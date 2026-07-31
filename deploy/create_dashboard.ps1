@@ -125,10 +125,13 @@ function Get-PrimaryPage([string]$headerPage) {
 
 function Get-VisualType([string]$number) {
     switch ($number) {
-        '01' { 'map'; break }
-        { $_ -in @('02', '04', '06', '12') } { 'line'; break }
+        { $_ -in @('01', '17') } { 'map'; break }
+        { $_ -in @('02', '04', '06', '12', '16') } { 'line'; break }
         { $_ -in @('03', '09') } { 'multistat'; break }
-        { $_ -in @('07', '13') } { 'column'; break }
+        { $_ -in @('05', '08') } { 'bar'; break }
+        { $_ -in @('07', '10') } { 'column'; break }
+        '13' { 'pie'; break }
+        '15' { 'heatmap'; break }
         default { 'table' }
     }
 }
@@ -159,26 +162,52 @@ function Get-VisualOptions([string]$number, [string]$visualType) {
             colorRules = @()
         }
     }
+    # Schemat kafelka (schema/60/tile.json) dopuszcza wylacznie te cztery wlasciwosci mapy.
+    # Nieznane klucze (map__geoType, map__sizeColumn) powodowaly, ze kontrolka ignorowala
+    # kolumny lat/lon i probowala geokodowac po nazwie - stad wielosekundowe ladowanie.
     if ($visualType -eq 'map') {
+        $sizeColumn = if ($number -eq '01') { 'level_cm' } else { 'Zgloszenia' }
         return @{
-            map__type = 'bubble'
-            map__geoType = 'numeric'
-            map__geoPointColumn = $null
-            map__labelColumn = 'gauge_name'
-            map__sizeColumn = 'level_cm'
-            map__sizeDisabled = $false
+            map__bubbleFormat = 'bubble'
             map__latitudeColumn = 'lat'
             map__longitudeColumn = 'lon'
+            map__minBubbleSizeColumn = $sizeColumn
+            hideLegend = $false
+            legendLocation = 'bottom'
+        }
+    }
+    if ($visualType -eq 'heatmap') {
+        return @{
+            xColumn = 'Doba'
+            yColumn = 'Wojewodztwo'
+            heatMap__dataColumn = 'Zgloszenia'
+            heatMap__colorPaletteKey = 'orange'
+            colorRulesDisabled = $true
+            colorRules = @()
+        }
+    }
+    if ($visualType -eq 'pie') {
+        return @{
+            xColumn = 'Kanal'
+            yColumns = @('Zasieg')
+            pie__kind = 'donut'
+            pie__label = @('name', 'percentage')
+            pie__orderBy = 'size'
+            hideLegend = $false
+            legendLocation = 'right'
         }
     }
 
     $axis = switch ($number) {
         '02' { @{ xColumn = 'timestamp'; yColumns = @('avg_level', 'max_level'); seriesColumns = @('gauge_id'); xColumnTitle = 'Czas' } }
         '04' { @{ xColumn = 'timestamp'; yColumns = @('incidents', 'affected'); seriesColumns = $null; xColumnTitle = 'Czas' } }
+        '05' { @{ xColumn = 'Gmina'; yColumns = @('Zgloszenia'); seriesColumns = $null; xColumnTitle = 'Gmina' } }
         '06' { @{ xColumn = 'timestamp'; yColumns = @('customers_offline'); seriesColumns = $null; xColumnTitle = 'Czas' } }
-        '07' { @{ xColumn = 'gmina_code'; yColumns = @('customers_offline'); seriesColumns = $null; xColumnTitle = 'Gmina' } }
+        '07' { @{ xColumn = 'Gmina'; yColumns = @('Odbiorcy'); seriesColumns = $null; xColumnTitle = 'Gmina' } }
+        '08' { @{ xColumn = 'Gmina'; yColumns = @('Pokrycie'); seriesColumns = $null; xColumnTitle = 'Gmina' } }
+        '10' { @{ xColumn = 'Wojewodztwo'; yColumns = @('PSP', 'WOT', 'Pompy', 'Agregaty', 'Smiglowce'); seriesColumns = $null; xColumnTitle = 'Wojewodztwo' } }
         '12' { @{ xColumn = 'timestamp'; yColumns = @('disinfo_signals', 'disinfo_reach'); seriesColumns = $null; xColumnTitle = 'Czas' } }
-        '13' { @{ xColumn = 'topic'; yColumns = @('reach'); seriesColumns = @('channel'); xColumnTitle = 'Temat' } }
+        '16' { @{ xColumn = 'Czas'; yColumns = @('Skumulowane'); seriesColumns = $null; xColumnTitle = 'Czas' } }
         default { @{ xColumn = $null; yColumns = @(); seriesColumns = $null; xColumnTitle = '' } }
     }
 
@@ -231,7 +260,7 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
         $visualType = Get-VisualType $q.Number
         $queryId = New-StableGuid "query-$($q.Number)"
 
-        $width = if ($visualType -eq 'multistat') { 6 } elseif ($visualType -in @('table', 'column')) { 12 } else { 12 }
+        $width = if ($visualType -in @('multistat', 'bar', 'pie')) { 6 } else { 12 }
         $height = if ($visualType -eq 'multistat') { 3 } elseif ($visualType -eq 'table') { 7 } else { 8 }
         $tile = [ordered]@{
             id = New-StableGuid "tile-$($q.Number)"
@@ -320,7 +349,7 @@ Resolve-Workspace
 
 Write-Step "Czytanie zapytań"
 $dashboardQueries = @(Split-DashboardQueries $QueriesPath)
-if ($dashboardQueries.Count -ne 14) { throw "Oczekiwano 14 zapytań, znaleziono $($dashboardQueries.Count)." }
+if ($dashboardQueries.Count -ne 17) { throw "Oczekiwano 17 zapytań, znaleziono $($dashboardQueries.Count)." }
 Write-Ok "znaleziono 14 zapytań"
 
 if (-not $SkipQueryValidation) {

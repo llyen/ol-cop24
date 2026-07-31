@@ -24,14 +24,12 @@
         "queryId": "c5f6996f-7f13-b5ac-e9ce-a8469472c338"
       },
       "visualOptions": {
-        "map__labelColumn": "gauge_name",
-        "map__sizeColumn": "level_cm",
-        "map__geoType": "numeric",
+        "hideLegend": false,
+        "map__bubbleFormat": "bubble",
+        "map__minBubbleSizeColumn": "level_cm",
         "map__latitudeColumn": "lat",
-        "map__sizeDisabled": false,
         "map__longitudeColumn": "lon",
-        "map__type": "bubble",
-        "map__geoPointColumn": null
+        "legendLocation": "bottom"
       }
     },
     {
@@ -50,36 +48,36 @@
         "queryId": "8019ec6b-2308-296c-c51d-a51946201cb8"
       },
       "visualOptions": {
-        "verticalLine": "",
-        "legendLocation": "bottom",
+        "drillthroughDisabled": false,
         "crossFilter": [],
+        "drillthrough": [],
+        "xColumnTitle": "Czas",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
         "yColumns": [
           "avg_level",
           "max_level"
         ],
+        "legendLocation": "bottom",
         "xColumn": "timestamp",
-        "hideLegend": false,
-        "xAxisScale": "linear",
         "seriesColumns": [
           "gauge_id"
         ],
-        "multipleYAxes": {
-          "additional": [],
-          "showMultiplePanels": false,
-          "base": {
-            "id": "-1",
-            "columns": [],
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
-            "horizontalLines": [],
-            "yAxisScale": "linear",
-            "label": ""
-          }
-        },
-        "xColumnTitle": "Czas",
+        "xAxisScale": "linear",
         "crossFilterDisabled": false,
-        "drillthrough": [],
-        "drillthroughDisabled": false
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
@@ -98,17 +96,17 @@
         "queryId": "b38f0b51-ca66-6e80-132e-54ece2c59d4e"
       },
       "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__displayOrientation": "horizontal",
+        "colorRules": [],
+        "multiStat__labelColumn": "Wskaznik",
         "colorStyle": "light",
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "multiStat__valueColumn": "Wartosc",
-        "multiStat__displayOrientation": "horizontal",
-        "multiStat__labelColumn": "Wskaznik",
         "colorRulesDisabled": true,
-        "colorRules": [],
-        "multiStat__textSize": "auto"
+        "multiStat__valueColumn": "Wartosc"
       }
     },
     {
@@ -127,61 +125,79 @@
         "queryId": "424aca17-b492-824d-984b-979842ba808d"
       },
       "visualOptions": {
-        "verticalLine": "",
-        "legendLocation": "bottom",
+        "drillthroughDisabled": false,
         "crossFilter": [],
+        "drillthrough": [],
+        "xColumnTitle": "Czas",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
         "yColumns": [
           "incidents",
           "affected"
         ],
+        "legendLocation": "bottom",
         "xColumn": "timestamp",
-        "hideLegend": false,
-        "xAxisScale": "linear",
         "seriesColumns": null,
-        "multipleYAxes": {
-          "additional": [],
-          "showMultiplePanels": false,
-          "base": {
-            "id": "-1",
-            "columns": [],
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
-            "horizontalLines": [],
-            "yAxisScale": "linear",
-            "label": ""
-          }
-        },
-        "xColumnTitle": "Czas",
+        "xAxisScale": "linear",
         "crossFilterDisabled": false,
-        "drillthrough": [],
-        "drillthroughDisabled": false
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
       "id": "9d168c01-fea3-ef1c-41c3-8b0e004f10d9",
-      "title": "Top gmin według incydentów",
-      "visualType": "table",
+      "title": "Top gmin wedlug incydentow",
+      "visualType": "bar",
       "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
       "layout": {
         "x": 0,
         "y": 8,
-        "width": 12,
-        "height": 7
+        "width": 6,
+        "height": 8
       },
       "queryRef": {
         "kind": "query",
         "queryId": "daadb2f3-2236-339a-ad76-690e03765cab"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
         "drillthroughDisabled": false,
         "crossFilter": [],
-        "crossFilterDisabled": false,
         "drillthrough": [],
-        "colorStyle": "light",
-        "colorRules": [],
-        "table__renderLinks": [],
-        "colorRulesDisabled": true
+        "xColumnTitle": "Gmina",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
+        "yColumns": [
+          "Zgloszenia"
+        ],
+        "legendLocation": "bottom",
+        "xColumn": "Gmina",
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "crossFilterDisabled": false,
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
@@ -200,38 +216,38 @@
         "queryId": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a"
       },
       "visualOptions": {
-        "verticalLine": "",
-        "legendLocation": "bottom",
+        "drillthroughDisabled": false,
         "crossFilter": [],
+        "drillthrough": [],
+        "xColumnTitle": "Czas",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
         "yColumns": [
           "customers_offline"
         ],
+        "legendLocation": "bottom",
         "xColumn": "timestamp",
-        "hideLegend": false,
-        "xAxisScale": "linear",
         "seriesColumns": null,
-        "multipleYAxes": {
-          "additional": [],
-          "showMultiplePanels": false,
-          "base": {
-            "id": "-1",
-            "columns": [],
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
-            "horizontalLines": [],
-            "yAxisScale": "linear",
-            "label": ""
-          }
-        },
-        "xColumnTitle": "Czas",
+        "xAxisScale": "linear",
         "crossFilterDisabled": false,
-        "drillthrough": [],
-        "drillthroughDisabled": false
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
       "id": "497e0ab9-be90-cdb5-2e71-5763baaf57a6",
-      "title": "Awarie energetyczne — najcięższe gminy",
+      "title": "Awarie energetyczne — najciezsze gminy",
       "visualType": "column",
       "pageId": "c6db2691-4a32-eb06-a091-12acfd281f28",
       "layout": {
@@ -245,60 +261,78 @@
         "queryId": "3475e7da-d41d-bb3a-db61-00ad4c9b333f"
       },
       "visualOptions": {
-        "verticalLine": "",
-        "legendLocation": "bottom",
+        "drillthroughDisabled": false,
         "crossFilter": [],
-        "yColumns": [
-          "customers_offline"
-        ],
-        "xColumn": "gmina_code",
-        "hideLegend": false,
-        "xAxisScale": "linear",
-        "seriesColumns": null,
+        "drillthrough": [],
+        "xColumnTitle": "Gmina",
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
+            "yAxisMinimumValue": null,
             "id": "-1",
             "columns": [],
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
-            "horizontalLines": [],
+            "label": "",
             "yAxisScale": "linear",
-            "label": ""
-          }
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
         },
-        "xColumnTitle": "Gmina",
+        "yColumns": [
+          "Odbiorcy"
+        ],
+        "legendLocation": "bottom",
+        "xColumn": "Gmina",
+        "seriesColumns": null,
+        "xAxisScale": "linear",
         "crossFilterDisabled": false,
-        "drillthrough": [],
-        "drillthroughDisabled": false
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
       "id": "56a36cd6-ab52-9127-1732-9d3d66465b0e",
       "title": "Gminy z pokryciem telco <50%",
-      "visualType": "table",
+      "visualType": "bar",
       "pageId": "c6db2691-4a32-eb06-a091-12acfd281f28",
       "layout": {
         "x": 0,
         "y": 8,
-        "width": 12,
-        "height": 7
+        "width": 6,
+        "height": 8
       },
       "queryRef": {
         "kind": "query",
         "queryId": "9917d286-54e8-2a72-6264-1569804cc108"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
         "drillthroughDisabled": false,
         "crossFilter": [],
-        "crossFilterDisabled": false,
         "drillthrough": [],
-        "colorStyle": "light",
-        "colorRules": [],
-        "table__renderLinks": [],
-        "colorRulesDisabled": true
+        "xColumnTitle": "Gmina",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
+        "yColumns": [
+          "Pokrycie"
+        ],
+        "legendLocation": "bottom",
+        "xColumn": "Gmina",
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "crossFilterDisabled": false,
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
@@ -317,44 +351,66 @@
         "queryId": "df1690d1-2cf7-1098-8737-98e73453ea75"
       },
       "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__displayOrientation": "horizontal",
+        "colorRules": [],
+        "multiStat__labelColumn": "Wskaznik",
         "colorStyle": "light",
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "multiStat__valueColumn": "Wartosc",
-        "multiStat__displayOrientation": "horizontal",
-        "multiStat__labelColumn": "Wskaznik",
         "colorRulesDisabled": true,
-        "colorRules": [],
-        "multiStat__textSize": "auto"
+        "multiStat__valueColumn": "Wartosc"
       }
     },
     {
       "id": "acb7dccc-92dd-fb0f-7060-8f13e63b9468",
-      "title": "Zaangażowane siły i środki",
-      "visualType": "table",
+      "title": "Zaangazowane sily i srodki",
+      "visualType": "column",
       "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
       "layout": {
         "x": 0,
         "y": 16,
         "width": 12,
-        "height": 7
+        "height": 8
       },
       "queryRef": {
         "kind": "query",
         "queryId": "286746ee-7e9a-cb49-51e8-31fc6d717dc7"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
         "drillthroughDisabled": false,
         "crossFilter": [],
-        "crossFilterDisabled": false,
         "drillthrough": [],
-        "colorStyle": "light",
-        "colorRules": [],
-        "table__renderLinks": [],
-        "colorRulesDisabled": true
+        "xColumnTitle": "Wojewodztwo",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
+        "yColumns": [
+          "PSP",
+          "WOT",
+          "Pompy",
+          "Agregaty",
+          "Smiglowce"
+        ],
+        "legendLocation": "bottom",
+        "xColumn": "Wojewodztwo",
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "crossFilterDisabled": false,
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
@@ -373,15 +429,15 @@
         "queryId": "057690da-f91a-d3a0-1eb1-daf8d55e79b8"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "drillthrough": [],
-        "colorStyle": "light",
-        "colorRules": [],
         "table__renderLinks": [],
-        "colorRulesDisabled": true
+        "colorRules": [],
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "table__enableRenderLinks": true
       }
     },
     {
@@ -400,45 +456,45 @@
         "queryId": "29192ae9-2d70-7fc6-076f-06771a87ad63"
       },
       "visualOptions": {
-        "verticalLine": "",
-        "legendLocation": "bottom",
+        "drillthroughDisabled": false,
         "crossFilter": [],
+        "drillthrough": [],
+        "xColumnTitle": "Czas",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
         "yColumns": [
           "disinfo_signals",
           "disinfo_reach"
         ],
+        "legendLocation": "bottom",
         "xColumn": "timestamp",
-        "hideLegend": false,
-        "xAxisScale": "linear",
         "seriesColumns": null,
-        "multipleYAxes": {
-          "additional": [],
-          "showMultiplePanels": false,
-          "base": {
-            "id": "-1",
-            "columns": [],
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
-            "horizontalLines": [],
-            "yAxisScale": "linear",
-            "label": ""
-          }
-        },
-        "xColumnTitle": "Czas",
+        "xAxisScale": "linear",
         "crossFilterDisabled": false,
-        "drillthrough": [],
-        "drillthroughDisabled": false
+        "hideLegend": false,
+        "verticalLine": ""
       }
     },
     {
       "id": "05a07a87-5295-5c02-019c-3a2771de7f3a",
-      "title": "Kanały i tematy Z20",
-      "visualType": "column",
+      "title": "Kanaly i tematy Z20",
+      "visualType": "pie",
       "pageId": "cf29945f-3398-69bc-ed0c-5279e4b881c9",
       "layout": {
         "x": 12,
         "y": 0,
-        "width": 12,
+        "width": 6,
         "height": 8
       },
       "queryRef": {
@@ -446,35 +502,18 @@
         "queryId": "599e29ef-6c06-3a19-86d0-b79bf91c9aaf"
       },
       "visualOptions": {
-        "verticalLine": "",
-        "legendLocation": "bottom",
-        "crossFilter": [],
+        "pie__kind": "donut",
         "yColumns": [
-          "reach"
+          "Zasieg"
         ],
-        "xColumn": "topic",
+        "xColumn": "Kanal",
+        "pie__orderBy": "size",
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
         "hideLegend": false,
-        "xAxisScale": "linear",
-        "seriesColumns": [
-          "channel"
-        ],
-        "multipleYAxes": {
-          "additional": [],
-          "showMultiplePanels": false,
-          "base": {
-            "id": "-1",
-            "columns": [],
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
-            "horizontalLines": [],
-            "yAxisScale": "linear",
-            "label": ""
-          }
-        },
-        "xColumnTitle": "Temat",
-        "crossFilterDisabled": false,
-        "drillthrough": [],
-        "drillthroughDisabled": false
+        "legendLocation": "right"
       }
     },
     {
@@ -493,15 +532,108 @@
         "queryId": "67cede41-377e-ca16-6e0f-4431e2d6e78d"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
+        "table__renderLinks": [],
+        "colorRules": [],
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "table__enableRenderLinks": true
+      }
+    },
+    {
+      "id": "3833bf26-9ac8-cef0-aaea-b27dfa72505f",
+      "title": "Heatmapa zgloszen: wojewodztwo x doba",
+      "visualType": "heatmap",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 12,
+        "y": 16,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "64927ecc-2324-888d-c648-bc28c19172f5"
+      },
+      "visualOptions": {
+        "colorRulesDisabled": true,
+        "yColumn": "Wojewodztwo",
+        "xColumn": "Doba",
+        "heatMap__dataColumn": "Zgloszenia",
+        "heatMap__colorPaletteKey": "orange",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "6491c017-2ca3-62ca-5c9b-515b78fd4c27",
+      "title": "Osoby objete zdarzeniem — narastajaco",
+      "visualType": "line",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 0,
+        "y": 24,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "86a0e303-e60a-e04c-9b29-13b317bd3148"
+      },
+      "visualOptions": {
         "drillthroughDisabled": false,
         "crossFilter": [],
-        "crossFilterDisabled": false,
         "drillthrough": [],
-        "colorStyle": "light",
-        "colorRules": [],
-        "table__renderLinks": [],
-        "colorRulesDisabled": true
+        "xColumnTitle": "Czas",
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "yAxisMinimumValue": null,
+            "id": "-1",
+            "columns": [],
+            "label": "",
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "horizontalLines": []
+          },
+          "showMultiplePanels": false
+        },
+        "yColumns": [
+          "Skumulowane"
+        ],
+        "legendLocation": "bottom",
+        "xColumn": "Czas",
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "crossFilterDisabled": false,
+        "hideLegend": false,
+        "verticalLine": ""
+      }
+    },
+    {
+      "id": "4235a96a-97b3-4e92-13df-39dc4b36e3e4",
+      "title": "Mapa incydentow: intensywnosc w gminach",
+      "visualType": "map",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 12,
+        "y": 24,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "9dcf4a32-4b32-d331-344b-c68e22465a33"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "map__bubbleFormat": "bubble",
+        "map__minBubbleSizeColumn": "Zgloszenia",
+        "map__latitudeColumn": "lat",
+        "map__longitudeColumn": "lon",
+        "legendLocation": "bottom"
       }
     }
   ],
@@ -599,7 +731,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "incident_reports\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where hazard_code == \"Z02\"\n| summarize incidents=count(), affected=sum(affected_people), high_priority=countif(priority >= 4) by gmina_code\n| top 20 by incidents desc",
+      "text": "incident_reports\n| where hazard_code == \"Z02\"\n| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by Zgloszenia desc\n| project Gmina = coalesce(gmina_name, gmina_code), Zgloszenia, Osoby\n| order by Zgloszenia asc",
       "id": "daadb2f3-2236-339a-ad76-690e03765cab",
       "usedVariables": []
     },
@@ -617,7 +749,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "power_grid_events\n| summarize customers_offline=sum(customers_offline), events=count(), max_eta_restore_min=max(eta_restore_min), causes=make_set(cause, 5) by gmina_code\n| top 15 by customers_offline desc",
+      "text": "power_grid_events\n| summarize Odbiorcy = sum(customers_offline), MaxETA = max(eta_restore_min) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by Odbiorcy desc\n| project Gmina = coalesce(gmina_name, gmina_code), Odbiorcy, MaxETA\n| order by Odbiorcy desc",
       "id": "3475e7da-d41d-bb3a-db61-00ad4c9b333f",
       "usedVariables": []
     },
@@ -626,7 +758,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "telecom_events\n| where coverage_pct < 50\n| summarize arg_max(timestamp, *) by gmina_code, operator\n| project timestamp, gmina_code, operator, coverage_pct, base_stations_down, cause\n| order by coverage_pct asc",
+      "text": "telecom_events\n| where coverage_pct < 50\n| summarize arg_max(timestamp, coverage_pct, base_stations_down) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by coverage_pct asc\n| project Gmina = coalesce(gmina_name, gmina_code), Pokrycie = coverage_pct, Stacje = base_stations_down\n| order by Pokrycie desc",
       "id": "9917d286-54e8-2a72-6264-1569804cc108",
       "usedVariables": []
     },
@@ -644,7 +776,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "resource_deployment\n| summarize arg_max(timestamp, *) by voivodeship_code\n| project timestamp, voivodeship_code, psp_units, wot_soldiers, pumps, generators, helicopters,\n          total_resources=psp_units + wot_soldiers + pumps + generators + helicopters\n| order by total_resources desc",
+      "text": "resource_deployment\n| summarize arg_max(timestamp, psp_units, wot_soldiers, pumps, generators, helicopters) by voivodeship_code\n| join kind=leftouter (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code\n| extend Razem = psp_units + wot_soldiers + pumps + generators + helicopters\n| top 10 by Razem desc\n| project Wojewodztwo = coalesce(voivodeship_name, voivodeship_code), PSP = psp_units, WOT = wot_soldiers,\n          Pompy = pumps, Agregaty = generators, Smiglowce = helicopters",
       "id": "286746ee-7e9a-cb49-51e8-31fc6d717dc7",
       "usedVariables": []
     },
@@ -671,7 +803,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "media_signals\n| where disinformation_flag == true\n| summarize signals=count(), reach=sum(reach) by channel, topic\n| top 20 by reach desc",
+      "text": "media_signals\n| where disinformation_flag == true\n| summarize Zasieg = sum(reach), Sygnaly = count() by channel\n| project Kanal = channel, Zasieg, Sygnaly\n| order by Zasieg desc",
       "id": "599e29ef-6c06-3a19-86d0-b79bf91c9aaf",
       "usedVariables": []
     },
@@ -682,6 +814,33 @@
       },
       "text": "let hydro_alarm = hydro_readings\n| where level_cm >= alarm_level_cm\n| summarize first_alarm=min(timestamp) by gmina_code;\nlet power_first = power_grid_events\n| summarize first_power=min(timestamp), customers=sum(customers_offline) by gmina_code;\nlet telco_first = telecom_events\n| summarize first_telco=min(timestamp), min_coverage=min(coverage_pct) by gmina_code;\nhydro_alarm\n| join kind=leftouter power_first on gmina_code\n| join kind=leftouter telco_first on gmina_code\n| extend power_delay_h=datetime_diff('hour', first_power, first_alarm), telco_delay_h=datetime_diff('hour', first_telco, first_alarm)\n| project gmina_code, first_alarm, first_power, power_delay_h, customers, first_telco, telco_delay_h, min_coverage\n| order by first_alarm asc",
       "id": "67cede41-377e-ca16-6e0f-4431e2d6e78d",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "incident_reports\n| join kind=inner (dim_gmina | project gmina_code, powiat_code) on gmina_code\n| join kind=inner (dim_powiat | project powiat_code, voivodeship_code) on powiat_code\n| join kind=inner (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code\n| summarize Zgloszenia = count() by Wojewodztwo = voivodeship_name, Doba = format_datetime(bin(timestamp, 1d), 'MM-dd')\n| order by Doba asc",
+      "id": "64927ecc-2324-888d-c648-bc28c19172f5",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "incident_reports\n| summarize Osoby = sum(affected_people) by Czas = bin(timestamp, 1h)\n| order by Czas asc\n| extend Skumulowane = row_cumsum(Osoby)",
+      "id": "86a0e303-e60a-e04c-9b29-13b317bd3148",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "incident_reports\n| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code\n| join kind=inner (dim_gmina | project gmina_code, gmina_name, lat, lon) on gmina_code\n| project Gmina = gmina_name, Zgloszenia, Osoby, lat, lon\n| order by Zgloszenia desc",
+      "id": "9dcf4a32-4b32-d331-344b-c68e22465a33",
       "usedVariables": []
     }
   ]

@@ -49,14 +49,17 @@ incident_reports
 | summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 15m)
 | order by timestamp asc
 
-// 05. Kafelek: „Top gmin według incydentów” | Strona: Obraz kraju
-// Co liczy: ranking gmin z największą liczbą zgłoszeń i osób objętych zgłoszeniami.
-// Parametry: _startTime/_endTime, _hazardCode. Wynik: tabela do drill-down dla oficera dyżurnego.
+// 05. Kafelek: „Top gmin wedlug incydentow” | Strona: Obraz kraju
+// Co liczy: ranking gmin z najwieksza liczba zgloszen i osob objetych zgloszeniami.
+// Parametry: _startTime/_endTime, _hazardCode. Wynik: wykres slupkowy poziomy dla oficera dyzurnego.
 incident_reports
-| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))
 | where hazard_code == "Z02"
-| summarize incidents=count(), affected=sum(affected_people), high_priority=countif(priority >= 4) by gmina_code
-| top 20 by incidents desc
+| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code
+| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code
+| top 15 by Zgloszenia desc
+| project Gmina = coalesce(gmina_name, gmina_code), Zgloszenia, Osoby
+| order by Zgloszenia asc
+
 
 // 06. Kafelek: „Odbiorcy bez prądu” | Strona: Infrastruktura krytyczna
 // Co liczy: godzinową sumę odbiorców bez prądu i liczbę zdarzeń energetycznych.
@@ -65,21 +68,28 @@ power_grid_events
 | summarize customers_offline=sum(customers_offline), events=count(), max_eta=max(eta_restore_min) by bin(timestamp, 1h)
 | order by timestamp asc
 
-// 07. Kafelek: „Awarie energetyczne — najcięższe gminy” | Strona: Infrastruktura krytyczna
-// Co liczy: gminy z największą sumą odbiorców bez prądu i najdłuższym ETA.
-// Parametry: _startTime/_endTime; używane do rozmowy z PSE/OSD i wojewodą.
+// 07. Kafelek: „Awarie energetyczne — najciezsze gminy” | Strona: Infrastruktura krytyczna
+// Co liczy: gminy z najwieksza liczba odbiorcow bez pradu wraz z najdluzszym czasem przywrocenia.
+// Parametry: _startTime/_endTime. Wynik: wykres kolumnowy dla dyzurnego infrastruktury.
 power_grid_events
-| summarize customers_offline=sum(customers_offline), events=count(), max_eta_restore_min=max(eta_restore_min), causes=make_set(cause, 5) by gmina_code
-| top 15 by customers_offline desc
+| summarize Odbiorcy = sum(customers_offline), MaxETA = max(eta_restore_min) by gmina_code
+| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code
+| top 15 by Odbiorcy desc
+| project Gmina = coalesce(gmina_name, gmina_code), Odbiorcy, MaxETA
+| order by Odbiorcy desc
+
 
 // 08. Kafelek: „Gminy z pokryciem telco <50%” | Strona: Infrastruktura krytyczna
-// Co liczy: najnowsze zdarzenia telekomunikacyjne z istotnym spadkiem pokrycia.
-// Parametry: _startTime/_endTime. Oczekiwany wynik: 80 gmin miało co najmniej jeden event poniżej 50%.
+// Co liczy: najnizsze aktualne pokrycie telekomunikacyjne w gminach.
+// Parametry: _startTime/_endTime. Wynik: wykres slupkowy poziomy, 15 najgorszych gmin.
 telecom_events
 | where coverage_pct < 50
-| summarize arg_max(timestamp, *) by gmina_code, operator
-| project timestamp, gmina_code, operator, coverage_pct, base_stations_down, cause
-| order by coverage_pct asc
+| summarize arg_max(timestamp, coverage_pct, base_stations_down) by gmina_code
+| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code
+| top 15 by coverage_pct asc
+| project Gmina = coalesce(gmina_name, gmina_code), Pokrycie = coverage_pct, Stacje = base_stations_down
+| order by Pokrycie desc
+
 
 // 09. Kafelek: „Status ewakuacji” | Strona: Obraz kraju / RZZK i SPO
 // Co liczy: najnowszy status per gmina oraz sumę osób w ewakuacjach.
@@ -91,14 +101,17 @@ evacuation_status
 | evaluate narrow()
 | project Wskaznik=Column, Wartosc=toint(Value)
 
-// 10. Kafelek: „Zaangażowane siły i środki” | Strona: Obraz kraju / Karta województwa
-// Co liczy: ostatni raport zasobów per województwo: PSP, WOT, pompy, agregaty, śmigłowce.
-// Parametry: _voivodeshipCode. Oczekiwany wynik: widoczny wzrost zasobów D0-D+3 w woj. 02 i 16.
+// 10. Kafelek: „Zaangazowane sily i srodki” | Strona: Obraz kraju
+// Co liczy: ostatni raport zasobow per wojewodztwo: PSP, WOT, pompy, agregaty, smiglowce.
+// Parametry: _voivodeshipCode. Wynik: wykres kolumnowy wieloseryjny, widoczny wzrost w woj. 02 i 16.
 resource_deployment
-| summarize arg_max(timestamp, *) by voivodeship_code
-| project timestamp, voivodeship_code, psp_units, wot_soldiers, pumps, generators, helicopters,
-          total_resources=psp_units + wot_soldiers + pumps + generators + helicopters
-| order by total_resources desc
+| summarize arg_max(timestamp, psp_units, wot_soldiers, pumps, generators, helicopters) by voivodeship_code
+| join kind=leftouter (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code
+| extend Razem = psp_units + wot_soldiers + pumps + generators + helicopters
+| top 10 by Razem desc
+| project Wojewodztwo = coalesce(voivodeship_name, voivodeship_code), PSP = psp_units, WOT = wot_soldiers,
+          Pompy = pumps, Agregaty = generators, Smiglowce = helicopters
+
 
 // 11. Kafelek: „Ostatnie eskalacje i SPO” | Strona: RZZK i SPO
 // Co liczy: sekwencję eskalacji gmina→powiat→wojewoda→minister→RZZK oraz rekomendowaną SPO.
@@ -117,13 +130,15 @@ media_signals
 | summarize disinfo_signals=count(), disinfo_reach=sum(reach), topics=make_set(topic, 5) by bin(timestamp, 1h)
 | order by timestamp asc
 
-// 13. Kafelek: „Kanały i tematy Z20” | Strona: Z20 Dezinformacja
-// Co liczy: ranking kanałów i tematów, aby oficer komunikacji wiedział, gdzie reagować.
-// Parametry: _startTime/_endTime. Wynik: tabela kanał+temat+zasięg.
+// 13. Kafelek: „Kanaly i tematy Z20” | Strona: Z20 Dezinformacja
+// Co liczy: udzial kanalow w zasiegu przekazu dezinformacyjnego.
+// Parametry: _startTime/_endTime. Wynik: wykres pierscieniowy z udzialem procentowym.
 media_signals
 | where disinformation_flag == true
-| summarize signals=count(), reach=sum(reach) by channel, topic
-| top 20 by reach desc
+| summarize Zasieg = sum(reach), Sygnaly = count() by channel
+| project Kanal = channel, Zasieg, Sygnaly
+| order by Zasieg desc
+
 
 // 14. Kafelek: „Korelacja hydro → energia → telco” | Strona: Infrastruktura krytyczna
 // Co liczy: dla gmin z alarmem hydro pokazuje pierwszą awarię energii i telco oraz opóźnienia godzinowe.
@@ -141,3 +156,34 @@ hydro_alarm
 | extend power_delay_h=datetime_diff('hour', first_power, first_alarm), telco_delay_h=datetime_diff('hour', first_telco, first_alarm)
 | project gmina_code, first_alarm, first_power, power_delay_h, customers, first_telco, telco_delay_h, min_coverage
 | order by first_alarm asc
+
+
+// 15. Kafelek: „Heatmapa zgloszen: wojewodztwo x doba” | Strona: Obraz kraju
+// Co liczy: natezenie zgloszen w ukladzie wojewodztwo x doba, aby jednym rzutem oka wskazac ognisko.
+// Parametry: _startTime/_endTime. Wynik: mapa ciepla, wyrazne skupisko w woj. dolnoslaskim i opolskim.
+incident_reports
+| join kind=inner (dim_gmina | project gmina_code, powiat_code) on gmina_code
+| join kind=inner (dim_powiat | project powiat_code, voivodeship_code) on powiat_code
+| join kind=inner (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code
+| summarize Zgloszenia = count() by Wojewodztwo = voivodeship_name, Doba = format_datetime(bin(timestamp, 1d), 'MM-dd')
+| order by Doba asc
+
+
+// 16. Kafelek: „Osoby objete zdarzeniem — narastajaco” | Strona: Obraz kraju
+// Co liczy: skala zdarzenia w czasie, narastajaco, jako krzywa dla kierownictwa.
+// Parametry: _startTime/_endTime. Wynik: krzywa z wyraznym zalamaniem w D0.
+incident_reports
+| summarize Osoby = sum(affected_people) by Czas = bin(timestamp, 1h)
+| order by Czas asc
+| extend Skumulowane = row_cumsum(Osoby)
+
+
+// 17. Kafelek: „Mapa incydentow: intensywnosc w gminach” | Strona: Obraz kraju
+// Co liczy: liczbe zgloszen i osoby objete zdarzeniem w kazdej gminie, naniesione na mape kraju.
+// Parametry: _startTime/_endTime. Wynik: skupisko bombelkow na Nysie Klodzkiej i w woj. opolskim.
+incident_reports
+| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code
+| join kind=inner (dim_gmina | project gmina_code, gmina_name, lat, lon) on gmina_code
+| project Gmina = gmina_name, Zgloszenia, Osoby, lat, lon
+| order by Zgloszenia desc
+
