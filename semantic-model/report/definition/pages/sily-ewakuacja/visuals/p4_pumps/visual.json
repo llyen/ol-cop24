@@ -3,11 +3,11 @@
   "name": "p4_pumps",
   "position": {
     "x": 770,
-    "z": 100,
     "width": 235,
     "height": 92,
+    "y": 74,
     "tabOrder": 100,
-    "y": 74
+    "z": 100
   },
   "visual": {
     "visualType": "cardVisual",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Measure": {
+                  "Property": "Pompy",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  },
-                  "Property": "Pompy"
+                  }
                 }
               },
               "queryRef": "kis_country.Pompy",
@@ -36,38 +36,13 @@
       }
     },
     "objects": {
-      "label": [
+      "outline": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#A9B8CC'"
-                    }
-                  }
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Pompy'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
+                  "Value": "false"
                 }
               }
             }
@@ -80,6 +55,13 @@
       "value": [
         {
           "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "26D"
+                }
+              }
+            },
             "bold": {
               "expr": {
                 "Literal": {
@@ -97,13 +79,6 @@
                   }
                 }
               }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "26D"
-                }
-              }
             }
           },
           "selector": {
@@ -111,13 +86,38 @@
           }
         }
       ],
-      "outline": [
+      "label": [
         {
           "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Pompy'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#A9B8CC'"
+                    }
+                  }
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -137,13 +137,6 @@
                 }
               }
             },
-            "leftOuterMargin": {
-              "expr": {
-                "Literal": {
-                  "Value": "0L"
-                }
-              }
-            },
             "rightOuterMargin": {
               "expr": {
                 "Literal": {
@@ -152,6 +145,13 @@
               }
             },
             "paddingUniform": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "leftOuterMargin": {
               "expr": {
                 "Literal": {
                   "Value": "0L"
@@ -176,13 +176,6 @@
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -200,6 +193,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -207,13 +207,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -238,6 +231,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -258,17 +258,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -279,7 +279,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"

@@ -3,28 +3,51 @@
   "name": "ttl_sily-ewakuacja",
   "position": {
     "x": 20,
-    "z": 10,
     "width": 1240,
     "height": 52,
+    "y": 5,
     "tabOrder": 1,
-    "y": 5
+    "z": 10
   },
   "visual": {
     "visualType": "textbox",
-    "visualContainerObjects": {
-      "border": [
+    "objects": {
+      "general": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
+            "paragraphs": [
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "textStyle": {
+                      "fontSize": "22px",
+                      "color": "#F8FAFC",
+                      "fontFamily": "Segoe UI Semibold"
+                    },
+                    "value": "Siły, środki i ewakuacja"
+                  }
+                ]
+              },
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "textStyle": {
+                      "fontSize": "10px",
+                      "color": "#93A4B8",
+                      "fontFamily": "Segoe UI"
+                    },
+                    "value": "Oceń, czy rozmieszczenie zasobów nadąża za skalą ewakuacji i potrzebami województw."
+                  }
+                ]
               }
-            }
+            ]
           }
         }
-      ],
+      ]
+    },
+    "visualContainerObjects": {
       "background": [
         {
           "properties": {
@@ -41,14 +64,14 @@
       "padding": [
         {
           "properties": {
-            "right": {
+            "top": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
                 }
               }
             },
-            "bottom": {
+            "right": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -62,7 +85,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -71,40 +94,17 @@
             }
           }
         }
-      ]
-    },
-    "objects": {
-      "general": [
+      ],
+      "border": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "horizontalTextAlignment": "left",
-                "textRuns": [
-                  {
-                    "value": "Siły, środki i ewakuacja",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "color": "#F8FAFC",
-                      "fontSize": "22px"
-                    }
-                  }
-                ]
-              },
-              {
-                "horizontalTextAlignment": "left",
-                "textRuns": [
-                  {
-                    "value": "Oceń, czy rozmieszczenie zasobów nadąża za skalą ewakuacji i potrzebami województw.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "color": "#93A4B8",
-                      "fontSize": "10px"
-                    }
-                  }
-                ]
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
               }
-            ]
+            }
           }
         }
       ]

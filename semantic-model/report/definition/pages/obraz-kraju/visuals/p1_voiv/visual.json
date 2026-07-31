@@ -3,11 +3,11 @@
   "name": "p1_voiv",
   "position": {
     "x": 755,
-    "z": 100,
     "width": 505,
     "height": 240,
+    "y": 178,
     "tabOrder": 100,
-    "y": 178
+    "z": 100
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Measure": {
+                  "Property": "KIS",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  },
-                  "Property": "KIS"
+                  }
                 }
               },
               "queryRef": "kis_country.KIS",
@@ -34,12 +34,12 @@
             {
               "field": {
                 "Measure": {
+                  "Property": "KIS Max Lokalny",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  },
-                  "Property": "KIS Max Lokalny"
+                  }
                 }
               },
               "queryRef": "kis_country.KIS Max Lokalny",
@@ -54,12 +54,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "voivodeship_name",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "dim_voivodeship"
                     }
-                  },
-                  "Property": "voivodeship_name"
+                  }
                 }
               },
               "queryRef": "dim_voivodeship.voivodeship_name",
@@ -71,35 +71,28 @@
         }
       },
       "sortDefinition": {
-        "isDefaultSort": false,
         "sort": [
           {
             "field": {
               "Measure": {
+                "Property": "KIS Max Lokalny",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "kis_country"
                   }
-                },
-                "Property": "KIS Max Lokalny"
+                }
               }
             },
             "direction": "Descending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -117,6 +110,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -124,13 +124,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -155,6 +148,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -175,17 +175,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -196,7 +196,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"
@@ -222,17 +222,10 @@
       "title": [
         {
           "properties": {
-            "alignment": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11D"
                 }
               }
             },
@@ -243,17 +236,10 @@
                 }
               }
             },
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Województwa — średni i maksymalny KIS'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+                  "Value": "true"
                 }
               }
             },
@@ -265,6 +251,20 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Województwa — średni i maksymalny KIS'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             },

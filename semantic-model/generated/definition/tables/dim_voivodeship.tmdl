@@ -14,9 +14,10 @@ table dim_voivodeship
 		sourceColumn: voivodeship_name
 
 	column population
-		dataType: string
+		dataType: int64
+		formatString: 0
 		sourceLineageTag: population
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: population
 
 	column wczk_seat
@@ -26,15 +27,15 @@ table dim_voivodeship
 		sourceColumn: wczk_seat
 
 	column lat
-		dataType: string
+		dataType: double
 		sourceLineageTag: lat
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: lat
 
 	column lon
-		dataType: string
+		dataType: double
 		sourceLineageTag: lon
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: lon
 
 	column ingested_at

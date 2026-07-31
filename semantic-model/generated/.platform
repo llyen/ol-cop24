@@ -1,11 +1,11 @@
 {
-  "config": {
-    "version": "2.0",
-    "logicalId": "7fe17a33-264b-4cb6-95b8-b19bd5a6dfc8"
-  },
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "config": {
+    "logicalId": "06aba03e-cba5-4ba5-a48b-8f47afcb86b3",
+    "version": "2.0"
+  },
   "metadata": {
-    "type": "SemanticModel",
-    "displayName": "OL_COP24_SemanticModel"
+    "displayName": "OL_COP24_SemanticModel",
+    "type": "SemanticModel"
   }
 }

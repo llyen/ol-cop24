@@ -101,13 +101,13 @@ function Get-LakehouseProperties([hashtable]$Headers) {
 
 $ColumnMap = [ordered]@{
     dim_voivodeship = @(
-        @('voivodeship_code','string'), @('voivodeship_name','string'), @('population','string'), @('wczk_seat','string'), @('lat','string'), @('lon','string'), @('ingested_at','dateTime')
+        @('voivodeship_code','string'), @('voivodeship_name','string'), @('population','int64'), @('wczk_seat','string'), @('lat','double'), @('lon','double'), @('ingested_at','dateTime')
     )
     dim_powiat = @(
-        @('powiat_code','string'), @('powiat_name','string'), @('voivodeship_code','string'), @('population','string'), @('area_km2','string'), @('lat','string'), @('lon','string'), @('ingested_at','dateTime')
+        @('powiat_code','string'), @('powiat_name','string'), @('voivodeship_code','string'), @('population','int64'), @('area_km2','string'), @('lat','double'), @('lon','double'), @('ingested_at','dateTime')
     )
     dim_gmina = @(
-        @('gmina_code','string'), @('gmina_name','string'), @('powiat_code','string'), @('gmina_type','string'), @('population','string'), @('lat','string'), @('lon','string'), @('ingested_at','dateTime')
+        @('gmina_code','string'), @('gmina_name','string'), @('powiat_code','string'), @('gmina_type','string'), @('population','int64'), @('lat','double'), @('lon','double'), @('ingested_at','dateTime')
     )
     dim_hazard = @(
         @('hazard_code','string'), @('hazard_name','string'), @('lead_minister','string'), @('cooperating_ministers','string'), @('ingested_at','dateTime')
@@ -119,7 +119,7 @@ $ColumnMap = [ordered]@{
         @('spo_code','string'), @('spo_name','string'), @('ingested_at','dateTime')
     )
     dim_river_gauge = @(
-        @('gauge_id','string'), @('gauge_name','string'), @('river','string'), @('gmina_code','string'), @('warning_level_cm','string'), @('alarm_level_cm','string'), @('lat','string'), @('lon','string'), @('wave_delay_h','string'), @('ingested_at','dateTime')
+        @('gauge_id','string'), @('gauge_name','string'), @('river','string'), @('gmina_code','string'), @('warning_level_cm','int64'), @('alarm_level_cm','int64'), @('lat','double'), @('lon','double'), @('wave_delay_h','string'), @('ingested_at','dateTime')
     )
     hydro_readings = @(
         @('timestamp','dateTime'), @('stream','string'), @('gauge_id','string'), @('gmina_code','int64'), @('river','string'), @('level_cm','int64'), @('flow_m3s','double'), @('trend','string'), @('warning_level_cm','int64'), @('alarm_level_cm','int64')

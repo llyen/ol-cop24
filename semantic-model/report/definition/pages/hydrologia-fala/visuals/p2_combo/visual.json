@@ -3,11 +3,11 @@
   "name": "p2_combo",
   "position": {
     "x": 20,
-    "z": 100,
     "width": 700,
     "height": 160,
+    "y": 540,
     "tabOrder": 100,
-    "y": 540
+    "z": 100
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
@@ -21,12 +21,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
+                      "Property": "level_cm",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "hydro_readings"
                         }
-                      },
-                      "Property": "level_cm"
+                      }
                     }
                   }
                 }
@@ -43,12 +43,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "hydro_readings"
                     }
-                  },
-                  "Property": "timestamp"
+                  }
                 }
               },
               "queryRef": "hydro_readings.timestamp",
@@ -66,12 +66,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
+                      "Property": "flow_m3s",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "hydro_readings"
                         }
-                      },
-                      "Property": "flow_m3s"
+                      }
                     }
                   }
                 }
@@ -85,35 +85,28 @@
         }
       },
       "sortDefinition": {
-        "isDefaultSort": false,
         "sort": [
           {
             "field": {
               "Column": {
+                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "hydro_readings"
                   }
-                },
-                "Property": "timestamp"
+                }
               }
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -131,6 +124,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -138,13 +138,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -169,6 +162,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -189,17 +189,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -210,7 +210,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"
@@ -236,17 +236,10 @@
       "title": [
         {
           "properties": {
-            "alignment": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11D"
                 }
               }
             },
@@ -257,17 +250,10 @@
                 }
               }
             },
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Przepływ i poziom — kolumna + linia'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+                  "Value": "true"
                 }
               }
             },
@@ -279,6 +265,20 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Przepływ i poziom — kolumna + linia'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             },

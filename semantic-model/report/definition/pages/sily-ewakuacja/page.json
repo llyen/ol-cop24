@@ -1,4 +1,8 @@
 {
+  "name": "sily-ewakuacja",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "width": 1280,
+  "height": 720,
   "displayOption": "FitToPage",
   "objects": {
     "outspace": [
@@ -50,9 +54,5 @@
       }
     ]
   },
-  "displayName": "Siły, środki i ewakuacja",
-  "width": 1280,
-  "height": 720,
-  "name": "sily-ewakuacja",
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json"
+  "displayName": "Siły, środki i ewakuacja"
 }

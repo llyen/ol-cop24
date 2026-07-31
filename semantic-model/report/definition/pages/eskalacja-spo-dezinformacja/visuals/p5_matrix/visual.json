@@ -3,11 +3,11 @@
   "name": "p5_matrix",
   "position": {
     "x": 535,
-    "z": 100,
     "width": 725,
     "height": 260,
+    "y": 440,
     "tabOrder": 100,
-    "y": 440
+    "z": 100
   },
   "visual": {
     "visualType": "pivotTable",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "recommended_level",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  },
-                  "Property": "recommended_level"
+                  }
                 }
               },
               "queryRef": "escalation_recommendations.recommended_level",
@@ -34,12 +34,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "gmina_code",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  },
-                  "Property": "gmina_code"
+                  }
                 }
               },
               "queryRef": "escalation_recommendations.gmina_code",
@@ -57,12 +57,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
+                      "Property": "kis",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      },
-                      "Property": "kis"
+                      }
                     }
                   }
                 }
@@ -75,12 +75,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "recommended_spo",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  },
-                  "Property": "recommended_spo"
+                  }
                 }
               },
               "queryRef": "escalation_recommendations.recommended_spo",
@@ -91,12 +91,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "explanation",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  },
-                  "Property": "explanation"
+                  }
                 }
               },
               "queryRef": "escalation_recommendations.explanation",
@@ -112,13 +112,6 @@
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -136,6 +129,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -143,13 +143,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -174,6 +167,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -194,17 +194,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -215,7 +215,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"
@@ -241,17 +241,10 @@
       "title": [
         {
           "properties": {
-            "alignment": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11D"
                 }
               }
             },
@@ -262,17 +255,10 @@
                 }
               }
             },
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Rekomendacje — poziom, SPO i uzasadnienie'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+                  "Value": "true"
                 }
               }
             },
@@ -284,6 +270,20 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Rekomendacje — poziom, SPO i uzasadnienie'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             },
@@ -304,114 +304,6 @@
     },
     "drillFilterOtherVisuals": true,
     "objects": {
-      "values": [
-        {
-          "properties": {
-            "fontColorPrimary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E2E8F0'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontColorSecondary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CBD5E1'"
-                    }
-                  }
-                }
-              }
-            },
-            "backColorSecondary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#111F33'"
-                    }
-                  }
-                }
-              }
-            },
-            "backColorPrimary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#0D1727'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "columnFormatting": [
-        {
-          "properties": {
-            "dataBars": {
-              "axisColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#64748B'"
-                      }
-                    }
-                  }
-                }
-              },
-              "negativeColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#EF4444'"
-                      }
-                    }
-                  }
-                }
-              },
-              "reverseDirection": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
-                  }
-                }
-              },
-              "positiveColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#22D3EE'"
-                      }
-                    }
-                  }
-                }
-              },
-              "hideText": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "Average(escalation_recommendations.kis)"
-          }
-        }
-      ],
       "rowHeaders": [
         {
           "properties": {
@@ -440,20 +332,82 @@
           }
         }
       ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "dataBars": {
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#64748B'"
+                      }
+                    }
+                  }
+                }
+              },
+              "positiveColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#22D3EE'"
+                      }
+                    }
+                  }
+                }
+              },
+              "reverseDirection": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "negativeColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#EF4444'"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Average(escalation_recommendations.kis)"
+          }
+        }
+      ],
       "columnHeaders": [
         {
           "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#17243A'"
+                    }
+                  }
+                }
+              }
+            },
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "columnAdjustment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'growToFit'"
                 }
               }
             },
@@ -468,12 +422,58 @@
                 }
               }
             },
-            "backColor": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColorSecondary": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#17243A'"
+                      "Value": "'#CBD5E1'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#111F33'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E2E8F0'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0D1727'"
                     }
                   }
                 }

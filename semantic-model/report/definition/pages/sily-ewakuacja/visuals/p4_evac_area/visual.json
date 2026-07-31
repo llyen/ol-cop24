@@ -3,11 +3,11 @@
   "name": "p4_evac_area",
   "position": {
     "x": 655,
-    "z": 100,
     "width": 605,
     "height": 240,
+    "y": 178,
     "tabOrder": 100,
-    "y": 178
+    "z": 100
   },
   "visual": {
     "visualType": "stackedAreaChart",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "status",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "evacuation_status"
                     }
-                  },
-                  "Property": "status"
+                  }
                 }
               },
               "queryRef": "evacuation_status.status",
@@ -38,12 +38,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "evacuation_status"
                     }
-                  },
-                  "Property": "timestamp"
+                  }
                 }
               },
               "queryRef": "evacuation_status.timestamp",
@@ -61,12 +61,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
+                      "Property": "people_count",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "evacuation_status"
                         }
-                      },
-                      "Property": "people_count"
+                      }
                     }
                   }
                 }
@@ -80,35 +80,28 @@
         }
       },
       "sortDefinition": {
-        "isDefaultSort": false,
         "sort": [
           {
             "field": {
               "Column": {
+                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "evacuation_status"
                   }
-                },
-                "Property": "timestamp"
+                }
               }
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -126,6 +119,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -133,13 +133,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -164,6 +157,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -184,17 +184,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -205,7 +205,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"
@@ -231,17 +231,10 @@
       "title": [
         {
           "properties": {
-            "alignment": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11D"
                 }
               }
             },
@@ -252,17 +245,10 @@
                 }
               }
             },
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Ewakuacja — narastanie wg statusu'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+                  "Value": "true"
                 }
               }
             },
@@ -274,6 +260,20 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ewakuacja — narastanie wg statusu'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             },

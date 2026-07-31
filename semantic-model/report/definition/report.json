@@ -1,41 +1,41 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json",
   "themeCollection": {
     "baseTheme": {
-      "name": "CY25SU12",
-      "type": "SharedResources",
       "reportVersionAtImport": {
         "visual": "2.5.0",
-        "page": "2.3.0",
-        "report": "3.1.0"
-      }
+        "report": "3.1.0",
+        "page": "2.3.0"
+      },
+      "type": "SharedResources",
+      "name": "CY25SU12"
     },
     "customTheme": {
-      "name": "COP24-CommandCenter-c0242026.json",
-      "type": "RegisteredResources",
       "reportVersionAtImport": {
         "visual": "2.6.0",
-        "page": "2.3.0",
-        "report": "3.1.0"
-      }
+        "report": "3.1.0",
+        "page": "2.3.0"
+      },
+      "type": "RegisteredResources",
+      "name": "COP24-CommandCenter-c0242026.json"
     }
   },
   "settings": {
+    "useStylableVisualContainerHeader": true,
     "defaultFilterActionIsDataFilter": true,
-    "useEnhancedTooltips": true,
-    "useStylableVisualContainerHeader": true
+    "useEnhancedTooltips": true
   },
   "resourcePackages": [
     {
+      "type": "RegisteredResources",
       "name": "RegisteredResources",
       "items": [
         {
-          "name": "COP24-CommandCenter-c0242026.json",
+          "type": "CustomTheme",
           "path": "COP24-CommandCenter-c0242026.json",
-          "type": "CustomTheme"
+          "name": "COP24-CommandCenter-c0242026.json"
         }
-      ],
-      "type": "RegisteredResources"
+      ]
     }
-  ]
+  ],
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json"
 }

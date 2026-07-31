@@ -3,61 +3,16 @@
   "name": "p2_map",
   "position": {
     "x": 20,
-    "z": 100,
     "width": 560,
     "height": 350,
+    "y": 178,
     "tabOrder": 100,
-    "y": 178
+    "z": 100
   },
   "visual": {
     "visualType": "azureMap",
     "query": {
       "queryState": {
-        "X": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Function": 1,
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "dim_river_gauge"
-                        }
-                      },
-                      "Property": "lon"
-                    }
-                  }
-                }
-              },
-              "queryRef": "Average(dim_river_gauge.lon)",
-              "nativeQueryRef": "Average of lon",
-              "active": true,
-              "displayName": "Długość geograficzna"
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_river_gauge"
-                    }
-                  },
-                  "Property": "river"
-                }
-              },
-              "queryRef": "dim_river_gauge.river",
-              "nativeQueryRef": "river",
-              "active": true,
-              "displayName": "Rzeka"
-            }
-          ]
-        },
         "Size": {
           "projections": [
             {
@@ -66,12 +21,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
+                      "Property": "level_cm",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "hydro_readings"
                         }
-                      },
-                      "Property": "level_cm"
+                      }
                     }
                   }
                 }
@@ -83,23 +38,23 @@
             }
           ]
         },
-        "Category": {
+        "Series": {
           "projections": [
             {
               "field": {
                 "Column": {
+                  "Property": "river",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "dim_river_gauge"
                     }
-                  },
-                  "Property": "gauge_name"
+                  }
                 }
               },
-              "queryRef": "dim_river_gauge.gauge_name",
-              "nativeQueryRef": "gauge_name",
+              "queryRef": "dim_river_gauge.river",
+              "nativeQueryRef": "river",
               "active": true,
-              "displayName": "Wodowskaz"
+              "displayName": "Rzeka"
             }
           ]
         },
@@ -111,12 +66,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
+                      "Property": "lat",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "dim_river_gauge"
                         }
-                      },
-                      "Property": "lat"
+                      }
                     }
                   }
                 }
@@ -127,6 +82,51 @@
               "displayName": "Szerokość geograficzna"
             }
           ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "gauge_name",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_river_gauge"
+                    }
+                  }
+                }
+              },
+              "queryRef": "dim_river_gauge.gauge_name",
+              "nativeQueryRef": "gauge_name",
+              "active": true,
+              "displayName": "Wodowskaz"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Property": "lon",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_river_gauge"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(dim_river_gauge.lon)",
+              "nativeQueryRef": "Average of lon",
+              "active": true,
+              "displayName": "Długość geograficzna"
+            }
+          ]
         }
       }
     },
@@ -134,13 +134,6 @@
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -158,6 +151,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -165,13 +165,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -196,6 +189,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -216,17 +216,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -237,7 +237,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"
@@ -263,17 +263,10 @@
       "title": [
         {
           "properties": {
-            "alignment": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11D"
                 }
               }
             },
@@ -284,17 +277,10 @@
                 }
               }
             },
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Wodowskazy — położenie i skala poziomu wody'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+                  "Value": "true"
                 }
               }
             },
@@ -306,6 +292,20 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Wodowskazy — położenie i skala poziomu wody'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             },

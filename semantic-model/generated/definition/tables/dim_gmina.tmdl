@@ -26,21 +26,22 @@ table dim_gmina
 		sourceColumn: gmina_type
 
 	column population
-		dataType: string
+		dataType: int64
+		formatString: 0
 		sourceLineageTag: population
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: population
 
 	column lat
-		dataType: string
+		dataType: double
 		sourceLineageTag: lat
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: lat
 
 	column lon
-		dataType: string
+		dataType: double
 		sourceLineageTag: lon
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: lon
 
 	column ingested_at

@@ -3,11 +3,11 @@
   "name": "p4_combo",
   "position": {
     "x": 655,
-    "z": 100,
     "width": 605,
     "height": 270,
+    "y": 430,
     "tabOrder": 100,
-    "y": 430
+    "z": 100
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
@@ -21,12 +21,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
+                      "Property": "wot_soldiers",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      },
-                      "Property": "wot_soldiers"
+                      }
                     }
                   }
                 }
@@ -43,12 +43,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "resource_deployment"
                     }
-                  },
-                  "Property": "timestamp"
+                  }
                 }
               },
               "queryRef": "resource_deployment.timestamp",
@@ -66,12 +66,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
+                      "Property": "psp_units",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      },
-                      "Property": "psp_units"
+                      }
                     }
                   }
                 }
@@ -85,35 +85,28 @@
         }
       },
       "sortDefinition": {
-        "isDefaultSort": false,
         "sort": [
           {
             "field": {
               "Column": {
+                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "resource_deployment"
                   }
-                },
-                "Property": "timestamp"
+                }
               }
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -131,6 +124,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -138,13 +138,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -169,6 +162,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -189,17 +189,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -210,7 +210,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"
@@ -236,17 +236,10 @@
       "title": [
         {
           "properties": {
-            "alignment": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11D"
                 }
               }
             },
@@ -257,17 +250,10 @@
                 }
               }
             },
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Napływ zasobów — PSP (kolumny) i WOT (linia)'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+                  "Value": "true"
                 }
               }
             },
@@ -279,6 +265,20 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Napływ zasobów — PSP (kolumny) i WOT (linia)'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             },

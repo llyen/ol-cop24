@@ -26,27 +26,29 @@ table dim_river_gauge
 		sourceColumn: gmina_code
 
 	column warning_level_cm
-		dataType: string
+		dataType: int64
+		formatString: 0
 		sourceLineageTag: warning_level_cm
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: warning_level_cm
 
 	column alarm_level_cm
-		dataType: string
+		dataType: int64
+		formatString: 0
 		sourceLineageTag: alarm_level_cm
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: alarm_level_cm
 
 	column lat
-		dataType: string
+		dataType: double
 		sourceLineageTag: lat
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: lat
 
 	column lon
-		dataType: string
+		dataType: double
 		sourceLineageTag: lon
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: lon
 
 	column wave_delay_h

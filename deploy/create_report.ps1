@@ -436,6 +436,8 @@ Add-Visual $parts $checks 'obraz-kraju' (New-CardVisual 'p1_alarm' 'Wodowskazy w
 Add-Visual $parts $checks 'obraz-kraju' (New-CardVisual 'p1_incidents' 'Incydenty' $m.Incidents 'kis_country.Incydenty' 'Incydenty' $cards4[3] 74 295 '#EF4444') 'EVALUATE ROW("Incydenty", [Incydenty])' 'Łączna liczba incydentów'
 
 $p1MapRoles = @{
+    # Wspolrzedne musza byc liczbami i miec agregacje - dopiero wtedy Azure Maps
+    # przyjmuje je razem z rola Lokalizacji. Wczesniej lat/lon byly w modelu tekstem.
     Category = @((New-Proj (New-Col 'dim_gmina' 'gmina_name') 'dim_gmina.gmina_name' 'gmina_name' 'Gmina'))
     X = @((New-Proj (New-Agg 'dim_gmina' 'lon' 1) 'Average(dim_gmina.lon)' 'Average of lon' 'Długość geograficzna'))
     Y = @((New-Proj (New-Agg 'dim_gmina' 'lat' 1) 'Average(dim_gmina.lat)' 'Average of lat' 'Szerokość geograficzna'))

@@ -3,11 +3,11 @@
   "name": "p1_levels",
   "position": {
     "x": 755,
-    "z": 100,
     "width": 505,
     "height": 270,
+    "y": 430,
     "tabOrder": 100,
-    "y": 430
+    "z": 100
   },
   "visual": {
     "visualType": "columnChart",
@@ -21,12 +21,12 @@
                   "Function": 2,
                   "Expression": {
                     "Column": {
+                      "Property": "gmina_code",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      },
-                      "Property": "gmina_code"
+                      }
                     }
                   }
                 }
@@ -43,12 +43,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "recommended_level",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  },
-                  "Property": "recommended_level"
+                  }
                 }
               },
               "queryRef": "escalation_recommendations.recommended_level",
@@ -60,7 +60,6 @@
         }
       },
       "sortDefinition": {
-        "isDefaultSort": false,
         "sort": [
           {
             "field": {
@@ -68,32 +67,26 @@
                 "Function": 2,
                 "Expression": {
                   "Column": {
+                    "Property": "gmina_code",
                     "Expression": {
                       "SourceRef": {
                         "Entity": "escalation_recommendations"
                       }
-                    },
-                    "Property": "gmina_code"
+                    }
                   }
                 }
               }
             },
             "direction": "Descending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "visualContainerObjects": {
       "background": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -111,6 +104,13 @@
                   "Value": "2D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -118,13 +118,6 @@
       "border": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -149,6 +142,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -169,17 +169,17 @@
       "padding": [
         {
           "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
                 }
               }
             },
@@ -190,7 +190,7 @@
                 }
               }
             },
-            "top": {
+            "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "6D"
@@ -216,17 +216,10 @@
       "title": [
         {
           "properties": {
-            "alignment": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11D"
                 }
               }
             },
@@ -237,17 +230,10 @@
                 }
               }
             },
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Skala rekomendowanej eskalacji'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "11D"
+                  "Value": "true"
                 }
               }
             },
@@ -259,6 +245,20 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Skala rekomendowanej eskalacji'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             },
