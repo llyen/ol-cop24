@@ -1,0 +1,38 @@
+table dim_hazard
+	sourceLineageTag: [dbo].[dim_hazard]
+
+	column hazard_code
+		dataType: string
+		sourceLineageTag: hazard_code
+		summarizeBy: none
+		sourceColumn: hazard_code
+
+	column hazard_name
+		dataType: string
+		sourceLineageTag: hazard_name
+		summarizeBy: none
+		sourceColumn: hazard_name
+
+	column lead_minister
+		dataType: string
+		sourceLineageTag: lead_minister
+		summarizeBy: none
+		sourceColumn: lead_minister
+
+	column cooperating_ministers
+		dataType: string
+		sourceLineageTag: cooperating_ministers
+		summarizeBy: none
+		sourceColumn: cooperating_ministers
+
+	column ingested_at
+		dataType: dateTime
+		sourceLineageTag: ingested_at
+		summarizeBy: none
+		sourceColumn: ingested_at
+
+	partition dim_hazard = entity
+		mode: directLake
+		source
+			entityName: dim_hazard
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

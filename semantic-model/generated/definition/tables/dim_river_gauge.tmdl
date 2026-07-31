@@ -1,0 +1,68 @@
+table dim_river_gauge
+	sourceLineageTag: [dbo].[dim_river_gauge]
+
+	column gauge_id
+		dataType: string
+		sourceLineageTag: gauge_id
+		summarizeBy: none
+		sourceColumn: gauge_id
+
+	column gauge_name
+		dataType: string
+		sourceLineageTag: gauge_name
+		summarizeBy: none
+		sourceColumn: gauge_name
+
+	column river
+		dataType: string
+		sourceLineageTag: river
+		summarizeBy: none
+		sourceColumn: river
+
+	column gmina_code
+		dataType: string
+		sourceLineageTag: gmina_code
+		summarizeBy: none
+		sourceColumn: gmina_code
+
+	column warning_level_cm
+		dataType: string
+		sourceLineageTag: warning_level_cm
+		summarizeBy: none
+		sourceColumn: warning_level_cm
+
+	column alarm_level_cm
+		dataType: string
+		sourceLineageTag: alarm_level_cm
+		summarizeBy: none
+		sourceColumn: alarm_level_cm
+
+	column lat
+		dataType: string
+		sourceLineageTag: lat
+		summarizeBy: none
+		sourceColumn: lat
+
+	column lon
+		dataType: string
+		sourceLineageTag: lon
+		summarizeBy: none
+		sourceColumn: lon
+
+	column wave_delay_h
+		dataType: string
+		sourceLineageTag: wave_delay_h
+		summarizeBy: none
+		sourceColumn: wave_delay_h
+
+	column ingested_at
+		dataType: dateTime
+		sourceLineageTag: ingested_at
+		summarizeBy: none
+		sourceColumn: ingested_at
+
+	partition dim_river_gauge = entity
+		mode: directLake
+		source
+			entityName: dim_river_gauge
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

@@ -296,7 +296,8 @@ expression $(Quote-TmdlName $ExpressionName) =
         Save-DefinitionPart $OutRoot 'definition\relationships.tmdl' $relationships
     }
     foreach ($t in $Tables) {
-        $meas = if ($t -eq 'kis_gmina') { $Measures } else { @() }
+        # Miary umieszczamy w tabeli kis_country, aby nie kolidowały z kolumną kis w kis_gmina.
+        $meas = if ($t -eq 'kis_country') { $Measures } else { @() }
         if (-not ($Tables -contains 'hydro_readings')) {
             $meas = @($meas | Where-Object { $_.Expression -notmatch 'hydro_readings' })
         }
@@ -364,7 +365,8 @@ function Upsert-SemanticModel([hashtable]$Headers) {
         }
     }
     else {
-        $successCandidate = $candidates[0]
+        # Przy aktualizacji preferujemy wariant bez schemaName; Lakehouse Delta zwykle publikuje tabele bez jawnego dbo.
+        $successCandidate = $candidates[1]
         Write-Host "Model $SemanticModelName już istnieje: $($existing.id). Używam updateDefinition."
     }
     if (-not $existing -or -not $successCandidate) { throw 'Nie udało się utworzyć minimalnego modelu Direct Lake po 8 próbach.' }
@@ -531,7 +533,12 @@ foreach ($p in @($semParts | Where-Object { $_.path -like 'definition/tables/*.t
 }
 $pageCount = 0
 if ($report) {
-    $repDef = Get-DefinitionStats -Headers $headers -ItemId $report.id -Format 'PBIR'
+    try {
+        $repDef = Get-DefinitionStats -Headers $headers -ItemId $report.id -Format 'PBIR'
+    }
+    catch {
+        $repDef = Get-DefinitionStats -Headers $headers -ItemId $report.id -Format ''
+    }
     if ($repDef) {
         $pageCount = @($repDef.definition.parts | Where-Object { $_.path -match '^definition/pages/.+/page\.json$' }).Count
         if ($pageCount -eq 0) {

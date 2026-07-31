@@ -1,0 +1,44 @@
+table dim_institution
+	sourceLineageTag: [dbo].[dim_institution]
+
+	column institution_id
+		dataType: string
+		sourceLineageTag: institution_id
+		summarizeBy: none
+		sourceColumn: institution_id
+
+	column institution_code
+		dataType: string
+		sourceLineageTag: institution_code
+		summarizeBy: none
+		sourceColumn: institution_code
+
+	column institution_name
+		dataType: string
+		sourceLineageTag: institution_name
+		summarizeBy: none
+		sourceColumn: institution_name
+
+	column level
+		dataType: string
+		sourceLineageTag: level
+		summarizeBy: none
+		sourceColumn: level
+
+	column seat
+		dataType: string
+		sourceLineageTag: seat
+		summarizeBy: none
+		sourceColumn: seat
+
+	column ingested_at
+		dataType: dateTime
+		sourceLineageTag: ingested_at
+		summarizeBy: none
+		sourceColumn: ingested_at
+
+	partition dim_institution = entity
+		mode: directLake
+		source
+			entityName: dim_institution
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

@@ -162,7 +162,7 @@ function Get-VisualOptions([string]$number, [string]$visualType) {
     if ($visualType -eq 'map') {
         return @{
             map__type = 'bubble'
-            map__geoType = 'latlong'
+            map__geoType = 'numeric'
             map__geoPointColumn = $null
             map__labelColumn = 'gauge_name'
             map__sizeColumn = 'level_cm'
@@ -262,7 +262,7 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
         eTag = ''
         schema_version = $schemaVersion
         title = $DashboardName
-        autoRefresh = [ordered]@{ enabled = $true; interval = '00:00:30' }
+        autoRefresh = [ordered]@{ enabled = $true; defaultDuration = '30s'; minimumDuration = '30s' }
         tiles = $tiles
         baseQueries = @()
         parameters = @(
@@ -273,7 +273,7 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
                 description = 'Domyślnie ostatnia godzina; zapytania demo używają pełnego zakresu 2026-09-12...2026-09-25.'
                 beginVariableName = '_startTime'
                 endVariableName = '_endTime'
-                defaultValue = [ordered]@{ kind = 'static'; startTime = '2026-09-12T00:00:00.000Z'; endTime = '2026-09-26T00:00:00.000Z' }
+                defaultValue = [ordered]@{ kind = 'fixed'; start = '2026-09-12T00:00:00.000Z'; end = '2026-09-26T00:00:00.000Z' }
                 showOnPages = [ordered]@{ kind = 'all' }
             }
         )

@@ -1,0 +1,95 @@
+table kis_country
+	sourceLineageTag: [dbo].[kis_country]
+
+	column kis_country
+		dataType: double
+		sourceLineageTag: kis_country
+		summarizeBy: sum
+		sourceColumn: kis_country
+
+	column max_local_kis
+		dataType: double
+		sourceLineageTag: max_local_kis
+		summarizeBy: sum
+		sourceColumn: max_local_kis
+
+	measure KIS = AVERAGE(kis_gmina[kis])
+		formatString: 0.0
+
+	measure 'KIS Max Lokalny' = MAX(kis_gmina[kis])
+		formatString: 0.0
+
+	measure 'Liczba Ewakuowanych' = SUM(evacuation_status[people_count])
+		formatString: #,0
+
+	measure '% Gmin w Alarmie' = DIVIDE(CALCULATE(DISTINCTCOUNT(hydro_readings[gmina_code]), hydro_readings[level_cm] >= hydro_readings[alarm_level_cm]), DISTINCTCOUNT(dim_gmina[gmina_code]))
+		formatString: 0.0%
+
+	measure 'Odbiorcy Bez Prądu' = SUM(power_grid_events[customers_offline])
+		formatString: #,0
+
+	measure 'Minimalne Pokrycie Telco' = MIN(telecom_events[coverage_pct]) / 100
+		formatString: 0.0%
+
+	measure 'Gminy Telco Ponizej 50' = CALCULATE(DISTINCTCOUNT(telecom_events[gmina_code]), telecom_events[coverage_pct] < 50)
+		formatString: #,0
+
+	measure Incydenty = COUNTROWS(incident_reports)
+		formatString: #,0
+
+	measure 'Incydenty Priorytet 4 Plus' = CALCULATE(COUNTROWS(incident_reports), incident_reports[priority] >= 4)
+		formatString: #,0
+
+	measure 'Osoby Dotkniete' = SUM(incident_reports[affected_people])
+		formatString: #,0
+
+	measure 'Zgloszenia 15 Min' = COUNTROWS(incident_reports)
+		formatString: #,0
+
+	measure 'Sygnały Dezinformacji' = CALCULATE(COUNTROWS(media_signals), media_signals[disinformation_flag] = TRUE())
+		formatString: #,0
+
+	measure 'Zasieg Dezinformacji' = CALCULATE(SUM(media_signals[reach]), media_signals[disinformation_flag] = TRUE())
+		formatString: #,0
+
+	measure 'PSP Zastepy' = SUM(resource_deployment[psp_units])
+		formatString: #,0
+
+	measure 'WOT Zolnierze' = SUM(resource_deployment[wot_soldiers])
+		formatString: #,0
+
+	measure Pompy = SUM(resource_deployment[pumps])
+		formatString: #,0
+
+	measure Agregaty = SUM(resource_deployment[generators])
+		formatString: #,0
+
+	measure Smiglowce = SUM(resource_deployment[helicopters])
+		formatString: #,0
+
+	measure 'Czas Reakcji Min' = AVERAGEX(escalation_events, DATEDIFF(escalation_events[timestamp], NOW(), MINUTE))
+		formatString: #,0
+
+	measure 'Rekomendacje RZZK' = CALCULATE(COUNTROWS(escalation_recommendations), escalation_recommendations[recommended_level] = "RZZK")
+		formatString: #,0
+
+	measure 'Gminy KIS Powiat Plus' = CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 25)
+		formatString: #,0
+
+	measure 'Gminy KIS Wojewoda Plus' = CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 45)
+		formatString: #,0
+
+	measure 'Gminy KIS RZZK' = CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 85)
+		formatString: #,0
+
+	measure 'Alarm Hydro' = CALCULATE(DISTINCTCOUNT(hydro_readings[gauge_id]), hydro_readings[level_cm] >= hydro_readings[alarm_level_cm])
+		formatString: #,0
+
+	measure 'Stan Ostrzegawczy Hydro' = CALCULATE(DISTINCTCOUNT(hydro_readings[gauge_id]), hydro_readings[level_cm] >= hydro_readings[warning_level_cm], hydro_readings[level_cm] < hydro_readings[alarm_level_cm])
+		formatString: #,0
+
+	partition kis_country = entity
+		mode: directLake
+		source
+			entityName: kis_country
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

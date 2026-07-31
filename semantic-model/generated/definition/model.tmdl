@@ -6,12 +6,29 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["DirectLakeConnection"]
+annotation PBI_QueryOrder = ["DirectLake - OL_COP24_Lakehouse"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb"]
 
+ref table dim_voivodeship
+ref table dim_powiat
 ref table dim_gmina
-ref table kis_gmina
+ref table dim_hazard
+ref table dim_institution
+ref table dim_spo
+ref table dim_river_gauge
+ref table hydro_readings
 ref table incident_reports
+ref table power_grid_events
+ref table telecom_events
+ref table evacuation_status
+ref table resource_deployment
+ref table media_signals
+ref table escalation_events
+ref table kis_gmina
+ref table kis_powiat
+ref table kis_voivodeship
+ref table kis_country
+ref table escalation_recommendations

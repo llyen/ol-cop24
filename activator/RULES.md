@@ -42,3 +42,74 @@ Przed demo wykonaj test techniczny każdej reguły na ograniczonym zakresie czas
 ## Zarządzanie hałasem alertowym
 
 Reguły powinny mieć mechanizm „cooldown”, aby nie wysyłać tego samego alertu co pięć minut. Proponowane wartości: hydro 60 minut, energia 60 minut, telco 120 minut, dezinformacja 180 minut, RZZK bez powtórzeń po zatwierdzeniu decyzji. Alert zamknięty ręcznie nie powinien wrócić, jeśli nie pojawi się nowy wzrost wartości lub nowy obszar.
+
+## Wdrożenie
+
+Stan na 2026-07-31: element Fabric Activator/Reflex **OL_COP24_Activator** został utworzony w workspace **OL-ZK-Demo-COP24** (`dde1f39b-fe6c-4adb-8efe-db708cdb1bdf`). REST API Fabric pozwolił utworzyć element i zapisać w `ReflexEntities.json` źródło `eventstreamSource-v1` wskazujące na **OL_COP24_Eventstream** (`c964c29e-bdd7-46b6-b59f-89b3a49d3338`). Próby wgrania pełnych reguł `timeSeriesView-v1` przez `updateDefinition` zakończyły się błędami walidacji definicji, więc działający mechanizm demo jest wdrożony po stronie Eventhouse jako funkcje KQL.
+
+### Skrypt automatyczny
+
+Uruchomienie:
+
+```powershell
+cd C:\repos\OchronaLudnosci\ol-cop24
+.\deploy\create_activator.ps1 -WorkspaceName OL-ZK-Demo-COP24
+```
+
+Skrypt:
+
+1. pobiera tokeny przez Azure CLI dla Fabric REST i Kusto,
+2. wyszukuje albo tworzy Activator `OL_COP24_Activator`,
+3. aktualizuje definicję Activatora o źródło Eventstream,
+4. tworzy/aktualizuje funkcje KQL w folderze `Activator/COP24`,
+5. wykonuje zapytania weryfikacyjne i wypisuje liczbę trafień oraz próbkę rekordu.
+
+### Funkcje KQL działające jako reguły
+
+| Reguła | Funkcja KQL | Warunek wdrożony | Trafienia | Zakres/obszary | Pierwsze trafienie | Przykład |
+|---|---|---:|---:|---|---|---|
+| Stan alarmowy wodowskazu | `alert_hydro_alarm()` | `level_cm >= alarm_level_cm` | 3726 | 10 gmin, 10 wodowskazów | 2026-09-14 14:55 UTC | `WG-001`, 345 cm przy progu 340 cm |
+| Gwałtowny przyrost poziomu | `alert_hydro_rapid_rise()` | poziom `>=` stanu ostrzegawczego i przyrost `>= 12 cm/h` (średnia godzinowa) | 77 | 10 gmin, 10 wodowskazów, rzeka Nysa Kłodzka | 2026-09-14 13:00 UTC | `WG-001`, 330,2 cm, wzrost +18,5 cm/h |
+| Skok zgłoszeń 112/PSP | `alert_incident_spike()` | próg demo `>2` zgłoszenia/gmina/15 min; próg produkcyjny z zasad: `>25` | 4 | 4 gminy | 2026-09-16 00:15 UTC | gmina `0202003`, 3 zgłoszenia/15 min |
+| Odbiorcy bez prądu | `alert_power_outage()` | suma `customers_offline > 5000`/gmina/1h | 94 | 41 gmin | 2026-09-12 19:00 UTC | gmina `1601006`, 6452 odbiorców |
+| Brak/spadek łączności | `alert_telco_coverage_drop()` | `coverage_pct < 40` albo `base_stations_down >= 5` | 221 | 102 gminy | 2026-09-12 18:44 UTC | gmina `1602008`, coverage 39,2% |
+| Dezinformacja Z20 | `alert_disinformation_z20()` | `disinformation_flag == true and reach > 50000` | 284 | 6 tematów, 249 okien deduplikacji | 2026-09-12 13:43 UTC | `braki paliwa/telegram`, zasięg 177229 |
+| Eskalacja RZZK | `alert_escalation_rzzk()` | `to_level == RZZK` lub poziom ministerialny | 2 | obszar kraj | 2026-09-15 16:00 UTC | minister wiodący → RZZK |
+
+Uwaga dla zgłoszeń 112/PSP: próg produkcyjny `>25` w jednej gminie w 15 minut nie ma trafień w danych syntetycznych; najwyższy peak gminny wynosi 3. Dlatego w funkcji demo użyto `>2`, aby reguła faktycznie zadziałała na danych podczas pokazu.
+
+### Ręczne dokończenie powiadomień w UI Activator
+
+Ścieżka workspace: [OL-ZK-Demo-COP24](https://app.fabric.microsoft.com/groups/8ea0556f-7368-4b36-ad84-adf995e19a80).
+
+Wariant A — od Eventstream:
+
+1. Otwórz workspace → **OL_COP24_Eventstream**.
+2. Wybierz źródło/destynację strumienia `hydro_readings_rt` i akcję **Set alert** / **New Activator alert**.
+3. Jako cel wybierz istniejący Activator **OL_COP24_Activator**.
+4. Utwórz obiekty i reguły:
+   - `HydroAlarm`: pole `level_cm`, warunek `Becomes greater than` odpowiedni próg alarmowy; dla szybkiego testu użyj stałego progu 340 cm albo danych z funkcji `alert_hydro_alarm()`.
+   - `HydroRapidRise`: pole/miara przyrostu, warunek `>20` cm w oknie 30 min.
+5. Akcja: Teams albo e-mail do kanału demo; tytuł w formacie z sekcji „Format powiadomienia”.
+
+Wariant B — od Real-Time Dashboard:
+
+1. Otwórz workspace → **OL_COP24_Dashboard**.
+2. Dodaj kafelek/tabelę dla każdej funkcji, np. `alert_power_outage() | top 100 by alert_ts desc`.
+3. Na kafelku wybierz **Set alert**.
+4. Ustaw warunek „liczba wierszy > 0” lub „`current_value` przekracza `threshold_value`”, cooldown zgodnie z zasadami powyżej.
+5. Połącz alert z **OL_COP24_Activator** i wybierz kanał powiadomienia.
+
+Rekomendowane kafelki do alertów UI:
+
+```kusto
+alert_hydro_alarm() | top 100 by alert_ts desc
+alert_hydro_rapid_rise() | top 100 by alert_ts desc
+alert_incident_spike() | top 100 by alert_ts desc
+alert_power_outage() | top 100 by alert_ts desc
+alert_telco_coverage_drop() | top 100 by alert_ts desc
+alert_disinformation_z20() | top 100 by alert_ts desc
+alert_escalation_rzzk() | top 100 by alert_ts desc
+```
+
+Każde powiadomienie powinno używać pól `alert_rule`, `alert_severity`, `alert_ts`, `gmina_code`, `current_value`, `threshold_value`, `spo` i `message`. Deduplikację prowadź po `alert_key`.

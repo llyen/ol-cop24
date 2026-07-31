@@ -1,0 +1,26 @@
+table dim_spo
+	sourceLineageTag: [dbo].[dim_spo]
+
+	column spo_code
+		dataType: string
+		sourceLineageTag: spo_code
+		summarizeBy: none
+		sourceColumn: spo_code
+
+	column spo_name
+		dataType: string
+		sourceLineageTag: spo_name
+		summarizeBy: none
+		sourceColumn: spo_name
+
+	column ingested_at
+		dataType: dateTime
+		sourceLineageTag: ingested_at
+		summarizeBy: none
+		sourceColumn: ingested_at
+
+	partition dim_spo = entity
+		mode: directLake
+		source
+			entityName: dim_spo
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

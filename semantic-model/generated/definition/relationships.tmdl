@@ -1,4 +1,40 @@
+relationship rel_dim_powiat_dim_voivodeship
+	fromColumn: dim_powiat.voivodeship_code
+	toColumn: dim_voivodeship.voivodeship_code
+
+relationship rel_dim_gmina_dim_powiat
+	fromColumn: dim_gmina.powiat_code
+	toColumn: dim_powiat.powiat_code
+
+relationship rel_dim_river_gauge_dim_gmina
+	fromColumn: dim_river_gauge.gmina_code
+	toColumn: dim_gmina.gmina_code
+
 relationship rel_kis_gmina_dim_gmina
 	fromColumn: kis_gmina.gmina_code
 	toColumn: dim_gmina.gmina_code
+
+relationship rel_kis_powiat_dim_powiat
+	fromColumn: kis_powiat.powiat_code
+	toColumn: dim_powiat.powiat_code
+
+relationship rel_kis_voivodeship_dim_voivodeship
+	fromColumn: kis_voivodeship.voivodeship_code
+	toColumn: dim_voivodeship.voivodeship_code
+
+relationship rel_escalation_recommendations_dim_gmina
+	fromColumn: escalation_recommendations.gmina_code
+	toColumn: dim_gmina.gmina_code
+
+relationship rel_incident_reports_dim_hazard
+	fromColumn: incident_reports.hazard_code
+	toColumn: dim_hazard.hazard_code
+
+relationship rel_media_signals_dim_hazard
+	fromColumn: media_signals.hazard_code
+	toColumn: dim_hazard.hazard_code
+
+relationship rel_evacuation_status_dim_spo
+	fromColumn: evacuation_status.spo_code
+	toColumn: dim_spo.spo_code
 

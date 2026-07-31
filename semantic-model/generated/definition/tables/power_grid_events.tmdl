@@ -1,0 +1,59 @@
+table power_grid_events
+	sourceLineageTag: [dbo].[power_grid_events]
+
+	column timestamp
+		dataType: dateTime
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	column stream
+		dataType: string
+		sourceLineageTag: stream
+		summarizeBy: none
+		sourceColumn: stream
+
+	column event_id
+		dataType: string
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+	column station
+		dataType: string
+		sourceLineageTag: station
+		summarizeBy: none
+		sourceColumn: station
+
+	column gmina_code
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: gmina_code
+		summarizeBy: sum
+		sourceColumn: gmina_code
+
+	column customers_offline
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: customers_offline
+		summarizeBy: sum
+		sourceColumn: customers_offline
+
+	column eta_restore_min
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: eta_restore_min
+		summarizeBy: sum
+		sourceColumn: eta_restore_min
+
+	column cause
+		dataType: string
+		sourceLineageTag: cause
+		summarizeBy: none
+		sourceColumn: cause
+
+	partition power_grid_events = entity
+		mode: directLake
+		source
+			entityName: power_grid_events
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

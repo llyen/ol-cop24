@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "SemanticModel",
-    "displayName": "OL_COP24_SemanticModel"
+    "type": "Report",
+    "displayName": "OL_COP24_Raport"
   },
   "config": {
-    "logicalId": "0c35a122-5076-4968-9631-a3c28f995c43",
+    "logicalId": "293ea488-f017-4838-9ed9-3d6eb5217df1",
     "version": "2.0"
   }
 }

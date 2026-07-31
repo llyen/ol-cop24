@@ -1,0 +1,72 @@
+table hydro_readings
+	sourceLineageTag: [dbo].[hydro_readings]
+
+	column timestamp
+		dataType: dateTime
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	column stream
+		dataType: string
+		sourceLineageTag: stream
+		summarizeBy: none
+		sourceColumn: stream
+
+	column gauge_id
+		dataType: string
+		sourceLineageTag: gauge_id
+		summarizeBy: none
+		sourceColumn: gauge_id
+
+	column gmina_code
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: gmina_code
+		summarizeBy: sum
+		sourceColumn: gmina_code
+
+	column river
+		dataType: string
+		sourceLineageTag: river
+		summarizeBy: none
+		sourceColumn: river
+
+	column level_cm
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: level_cm
+		summarizeBy: sum
+		sourceColumn: level_cm
+
+	column flow_m3s
+		dataType: double
+		sourceLineageTag: flow_m3s
+		summarizeBy: sum
+		sourceColumn: flow_m3s
+
+	column trend
+		dataType: string
+		sourceLineageTag: trend
+		summarizeBy: none
+		sourceColumn: trend
+
+	column warning_level_cm
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: warning_level_cm
+		summarizeBy: sum
+		sourceColumn: warning_level_cm
+
+	column alarm_level_cm
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: alarm_level_cm
+		summarizeBy: sum
+		sourceColumn: alarm_level_cm
+
+	partition hydro_readings = entity
+		mode: directLake
+		source
+			entityName: hydro_readings
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

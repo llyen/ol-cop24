@@ -1,5 +1,5 @@
-table kis_gmina
-	sourceLineageTag: [dbo].[kis_gmina]
+table escalation_recommendations
+	sourceLineageTag: [dbo].[escalation_recommendations]
 
 	column gmina_code
 		dataType: string
@@ -63,8 +63,26 @@ table kis_gmina
 		summarizeBy: sum
 		sourceColumn: kis
 
-	partition kis_gmina = entity
+	column recommended_level
+		dataType: string
+		sourceLineageTag: recommended_level
+		summarizeBy: none
+		sourceColumn: recommended_level
+
+	column recommended_spo
+		dataType: string
+		sourceLineageTag: recommended_spo
+		summarizeBy: none
+		sourceColumn: recommended_spo
+
+	column explanation
+		dataType: string
+		sourceLineageTag: explanation
+		summarizeBy: none
+		sourceColumn: explanation
+
+	partition escalation_recommendations = entity
 		mode: directLake
 		source
-			entityName: kis_gmina
+			entityName: escalation_recommendations
 			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

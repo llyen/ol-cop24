@@ -1,0 +1,58 @@
+table telecom_events
+	sourceLineageTag: [dbo].[telecom_events]
+
+	column timestamp
+		dataType: dateTime
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	column stream
+		dataType: string
+		sourceLineageTag: stream
+		summarizeBy: none
+		sourceColumn: stream
+
+	column event_id
+		dataType: string
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+	column operator
+		dataType: string
+		sourceLineageTag: operator
+		summarizeBy: none
+		sourceColumn: operator
+
+	column gmina_code
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: gmina_code
+		summarizeBy: sum
+		sourceColumn: gmina_code
+
+	column base_stations_down
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: base_stations_down
+		summarizeBy: sum
+		sourceColumn: base_stations_down
+
+	column coverage_pct
+		dataType: double
+		sourceLineageTag: coverage_pct
+		summarizeBy: sum
+		sourceColumn: coverage_pct
+
+	column cause
+		dataType: string
+		sourceLineageTag: cause
+		summarizeBy: none
+		sourceColumn: cause
+
+	partition telecom_events = entity
+		mode: directLake
+		source
+			entityName: telecom_events
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

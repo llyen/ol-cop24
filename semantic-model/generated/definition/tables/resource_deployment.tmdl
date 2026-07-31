@@ -1,0 +1,68 @@
+table resource_deployment
+	sourceLineageTag: [dbo].[resource_deployment]
+
+	column timestamp
+		dataType: dateTime
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	column stream
+		dataType: string
+		sourceLineageTag: stream
+		summarizeBy: none
+		sourceColumn: stream
+
+	column event_id
+		dataType: string
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+	column voivodeship_code
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: voivodeship_code
+		summarizeBy: sum
+		sourceColumn: voivodeship_code
+
+	column psp_units
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: psp_units
+		summarizeBy: sum
+		sourceColumn: psp_units
+
+	column wot_soldiers
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: wot_soldiers
+		summarizeBy: sum
+		sourceColumn: wot_soldiers
+
+	column pumps
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: pumps
+		summarizeBy: sum
+		sourceColumn: pumps
+
+	column generators
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: generators
+		summarizeBy: sum
+		sourceColumn: generators
+
+	column helicopters
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: helicopters
+		summarizeBy: sum
+		sourceColumn: helicopters
+
+	partition resource_deployment = entity
+		mode: directLake
+		source
+			entityName: resource_deployment
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

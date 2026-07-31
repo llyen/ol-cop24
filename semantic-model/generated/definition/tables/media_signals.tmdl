@@ -1,0 +1,63 @@
+table media_signals
+	sourceLineageTag: [dbo].[media_signals]
+
+	column timestamp
+		dataType: dateTime
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	column stream
+		dataType: string
+		sourceLineageTag: stream
+		summarizeBy: none
+		sourceColumn: stream
+
+	column signal_id
+		dataType: string
+		sourceLineageTag: signal_id
+		summarizeBy: none
+		sourceColumn: signal_id
+
+	column topic
+		dataType: string
+		sourceLineageTag: topic
+		summarizeBy: none
+		sourceColumn: topic
+
+	column sentiment
+		dataType: string
+		sourceLineageTag: sentiment
+		summarizeBy: none
+		sourceColumn: sentiment
+
+	column reach
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: reach
+		summarizeBy: sum
+		sourceColumn: reach
+
+	column disinformation_flag
+		dataType: boolean
+		sourceLineageTag: disinformation_flag
+		summarizeBy: none
+		sourceColumn: disinformation_flag
+
+	column hazard_code
+		dataType: string
+		sourceLineageTag: hazard_code
+		summarizeBy: none
+		sourceColumn: hazard_code
+
+	column channel
+		dataType: string
+		sourceLineageTag: channel
+		summarizeBy: none
+		sourceColumn: channel
+
+	partition media_signals = entity
+		mode: directLake
+		source
+			entityName: media_signals
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

@@ -1,17 +1,5 @@
-table dim_gmina
-	sourceLineageTag: [dbo].[dim_gmina]
-
-	column gmina_code
-		dataType: string
-		sourceLineageTag: gmina_code
-		summarizeBy: none
-		sourceColumn: gmina_code
-
-	column gmina_name
-		dataType: string
-		sourceLineageTag: gmina_name
-		summarizeBy: none
-		sourceColumn: gmina_name
+table dim_powiat
+	sourceLineageTag: [dbo].[dim_powiat]
 
 	column powiat_code
 		dataType: string
@@ -19,17 +7,29 @@ table dim_gmina
 		summarizeBy: none
 		sourceColumn: powiat_code
 
-	column gmina_type
+	column powiat_name
 		dataType: string
-		sourceLineageTag: gmina_type
+		sourceLineageTag: powiat_name
 		summarizeBy: none
-		sourceColumn: gmina_type
+		sourceColumn: powiat_name
+
+	column voivodeship_code
+		dataType: string
+		sourceLineageTag: voivodeship_code
+		summarizeBy: none
+		sourceColumn: voivodeship_code
 
 	column population
 		dataType: string
 		sourceLineageTag: population
 		summarizeBy: none
 		sourceColumn: population
+
+	column area_km2
+		dataType: string
+		sourceLineageTag: area_km2
+		summarizeBy: none
+		sourceColumn: area_km2
 
 	column lat
 		dataType: string
@@ -49,8 +49,8 @@ table dim_gmina
 		summarizeBy: none
 		sourceColumn: ingested_at
 
-	partition dim_gmina = entity
+	partition dim_powiat = entity
 		mode: directLake
 		source
-			entityName: dim_gmina
+			entityName: dim_powiat
 			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

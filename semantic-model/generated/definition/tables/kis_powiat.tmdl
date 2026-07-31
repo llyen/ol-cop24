@@ -1,0 +1,26 @@
+table kis_powiat
+	sourceLineageTag: [dbo].[kis_powiat]
+
+	column powiat_code
+		dataType: string
+		sourceLineageTag: powiat_code
+		summarizeBy: none
+		sourceColumn: powiat_code
+
+	column kis
+		dataType: double
+		sourceLineageTag: kis
+		summarizeBy: sum
+		sourceColumn: kis
+
+	column max_kis
+		dataType: double
+		sourceLineageTag: max_kis
+		summarizeBy: sum
+		sourceColumn: max_kis
+
+	partition kis_powiat = entity
+		mode: directLake
+		source
+			entityName: kis_powiat
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

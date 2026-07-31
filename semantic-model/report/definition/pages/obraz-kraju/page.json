@@ -1,0 +1,8 @@
+{
+  "displayOption": "FitToPage",
+  "displayName": "Obraz kraju",
+  "height": 720,
+  "name": "obraz-kraju",
+  "width": 1280,
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json"
+}

@@ -1,0 +1,62 @@
+table escalation_events
+	sourceLineageTag: [dbo].[escalation_events]
+
+	column timestamp
+		dataType: dateTime
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	column stream
+		dataType: string
+		sourceLineageTag: stream
+		summarizeBy: none
+		sourceColumn: stream
+
+	column event_id
+		dataType: string
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+	column from_level
+		dataType: string
+		sourceLineageTag: from_level
+		summarizeBy: none
+		sourceColumn: from_level
+
+	column to_level
+		dataType: string
+		sourceLineageTag: to_level
+		summarizeBy: none
+		sourceColumn: to_level
+
+	column area
+		dataType: string
+		sourceLineageTag: area
+		summarizeBy: none
+		sourceColumn: area
+
+	column hazard_code
+		dataType: string
+		sourceLineageTag: hazard_code
+		summarizeBy: none
+		sourceColumn: hazard_code
+
+	column recommended_spo
+		dataType: string
+		sourceLineageTag: recommended_spo
+		summarizeBy: none
+		sourceColumn: recommended_spo
+
+	column reason
+		dataType: string
+		sourceLineageTag: reason
+		summarizeBy: none
+		sourceColumn: reason
+
+	partition escalation_events = entity
+		mode: directLake
+		source
+			entityName: escalation_events
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

@@ -1,0 +1,59 @@
+table evacuation_status
+	sourceLineageTag: [dbo].[evacuation_status]
+
+	column timestamp
+		dataType: dateTime
+		sourceLineageTag: timestamp
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	column stream
+		dataType: string
+		sourceLineageTag: stream
+		summarizeBy: none
+		sourceColumn: stream
+
+	column event_id
+		dataType: string
+		sourceLineageTag: event_id
+		summarizeBy: none
+		sourceColumn: event_id
+
+	column gmina_code
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: gmina_code
+		summarizeBy: sum
+		sourceColumn: gmina_code
+
+	column status
+		dataType: string
+		sourceLineageTag: status
+		summarizeBy: none
+		sourceColumn: status
+
+	column people_count
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: people_count
+		summarizeBy: sum
+		sourceColumn: people_count
+
+	column reception_capacity
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: reception_capacity
+		summarizeBy: sum
+		sourceColumn: reception_capacity
+
+	column spo_code
+		dataType: string
+		sourceLineageTag: spo_code
+		summarizeBy: none
+		sourceColumn: spo_code
+
+	partition evacuation_status = entity
+		mode: directLake
+		source
+			entityName: evacuation_status
+			expressionSource: 'DirectLake - OL_COP24_Lakehouse'

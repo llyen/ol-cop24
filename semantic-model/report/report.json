@@ -1,0 +1,31 @@
+{
+  "resourcePackages": [],
+  "sections": [
+    {
+      "displayOption": "FitToPage",
+      "displayName": "Obraz kraju",
+      "name": "ReportSectionObrazKraju",
+      "visualContainers": [],
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "displayOption": "FitToPage",
+      "displayName": "Województwo i gminy",
+      "name": "ReportSectionWojGminy",
+      "visualContainers": [],
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "displayOption": "FitToPage",
+      "displayName": "Eskalacja i SPO",
+      "name": "ReportSectionEskalacjaSpo",
+      "visualContainers": [],
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "layoutOptimization": 0,
+  "config": "{}"
+}
