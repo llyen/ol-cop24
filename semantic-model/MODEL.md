@@ -43,21 +43,24 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .\deploy\create_semantic_model.ps1
   -WorkspaceName 'OL-ZK-Demo-COP24'
 ```
 
-Skrypt pobiera tokeny przez `az account get-access-token`, tworzy lub aktualizuje model `OL_COP24_SemanticModel` oraz raport `OL_COP24_Raport`. Definicja modelu jest generowana w TMDL do `semantic-model\generated\` i wdrażana przez Fabric REST API `semanticModels` / `updateDefinition`. W modelu użyto partycji `mode: directLake` oraz źródła `DirectLakeSqlEndpoint` przez SQL endpoint Lakehouse; wcześniejsze próby `AzureStorage.DataLake` dla Direct Lake on OneLake zwracały brak dostępu lub brak tabel przy weryfikacji DAX.
+Skrypt pobiera tokeny przez `az account get-access-token`, tworzy lub aktualizuje model `OL_COP24_SemanticModel` oraz wywołuje `deploy\create_report.ps1` dla raportu `OL_COP24_Raport`. Definicja modelu jest generowana w TMDL do `semantic-model\generated\` i wdrażana przez Fabric REST API `semanticModels` / `updateDefinition`. W modelu użyto partycji `mode: directLake` oraz źródła `DirectLakeSqlEndpoint` przez SQL endpoint Lakehouse.
 
-Raport jest wdrażany idempotentnie przez Fabric REST API `items/{reportId}/updateDefinition` w folderowym formacie PBIR. Definicja lokalna jest zapisywana w `semantic-model\report\` jako `definition.pbir`, `definition\report.json`, `definition\version.json`, `definition\pages\pages.json`, pliki `page.json` oraz osobne pliki `visual.json` dla każdej wizualizacji. Połączenie z modelem jest zapisane w `definition.pbir` jako `datasetReference.byConnection` z `semanticmodelid`.
+Raport jest wdrażany idempotentnie przez Fabric REST API `items/{reportId}/updateDefinition` w folderowym formacie PBIR. Pełna definicja lokalna znajduje się w `semantic-model\report\`: pliki PBIR, pięć stron, osobne `visual.json`, zarejestrowany motyw `COP24-CommandCenter-c0242026.json` oraz manifest i wyniki walidacji DAX.
 
-Raport `OL_COP24_Raport` ma cztery strony:
+Raport `OL_COP24_Raport` ma pięć stron:
 
-- `Obraz kraju`: karty KPI alarmu hydro, osób objętych zgłoszeniami, ewakuacji i odbiorców bez prądu; KIS wg województw; incydenty w czasie; mapa gmin wg KIS; top gminy wg KIS.
-- `Województwo i gminy`: slicer województwa, tabela gmin z KIS i skutkami, top 15 gmin wg KIS, poziomy wody w czasie oraz karta alarmu hydro.
-- `Infrastruktura krytyczna`: odbiorcy bez prądu w czasie, gminy z ograniczoną łącznością, awarie energii wg gmin oraz tabela korelacji energii i łączności.
-- `Eskalacja i SPO`: tabela rekomendacji eskalacji, uruchomione SPO, zaangażowane siły i środki, karty rekomendacji RZZK i maksymalnego KIS lokalnego.
+- `Obraz kraju` — sytuacja krajowa, mapa ryzyka gmin, trend incydentów i drabina eskalacji.
+- `Hydrologia i fala` — mapa wodowskazów, małe multiplikatory rzek, wykres kombi przepływ–poziom i macierz progów.
+- `Infrastruktura krytyczna` — korelacja hydro→energia→telco, trendy awarii i macierz kaskady.
+- `Siły, środki i ewakuacja` — ewakuacja, skumulowany bilans zasobów, mobilizacja PSP/WOT i macierz województw.
+- `Eskalacja, SPO i dezinformacja` — rekomendacje RZZK, procedury SPO, kanały i zasięg Z20 oraz uzasadnienia decyzji.
 
-Po wdrożeniu skrypt wykonuje `getDefinition` i zapytanie DAX przez Power BI REST API:
+Po wdrożeniu `create_report.ps1`:
 
-```dax
-EVALUATE ROW("n", COUNTROWS('dim_gmina'))
-```
+1. wykonuje osobne zapytanie DAX przez `executeQueries` dla każdej wizualizacji,
+2. porównuje 24 kluczowe miary z wartościami kontrolnymi scenariusza,
+3. pobiera `getDefinition?format=PBIR`,
+4. sprawdza liczbę stron i plików `visual.json`,
+5. zapisuje wyniki w `semantic-model\report\validation\results.json`.
 
-Oczekiwany wynik kontrolny dla danych demo to `2477`. Dodatkowo po zmianach raportu należy pobrać definicję przez `getDefinition?format=PBIR` i sprawdzić obecność części `definition/pages/*/visuals/*/visual.json`, a dla wizualizacji danych wykonać równoważne zapytania DAX przez `executeQueries`.
+Szczegółowy katalog stron i wizualizacji znajduje się w `semantic-model\RAPORT.md`.

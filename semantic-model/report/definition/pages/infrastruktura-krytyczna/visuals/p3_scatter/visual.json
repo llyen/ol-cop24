@@ -1,0 +1,334 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "p3_scatter",
+  "position": {
+    "y": 178,
+    "tabOrder": 100,
+    "width": 720,
+    "x": 20,
+    "z": 100,
+    "height": 350
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Property": "hydro_score",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "escalation_recommendations"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(escalation_recommendations.hydro_score)",
+              "nativeQueryRef": "Average of hydro_score",
+              "active": true,
+              "displayName": "Presja hydro"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Property": "power_score",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "escalation_recommendations"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(escalation_recommendations.power_score)",
+              "nativeQueryRef": "Average of power_score",
+              "active": true,
+              "displayName": "Skutek energetyczny"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Property": "kis",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "escalation_recommendations"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(escalation_recommendations.kis)",
+              "nativeQueryRef": "Average of kis",
+              "active": true,
+              "displayName": "KIS"
+            }
+          ]
+        },
+        "Details": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "gmina_code",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_recommendations.gmina_code",
+              "nativeQueryRef": "gmina_code",
+              "active": true,
+              "displayName": "Gmina"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Property": "telecom_score",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "escalation_recommendations"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(escalation_recommendations.telecom_score)",
+              "nativeQueryRef": "Average of telecom_score",
+              "active": true,
+              "displayName": "Skutek telco"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#101B2D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#EF4444'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "11D"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#101B2D'"
+                    }
+                  }
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F8FAFC'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Kaskada hydro → energia → telco (bąbel = skutek telco)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

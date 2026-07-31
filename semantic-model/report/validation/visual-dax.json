@@ -1,0 +1,373 @@
+[
+  {
+    "page": "obraz-kraju",
+    "visual": "hdr_obraz-kraju",
+    "type": "shape",
+    "purpose": "Tło nagłówka strony",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "ttl_obraz-kraju",
+    "type": "textbox",
+    "purpose": "Tytuł i zdanie decyzyjne",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "hdr_hydrologia-fala",
+    "type": "shape",
+    "purpose": "Tło nagłówka strony",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "ttl_hydrologia-fala",
+    "type": "textbox",
+    "purpose": "Tytuł i zdanie decyzyjne",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "hdr_infrastruktura-krytyczna",
+    "type": "shape",
+    "purpose": "Tło nagłówka strony",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "ttl_infrastruktura-krytyczna",
+    "type": "textbox",
+    "purpose": "Tytuł i zdanie decyzyjne",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "hdr_sily-ewakuacja",
+    "type": "shape",
+    "purpose": "Tło nagłówka strony",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "ttl_sily-ewakuacja",
+    "type": "textbox",
+    "purpose": "Tytuł i zdanie decyzyjne",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "hdr_eskalacja-spo-dezinformacja",
+    "type": "shape",
+    "purpose": "Tło nagłówka strony",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "ttl_eskalacja-spo-dezinformacja",
+    "type": "textbox",
+    "purpose": "Tytuł i zdanie decyzyjne",
+    "dax": "EVALUATE ROW(\"element\", 1)"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_kis",
+    "type": "cardVisual",
+    "purpose": "Krajowy indeks sytuacji",
+    "dax": "EVALUATE ROW(\"KIS\", [KIS])"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_kismax",
+    "type": "cardVisual",
+    "purpose": "Najgorsza sytuacja lokalna",
+    "dax": "EVALUATE ROW(\"KIS max\", [KIS Max Lokalny])"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_alarm",
+    "type": "cardVisual",
+    "purpose": "Liczba wodowskazów w alarmie",
+    "dax": "EVALUATE ROW(\"Alarm\", [Alarm Hydro])"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_incidents",
+    "type": "cardVisual",
+    "purpose": "Łączna liczba incydentów",
+    "dax": "EVALUATE ROW(\"Incydenty\", [Incydenty])"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_map",
+    "type": "azureMap",
+    "purpose": "Dominująca mapa sytuacji gmin",
+    "dax": "EVALUATE TOPN(2477,FILTER(SUMMARIZECOLUMNS(dim_gmina[gmina_name],dim_gmina[lat],dim_gmina[lon],\"KIS\",[KIS]),NOT ISBLANK([KIS])),[KIS],DESC)"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_voiv",
+    "type": "clusteredBarChart",
+    "purpose": "Ranking województw",
+    "dax": "EVALUATE SUMMARIZECOLUMNS(dim_voivodeship[voivodeship_name],\"KIS\",[KIS],\"KIS max\",[KIS Max Lokalny])"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_inc_area",
+    "type": "areaChart",
+    "purpose": "Trend incydentów",
+    "dax": "EVALUATE TOPN(1000,SUMMARIZECOLUMNS(incident_reports[timestamp],\"Incydenty\",[Incydenty]),incident_reports[timestamp],ASC)"
+  },
+  {
+    "page": "obraz-kraju",
+    "visual": "p1_levels",
+    "type": "columnChart",
+    "purpose": "Rozkład poziomów eskalacji",
+    "dax": "EVALUATE SUMMARIZECOLUMNS(escalation_recommendations[recommended_level],\"Gminy\",COUNTROWS(escalation_recommendations))"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_alarm",
+    "type": "cardVisual",
+    "purpose": "Wodowskazy powyżej alarmu",
+    "dax": "EVALUATE ROW(\"Alarm\", [Alarm Hydro])"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_warning",
+    "type": "cardVisual",
+    "purpose": "Wodowskazy w stanie ostrzegawczym",
+    "dax": "EVALUATE ROW(\"Ostrzegawcze\", [Stan Ostrzegawczy Hydro])"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_alarm_pct",
+    "type": "cardVisual",
+    "purpose": "Udział gmin objętych alarmem",
+    "dax": "EVALUATE ROW(\"Procent\", [% Gmin w Alarmie])"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_affected",
+    "type": "cardVisual",
+    "purpose": "Skutek społeczny zdarzeń",
+    "dax": "EVALUATE ROW(\"Osoby\", [Osoby Dotkniete])"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_map",
+    "type": "azureMap",
+    "purpose": "Mapa wodowskazów",
+    "dax": "EVALUATE FILTER(SUMMARIZECOLUMNS(dim_river_gauge[gauge_name],dim_river_gauge[river],dim_river_gauge[lat],dim_river_gauge[lon],\"Poziom\",AVERAGE(hydro_readings[level_cm])),NOT ISBLANK([Poziom]))"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_wave",
+    "type": "lineChart",
+    "purpose": "Propagacja fali w małych multiplikatorach",
+    "dax": "EVALUATE TOPN(1500,SUMMARIZECOLUMNS(hydro_readings[river],hydro_readings[timestamp],\"Poziom\",AVERAGE(hydro_readings[level_cm])),hydro_readings[timestamp],ASC)"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_combo",
+    "type": "lineClusteredColumnComboChart",
+    "purpose": "Wykres kombi hydro",
+    "dax": "EVALUATE TOPN(1000,SUMMARIZECOLUMNS(hydro_readings[timestamp],\"Przepływ\",AVERAGE(hydro_readings[flow_m3s]),\"Poziom\",AVERAGE(hydro_readings[level_cm])),hydro_readings[timestamp],ASC)"
+  },
+  {
+    "page": "hydrologia-fala",
+    "visual": "p2_matrix",
+    "type": "pivotTable",
+    "purpose": "Macierz progów hydrologicznych",
+    "dax": "EVALUATE SUMMARIZECOLUMNS(dim_river_gauge[gauge_name],\"Poziom max\",MAX(hydro_readings[level_cm]),\"Ostrzegawczy\",MAX(hydro_readings[warning_level_cm]),\"Alarmowy\",MAX(hydro_readings[alarm_level_cm]))"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_power",
+    "type": "cardVisual",
+    "purpose": "Łączna skala awarii energii",
+    "dax": "EVALUATE ROW(\"Bez prądu\", [Odbiorcy Bez Prądu])"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_telco_min",
+    "type": "cardVisual",
+    "purpose": "Najniższy poziom pokrycia",
+    "dax": "EVALUATE ROW(\"Pokrycie\", [Minimalne Pokrycie Telco])"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_telco_low",
+    "type": "cardVisual",
+    "purpose": "Gminy z krytycznym pokryciem",
+    "dax": "EVALUATE ROW(\"Gminy\", [Gminy Telco Ponizej 50])"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_priority",
+    "type": "cardVisual",
+    "purpose": "Najpoważniejsze incydenty",
+    "dax": "EVALUATE ROW(\"Priorytet\", [Incydenty Priorytet 4 Plus])"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_scatter",
+    "type": "scatterChart",
+    "purpose": "Korelacja skutków infrastrukturalnych",
+    "dax": "EVALUATE TOPN(2477,SUMMARIZECOLUMNS(escalation_recommendations[gmina_code],\"Hydro\",AVERAGE(escalation_recommendations[hydro_score]),\"Energia\",AVERAGE(escalation_recommendations[power_score]),\"Telco\",AVERAGE(escalation_recommendations[telecom_score]),\"KIS\",AVERAGE(escalation_recommendations[kis])),[KIS],DESC)"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_power_time",
+    "type": "areaChart",
+    "purpose": "Trend awarii energetycznych",
+    "dax": "EVALUATE TOPN(1000,SUMMARIZECOLUMNS(power_grid_events[timestamp],\"Odbiorcy\",SUM(power_grid_events[customers_offline])),power_grid_events[timestamp],ASC)"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_telco_time",
+    "type": "lineChart",
+    "purpose": "Trend pokrycia operatorów",
+    "dax": "EVALUATE TOPN(1200,SUMMARIZECOLUMNS(telecom_events[operator],telecom_events[timestamp],\"Pokrycie\",AVERAGE(telecom_events[coverage_pct])),telecom_events[timestamp],ASC)"
+  },
+  {
+    "page": "infrastruktura-krytyczna",
+    "visual": "p3_matrix",
+    "type": "pivotTable",
+    "purpose": "Macierz kaskady z paskami danych",
+    "dax": "EVALUATE TOPN(100,SUMMARIZECOLUMNS(escalation_recommendations[gmina_code],\"Hydro\",AVERAGE(escalation_recommendations[hydro_score]),\"Energia\",AVERAGE(escalation_recommendations[power_score]),\"Telco\",AVERAGE(escalation_recommendations[telecom_score]),\"KIS\",AVERAGE(escalation_recommendations[kis])),[KIS],DESC)"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_evac",
+    "type": "cardVisual",
+    "purpose": "Skala ewakuacji",
+    "dax": "EVALUATE ROW(\"Ewakuowani\", [Liczba Ewakuowanych])"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_psp",
+    "type": "cardVisual",
+    "purpose": "Zaangażowanie PSP",
+    "dax": "EVALUATE ROW(\"PSP\", [PSP Zastepy])"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_wot",
+    "type": "cardVisual",
+    "purpose": "Zaangażowanie WOT",
+    "dax": "EVALUATE ROW(\"WOT\", [WOT Zolnierze])"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_pumps",
+    "type": "cardVisual",
+    "purpose": "Dostępne pompy",
+    "dax": "EVALUATE ROW(\"Pompy\", [Pompy])"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_generators",
+    "type": "cardVisual",
+    "purpose": "Dostępne agregaty",
+    "dax": "EVALUATE ROW(\"Agregaty\", [Agregaty])"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_resources",
+    "type": "barChart",
+    "purpose": "Skumulowany obraz zasobów",
+    "dax": "EVALUATE SUMMARIZECOLUMNS(resource_deployment[voivodeship_code],\"PSP\",SUM(resource_deployment[psp_units]),\"WOT\",SUM(resource_deployment[wot_soldiers]),\"Pompy\",SUM(resource_deployment[pumps]),\"Agregaty\",SUM(resource_deployment[generators]))"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_evac_area",
+    "type": "stackedAreaChart",
+    "purpose": "Narastanie ewakuacji",
+    "dax": "EVALUATE TOPN(1000,SUMMARIZECOLUMNS(evacuation_status[status],evacuation_status[timestamp],\"Osoby\",SUM(evacuation_status[people_count])),evacuation_status[timestamp],ASC)"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_combo",
+    "type": "lineClusteredColumnComboChart",
+    "purpose": "Tempo mobilizacji zasobów",
+    "dax": "EVALUATE TOPN(1000,SUMMARIZECOLUMNS(resource_deployment[timestamp],\"PSP\",SUM(resource_deployment[psp_units]),\"WOT\",SUM(resource_deployment[wot_soldiers])),resource_deployment[timestamp],ASC)"
+  },
+  {
+    "page": "sily-ewakuacja",
+    "visual": "p4_matrix",
+    "type": "pivotTable",
+    "purpose": "Macierz bilansu zasobów",
+    "dax": "EVALUATE SUMMARIZECOLUMNS(resource_deployment[voivodeship_code],\"PSP\",SUM(resource_deployment[psp_units]),\"WOT\",SUM(resource_deployment[wot_soldiers]),\"Pompy\",SUM(resource_deployment[pumps]),\"Agregaty\",SUM(resource_deployment[generators]),\"Śmigłowce\",SUM(resource_deployment[helicopters]))"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_rzzk",
+    "type": "cardVisual",
+    "purpose": "Rekomendacje najwyższego poziomu",
+    "dax": "EVALUATE ROW(\"RZZK\", [Rekomendacje RZZK])"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_kis_rzzk",
+    "type": "cardVisual",
+    "purpose": "Gminy wymagające RZZK",
+    "dax": "EVALUATE ROW(\"Gminy\", [Gminy KIS RZZK])"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_disinfo",
+    "type": "cardVisual",
+    "purpose": "Liczba sygnałów dezinformacyjnych",
+    "dax": "EVALUATE ROW(\"Sygnały\", [Sygnały Dezinformacji])"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_reach",
+    "type": "cardVisual",
+    "purpose": "Łączny zasięg dezinformacji",
+    "dax": "EVALUATE ROW(\"Zasięg\", [Zasieg Dezinformacji])"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_response",
+    "type": "cardVisual",
+    "purpose": "Czas od pierwszego zgłoszenia do eskalacji",
+    "dax": "EVALUATE ROW(\"Minuty\", [Czas Reakcji Min])"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_reach_area",
+    "type": "areaChart",
+    "purpose": "Trend zasięgu Z20",
+    "dax": "EVALUATE TOPN(1000,SUMMARIZECOLUMNS(media_signals[timestamp],\"Zasięg\",[Zasieg Dezinformacji]),media_signals[timestamp],ASC)"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_donut",
+    "type": "donutChart",
+    "purpose": "Jedyny wykres pierścieniowy — kanały Z20",
+    "dax": "EVALUATE FILTER(SUMMARIZECOLUMNS(media_signals[channel],\"Sygnały\",[Sygnały Dezinformacji]),[Sygnały]>0)"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_escalations",
+    "type": "columnChart",
+    "purpose": "Rozkład zdarzeń eskalacyjnych",
+    "dax": "EVALUATE SUMMARIZECOLUMNS(escalation_events[to_level],\"Eskalacje\",COUNTROWS(escalation_events))"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_spo",
+    "type": "clusteredBarChart",
+    "purpose": "Ranking rekomendowanych SPO",
+    "dax": "EVALUATE SUMMARIZECOLUMNS(escalation_recommendations[recommended_spo],\"Rekomendacje\",COUNTROWS(escalation_recommendations))"
+  },
+  {
+    "page": "eskalacja-spo-dezinformacja",
+    "visual": "p5_matrix",
+    "type": "pivotTable",
+    "purpose": "Macierz decyzji i uzasadnień",
+    "dax": "EVALUATE TOPN(100,SUMMARIZECOLUMNS(escalation_recommendations[recommended_level],escalation_recommendations[gmina_code],escalation_recommendations[recommended_spo],escalation_recommendations[explanation],\"KIS\",AVERAGE(escalation_recommendations[kis])),[KIS],DESC)"
+  }
+]
