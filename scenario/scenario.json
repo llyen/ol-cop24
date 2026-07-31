@@ -1,0 +1,16 @@
+{
+  "cluster": "https://trd-tmsdqpz0s6cg6aewj9.z3.kusto.fabric.microsoft.com",
+  "database": "OL_COP24_Eventhouse",
+  "workspaceId": "8ea0556f-7368-4b36-ad84-adf995e19a80",
+  "streams": [
+    "hydro_readings",
+    "weather_observations",
+    "incident_reports",
+    "power_grid_events",
+    "telecom_events",
+    "evacuation_status",
+    "resource_deployment",
+    "media_signals",
+    "escalation_events"
+  ]
+}
