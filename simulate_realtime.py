@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse, json, os, sys, time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -22,7 +22,11 @@ def load_env():
 def parse_ts(value):
     if not value:
         return None
-    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    ts = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    # Znaczniki bez strefy traktujemy jako UTC, aby porownania byly jednorodne.
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=timezone.utc)
+    return ts
 
 def iter_events(stream, start=None, end=None):
     path = DATASETS / f"{stream}.jsonl"
