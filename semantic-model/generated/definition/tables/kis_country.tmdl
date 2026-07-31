@@ -19,13 +19,13 @@ table kis_country
 	measure 'KIS Max Lokalny' = MAX(kis_gmina[kis])
 		formatString: 0.0
 
-	measure 'Liczba Ewakuowanych' = SUM(evacuation_status[people_count])
+	measure 'Liczba Ewakuowanych' = SUMX(VALUES(evacuation_status[gmina_code]), CALCULATE(MAX(evacuation_status[people_count])))
 		formatString: #,0
 
 	measure '% Gmin w Alarmie' = DIVIDE(CALCULATE(DISTINCTCOUNT(hydro_readings[gmina_code]), hydro_readings[level_cm] >= hydro_readings[alarm_level_cm]), DISTINCTCOUNT(dim_gmina[gmina_code]))
 		formatString: 0.0%
 
-	measure 'Odbiorcy Bez Prądu' = SUM(power_grid_events[customers_offline])
+	measure 'Odbiorcy Bez Prądu' = MAXX(GROUPBY(ADDCOLUMNS(power_grid_events, "@godz", INT(power_grid_events[timestamp] * 24)), [@godz], "@odbiorcy", SUMX(CURRENTGROUP(), power_grid_events[customers_offline])), [@odbiorcy])
 		formatString: #,0
 
 	measure 'Minimalne Pokrycie Telco' = MIN(telecom_events[coverage_pct]) / 100
@@ -52,19 +52,19 @@ table kis_country
 	measure 'Zasieg Dezinformacji' = CALCULATE(SUM(media_signals[reach]), media_signals[disinformation_flag] = TRUE())
 		formatString: #,0
 
-	measure 'PSP Zastepy' = SUM(resource_deployment[psp_units])
+	measure 'PSP Zastepy' = MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[psp_units])))
 		formatString: #,0
 
-	measure 'WOT Zolnierze' = SUM(resource_deployment[wot_soldiers])
+	measure 'WOT Zolnierze' = MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[wot_soldiers])))
 		formatString: #,0
 
-	measure Pompy = SUM(resource_deployment[pumps])
+	measure Pompy = MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[pumps])))
 		formatString: #,0
 
-	measure Agregaty = SUM(resource_deployment[generators])
+	measure Agregaty = MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[generators])))
 		formatString: #,0
 
-	measure Smiglowce = SUM(resource_deployment[helicopters])
+	measure Smiglowce = MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[helicopters])))
 		formatString: #,0
 
 	measure 'Czas Reakcji Min' = VAR PierwszeZgloszenie = MIN(incident_reports[timestamp]) VAR PierwszaEskalacja = MIN(escalation_events[timestamp]) RETURN IF(NOT ISBLANK(PierwszeZgloszenie) && NOT ISBLANK(PierwszaEskalacja) && PierwszaEskalacja >= PierwszeZgloszenie, DATEDIFF(PierwszeZgloszenie, PierwszaEskalacja, MINUTE))

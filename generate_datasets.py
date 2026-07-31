@@ -93,18 +93,23 @@ def impacted(g,powby):
     return p["voivodeship_code"] in {"02","16"} and (p["powiat_name"] in {"kłodzki","nyski","opolski","Wrocław","Opole","wrocławski"} or g["gmina_name"] in {"Kłodzko","Bystrzyca Kłodzka","Lądek-Zdrój","Stronie Śląskie","Nysa","Opole","Wrocław"})
 
 def hydro(gauges):
+    # IMGW publikuje stany godzinowe; telemetria co 15 min jest zarezerwowana dla
+    # posterunkow na trasie fali. Wczesniej wszystkie 120 wodowskazow raportowalo
+    # co 5 min, co dawalo 484 tys. odczytow i plik 100 MB.
     prev={}
-    for i in range(int((END-START).total_seconds()//300)+1):
-        ts=START+timedelta(minutes=5*i)
+    for i in range(int((END-START).total_seconds()//900)+1):
+        ts=START+timedelta(minutes=15*i)
         for g in gauges:
+            on_route=g["wave_delay_h"]!=""
+            if not on_route and i%4!=0: continue
             alarm=int(g["alarm_level_cm"]); warn=int(g["warning_level_cm"]); base=warn-random.randint(45,90)
-            if g["wave_delay_h"]!="":
+            if on_route:
                 h=(ts-(D0+timedelta(hours=float(g["wave_delay_h"])))).total_seconds()/3600
                 wave=(alarm-base+135)*math.exp(-(h/19)**2)+35*math.exp(-(((ts-(D0-timedelta(hours=20))).total_seconds()/3600)/15)**2)
             else:
                 h=(ts-D0).total_seconds()/3600; wave=(30*math.exp(-((h-random.uniform(10,90))/35)**2) if g["river"] in {"Odra","Wisła","Warta"} else 0)+random.uniform(0,15)
-            level=int(base+wave+8*math.sin(i/26)+random.gauss(0,4)); d=level-prev.get(g["gauge_id"],level); prev[g["gauge_id"]]=level
-            yield dict(timestamp=iso(ts),stream="hydro_readings",gauge_id=g["gauge_id"],gmina_code=g["gmina_code"],river=g["river"],level_cm=level,flow_m3s=round(max(20,level*random.uniform(1.7,3.9)),1),trend="rising" if d>2 else "falling" if d<-2 else "stable",warning_level_cm=warn,alarm_level_cm=alarm)
+            level=int(base+wave+8*math.sin(i/9)+random.gauss(0,4)); d=level-prev.get(g["gauge_id"],level); prev[g["gauge_id"]]=level
+            yield dict(timestamp=iso(ts),stream="hydro_readings",gauge_id=g["gauge_id"],gmina_code=g["gmina_code"],river=g["river"],level_cm=level,flow_m3s=round(max(20,level*random.uniform(1.7,3.9)),1),trend="rising" if d>2 else "falling" if d<-2 else "stable",warning_level_cm=warn,alarm_level_cm=alarm,on_wave_route=on_route)
 
 def streams(vo,pow,gmi,gauges):
     counts={}; powby={p["powiat_code"]:p for p in pow}; imp=[g for g in gmi if impacted(g,powby)]; impc={g["gmina_code"] for g in imp}
@@ -116,16 +121,21 @@ def streams(vo,pow,gmi,gauges):
                 h=(t-(D0-timedelta(hours=28))).total_seconds()/3600
                 ext=58*math.exp(-(h/21)**2) if p["powiat_name"] in {"kłodzki","nyski"} else 18*math.exp(-(h/26)**2) if p["voivodeship_code"] in {"02","16","24"} else 0
                 yield dict(timestamp=iso(t),stream="weather_observations",powiat_code=p["powiat_code"],rain_mm_h=round(max(0,random.gauss(1,.8)+ext),1),temperature_c=round(random.uniform(11,18),1),wind_kmh=round(random.uniform(8,54),1),phenomenon="opad ekstremalny" if ext>30 else "opad" if ext>5 else "brak")
-            t+=timedelta(hours=1)
+            t+=timedelta(hours=3)
     counts["weather_observations.jsonl"]=jsonlw("weather_observations.jsonl",weather())
     def incidents():
-        eid=1; t=START; types=["zalanie budynku","podtopienie drogi","ewakuacja osoby","uszkodzenie wału","powalone drzewo","pomoc medyczna","pożar instalacji"]
+        # Zdarzenia raportowane na poziom krajowy, nie wszystkie interwencje PSP.
+        # Rozklad typow odwzorowuje strukture dzialan powodziowych: dominuja
+        # podtopienia i pompowanie wody, ewakuacje i uszkodzenia walow sa rzadsze.
+        eid=1; t=START
+        types=["podtopienie posesji","zalanie budynku","pompowanie wody","podtopienie drogi","ewakuacja osób","powalone drzewo","uszkodzenie wału","pomoc medyczna","uszkodzenie przepustu","pożar instalacji"]
+        wtypes=[.26,.19,.15,.13,.08,.07,.05,.04,.02,.01]
         while t<=END:
-            mult=9 if D0-timedelta(hours=18)<=t<=D0+timedelta(days=4) else 3 if t>D0+timedelta(days=4) else 1
-            for _ in range(random.randint(0,3)+random.randint(0,mult)):
+            mult=6 if D0-timedelta(hours=18)<=t<=D0+timedelta(days=4) else 2 if t>D0+timedelta(days=4) else 1
+            for _ in range(random.randint(0,2)+random.randint(0,mult)):
                 g=random.choice(imp if random.random()<.72 else gmi); sev=random.choices([1,2,3,4,5],[.20,.30,.28,.17,.05] if g["gmina_code"] in impc else [.55,.30,.12,.03,0])[0]
-                yield dict(timestamp=iso(t+timedelta(minutes=random.randint(0,14))),stream="incident_reports",incident_id=f"INC-{eid:06d}",source="112/PSP",hazard_code="Z02",event_type=random.choice(types),gmina_code=g["gmina_code"],priority=sev,injured_count=random.randint(0,sev-1),affected_people=random.randint(sev*2,sev*45),status=random.choice(["new","assigned","in_progress","closed"])); eid+=1
-            t+=timedelta(minutes=15)
+                yield dict(timestamp=iso(t+timedelta(minutes=random.randint(0,29))),stream="incident_reports",incident_id=f"INC-{eid:06d}",source="112/PSP",hazard_code="Z02",event_type=random.choices(types,wtypes)[0],gmina_code=g["gmina_code"],priority=sev,injured_count=random.randint(0,sev-1),affected_people=random.randint(sev*2,sev*45),status=random.choice(["new","assigned","in_progress","closed"])); eid+=1
+            t+=timedelta(minutes=30)
     counts["incident_reports.jsonl"]=jsonlw("incident_reports.jsonl",incidents())
     def simple_events(kind):
         eid=1; t=START+timedelta(hours=6)
@@ -133,17 +143,19 @@ def streams(vo,pow,gmi,gauges):
             n=random.randint(0,2)+(random.randint(1,6) if D0<=t<=D0+timedelta(days=3) else 0) if kind=="power" else random.randint(0,1)+(random.randint(0,4) if D0+timedelta(hours=4)<=t<=D0+timedelta(days=4) else 0)
             for _ in range(n):
                 g=random.choice(imp if random.random()<.76 else gmi)
-                if kind=="power": yield dict(timestamp=iso(t+timedelta(minutes=random.randint(0,59))),stream="power_grid_events",event_id=f"PWR-{eid:05d}",station=f"GPZ-{g['gmina_name'][:18]}",gmina_code=g["gmina_code"],customers_offline=random.randint(120,6500) if g["gmina_code"] in impc else random.randint(20,900),eta_restore_min=random.randint(90,1440),cause=random.choice(["zalanie stacji","uszkodzenie linii","prewencyjne wyłączenie","awaria transformatora"]))
+                if kind=="power": yield dict(timestamp=iso(t+timedelta(minutes=random.randint(0,59))),stream="power_grid_events",event_id=f"PWR-{eid:05d}",station=f"GPZ-{g['gmina_name'][:18]}",gmina_code=g["gmina_code"],customers_offline=random.randint(80,2600) if g["gmina_code"] in impc else random.randint(20,400),eta_restore_min=random.randint(90,1440),cause=random.choice(["zalanie stacji","uszkodzenie linii","prewencyjne wyłączenie","awaria transformatora"]))
                 else: yield dict(timestamp=iso(t+timedelta(minutes=random.randint(0,59))),stream="telecom_events",event_id=f"TEL-{eid:05d}",operator=random.choice(["operator_a","operator_b","operator_c"]),gmina_code=g["gmina_code"],base_stations_down=random.randint(1,8),coverage_pct=round(random.uniform(22,88),1),cause=random.choice(["brak zasilania","zalanie obiektu","przeciążenie","uszkodzenie światłowodu"]))
                 eid+=1
             t+=timedelta(hours=1)
     counts["power_grid_events.jsonl"]=jsonlw("power_grid_events.jsonl",simple_events("power")); counts["telecom_events.jsonl"]=jsonlw("telecom_events.jsonl",simple_events("telecom"))
     def evac():
+        # Ta sama grupa ludzi przechodzi przez trzy statusy - liczba osob musi byc
+        # stala dla gminy, inaczej suma po tabeli liczy tych samych ludzi trzykrotnie.
         eid=1
         for g in imp+random.sample(gmi,60):
             st=D0-timedelta(hours=18)+timedelta(hours=random.randint(0,96))
+            persons=random.randint(30,620) if g["gmina_code"] in impc else random.randint(5,60)
             for status,add in [("planned",0),("in_progress",random.randint(3,18)),("completed",random.randint(18,60))]:
-                persons=random.randint(40,1800) if g["gmina_code"] in impc else random.randint(5,130)
                 yield dict(timestamp=iso(st+timedelta(hours=add)),stream="evacuation_status",event_id=f"EVC-{eid:05d}",gmina_code=g["gmina_code"],status=status,people_count=persons,reception_capacity=persons+random.randint(80,1200),spo_code="SPO-3"); eid+=1
     counts["evacuation_status.jsonl"]=jsonlw("evacuation_status.jsonl",evac())
     def resources():
@@ -167,7 +179,7 @@ def streams(vo,pow,gmi,gauges):
     return counts
 
 def readme(counts):
-    desc={"dim_voivodeship.csv":"16 województw","dim_powiat.csv":"powiaty syntetyczne","dim_gmina.csv":"gminy syntetyczne","dim_hazard.csv":"20 zagrożeń KPZK","dim_institution.csv":"instytucje raportujące","dim_spo.csv":"16 SPO","dim_river_gauge.csv":"~120 wodowskazów","hydro_readings.jsonl":"fala Nysa Kłodzka→Odra co 5 min","weather_observations.jsonl":"pogoda per powiat","incident_reports.jsonl":"zgłoszenia 112/PSP","power_grid_events.jsonl":"awarie energetyczne","telecom_events.jsonl":"awarie telekom","evacuation_status.jsonl":"status ewakuacji","resource_deployment.jsonl":"siły i środki","media_signals.jsonl":"sygnały Z20","escalation_events.jsonl":"eskalacje poziomów"}
+    desc={"dim_voivodeship.csv":"16 województw","dim_powiat.csv":"powiaty syntetyczne","dim_gmina.csv":"gminy syntetyczne","dim_hazard.csv":"20 zagrożeń KPZK","dim_institution.csv":"instytucje raportujące","dim_spo.csv":"16 SPO","dim_river_gauge.csv":"~120 wodowskazów","hydro_readings.jsonl":"fala Nysa Kłodzka→Odra; trasa fali co 15 min, pozostałe posterunki co 60 min","weather_observations.jsonl":"pogoda per powiat co 3 h","incident_reports.jsonl":"zgłoszenia 112/PSP raportowane na poziom krajowy","power_grid_events.jsonl":"awarie energetyczne","telecom_events.jsonl":"awarie telekom","evacuation_status.jsonl":"status ewakuacji (stała liczba osób w trzech etapach)","resource_deployment.jsonl":"siły i środki — migawka co 12 h","media_signals.jsonl":"sygnały Z20","escalation_events.jsonl":"eskalacje poziomów"}
     lines=["# 📦 Datasety COP-24","","> ⚠️ Dane w 100% syntetyczne, wygenerowane proceduralnie z `seed=42`. Nie są danymi operacyjnymi żadnej instytucji.","","| Plik | Rekordy | Opis |","|---|---:|---|"]
     lines += [f"| `{k}` | {counts[k]} | {desc.get(k,'')} |" for k in sorted(counts)]
     (DATA_DIR/"README.md").write_text("\n".join(lines)+"\n",encoding="utf-8")

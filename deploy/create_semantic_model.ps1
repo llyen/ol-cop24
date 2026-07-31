@@ -165,9 +165,9 @@ $ColumnMap = [ordered]@{
 $Measures = @(
     @{Name='KIS'; Expression='AVERAGE(kis_gmina[kis])'; Format='0.0'},
     @{Name='KIS Max Lokalny'; Expression='MAX(kis_gmina[kis])'; Format='0.0'},
-    @{Name='Liczba Ewakuowanych'; Expression='SUM(evacuation_status[people_count])'; Format='#,0'},
+    @{Name='Liczba Ewakuowanych'; Expression='SUMX(VALUES(evacuation_status[gmina_code]), CALCULATE(MAX(evacuation_status[people_count])))'; Format='#,0'},
     @{Name='% Gmin w Alarmie'; Expression='DIVIDE(CALCULATE(DISTINCTCOUNT(hydro_readings[gmina_code]), hydro_readings[level_cm] >= hydro_readings[alarm_level_cm]), DISTINCTCOUNT(dim_gmina[gmina_code]))'; Format='0.0%'},
-    @{Name='Odbiorcy Bez Prądu'; Expression='SUM(power_grid_events[customers_offline])'; Format='#,0'},
+    @{Name='Odbiorcy Bez Prądu'; Expression='MAXX(GROUPBY(ADDCOLUMNS(power_grid_events, "@godz", INT(power_grid_events[timestamp] * 24)), [@godz], "@odbiorcy", SUMX(CURRENTGROUP(), power_grid_events[customers_offline])), [@odbiorcy])'; Format='#,0'},
     @{Name='Minimalne Pokrycie Telco'; Expression='MIN(telecom_events[coverage_pct]) / 100'; Format='0.0%'},
     @{Name='Gminy Telco Ponizej 50'; Expression='CALCULATE(DISTINCTCOUNT(telecom_events[gmina_code]), telecom_events[coverage_pct] < 50)'; Format='#,0'},
     @{Name='Incydenty'; Expression='COUNTROWS(incident_reports)'; Format='#,0'},
@@ -176,11 +176,11 @@ $Measures = @(
     @{Name='Zgloszenia 15 Min'; Expression='COUNTROWS(incident_reports)'; Format='#,0'},
     @{Name='Sygnały Dezinformacji'; Expression='CALCULATE(COUNTROWS(media_signals), media_signals[disinformation_flag] = TRUE())'; Format='#,0'},
     @{Name='Zasieg Dezinformacji'; Expression='CALCULATE(SUM(media_signals[reach]), media_signals[disinformation_flag] = TRUE())'; Format='#,0'},
-    @{Name='PSP Zastepy'; Expression='SUM(resource_deployment[psp_units])'; Format='#,0'},
-    @{Name='WOT Zolnierze'; Expression='SUM(resource_deployment[wot_soldiers])'; Format='#,0'},
-    @{Name='Pompy'; Expression='SUM(resource_deployment[pumps])'; Format='#,0'},
-    @{Name='Agregaty'; Expression='SUM(resource_deployment[generators])'; Format='#,0'},
-    @{Name='Smiglowce'; Expression='SUM(resource_deployment[helicopters])'; Format='#,0'},
+    @{Name='PSP Zastepy'; Expression='MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[psp_units])))'; Format='#,0'},
+    @{Name='WOT Zolnierze'; Expression='MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[wot_soldiers])))'; Format='#,0'},
+    @{Name='Pompy'; Expression='MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[pumps])))'; Format='#,0'},
+    @{Name='Agregaty'; Expression='MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[generators])))'; Format='#,0'},
+    @{Name='Smiglowce'; Expression='MAXX(VALUES(resource_deployment[timestamp]), CALCULATE(SUM(resource_deployment[helicopters])))'; Format='#,0'},
     @{Name='Czas Reakcji Min'; Expression='VAR PierwszeZgloszenie = MIN(incident_reports[timestamp]) VAR PierwszaEskalacja = MIN(escalation_events[timestamp]) RETURN IF(NOT ISBLANK(PierwszeZgloszenie) && NOT ISBLANK(PierwszaEskalacja) && PierwszaEskalacja >= PierwszeZgloszenie, DATEDIFF(PierwszeZgloszenie, PierwszaEskalacja, MINUTE))'; Format='#,0'},
     @{Name='Rekomendacje RZZK'; Expression='CALCULATE(COUNTROWS(escalation_recommendations), escalation_recommendations[recommended_level] = "RZZK")'; Format='#,0'},
     @{Name='Gminy KIS Powiat Plus'; Expression='CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 25)'; Format='#,0'},
@@ -608,6 +608,26 @@ function Get-DefinitionStats([hashtable]$Headers, [string]$ItemId, [string]$Form
     return $resp.Content | ConvertFrom-Json
 }
 
+# Direct Lake nie przeladowuje danych po updateDefinition - model dalej pokazuje
+# stan z poprzedniego framingu, nawet gdy pliki w OneLake i tabele Delta sa nowe.
+# Jawny refresh typu DirectLakeFraming przestawia model na aktualne wersje Delta.
+function Invoke-DirectLakeReframe([string]$SemanticModelId) {
+    $pbiToken = Get-AccessToken 'https://analysis.windows.net/powerbi/api'
+    $headers = New-AuthHeaders $pbiToken
+    $base = "https://api.powerbi.com/v1.0/myorg/groups/$WorkspaceId/datasets/$SemanticModelId"
+    Invoke-FabricJson -Method POST -Uri "$base/refreshes" -Headers $headers -Body @{ type = 'full' } | Out-Null
+
+    $deadline = (Get-Date).AddMinutes(10)
+    do {
+        Start-Sleep -Seconds 10
+        $last = ((Invoke-FabricJson -Method GET -Uri "$base/refreshes?`$top=1" -Headers $headers).Content | ConvertFrom-Json).value[0]
+        if ((Get-Date) -gt $deadline) { throw 'Reframe Direct Lake przekroczyl limit 10 minut.' }
+    } while ($last.status -eq 'Unknown')
+
+    if ($last.status -ne 'Completed') { throw "Reframe Direct Lake zakonczyl sie statusem $($last.status)." }
+    Write-Host "Direct Lake przeframowany ($($last.refreshType))."
+}
+
 function Invoke-DaxCheck([string]$SemanticModelId) {
     $pbiToken = Get-AccessToken 'https://analysis.windows.net/powerbi/api'
     $headers = New-AuthHeaders $pbiToken
@@ -629,6 +649,7 @@ Write-Host "SQL endpoint: $($lakeProps.sqlEndpointProperties.connectionString)"
 
 $semantic = Upsert-SemanticModel $headers
 Write-Host "Model semantyczny: $($semantic.displayName) id=$($semantic.id)"
+Invoke-DirectLakeReframe $semantic.id
 
 $report = $null
 if (-not $SkipReport) {
