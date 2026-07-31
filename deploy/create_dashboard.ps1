@@ -364,9 +364,9 @@ if (-not $SkipQueryValidation) {
     Write-Step "Walidacja KQL przez Eventhouse REST"
     foreach ($q in $dashboardQueries) {
         # Zapytania kafelkow filtruja po zmiennych dashboardu, ktorych Eventhouse nie zna.
-        # Na czas walidacji podstawiamy je tak samo, jak robi to dashboard: ostatnie 2 godziny.
+        # Na czas walidacji podstawiamy je tak samo, jak robi to dashboard: ostatnie 15 minut.
         $toRun = if (Get-UsedVariables $q.Query) {
-            "let _startTime = ago(2h);`nlet _endTime = now();`n$($q.Query)"
+            "let _startTime = ago(15m);`nlet _endTime = now();`n$($q.Query)"
         } else { $q.Query }
         $res = Invoke-KustoQuery $toRun
         $rows = if ($res.Tables -and $res.Tables.Count -gt 0) { $res.Tables[0].Rows.Count } else { 0 }

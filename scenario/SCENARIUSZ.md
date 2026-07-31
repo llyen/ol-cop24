@@ -42,12 +42,19 @@ a przy sztywnym zakresie dat nic by się nie ruszało. Dlatego cała scena jest
 znacznik zdarzenia = chwila startu + (czas sceny − początek okna live) / tempo
 ```
 
-Przy tempie 300x trzy doby tła zajmują ostatnie ~12 minut zegara, a doba D0 płynie przez
-kolejne ~5 minut. Zdarzenie dostaje znacznik równy chwili wysłania, więc opóźnienie
+Przy tempie 60x trzy doby tła zajmują ostatnie ~72 minuty zegara, a doba D0 płynie przez
+kolejne ~24 minuty. Zdarzenie dostaje znacznik równy chwili wysłania, więc opóźnienie
 strumienia utrzymuje się w granicach kilku sekund. Dzięki temu:
 
-- **kafelki filtrują po ruchomym oknie** `_startTime .. _endTime` (domyślnie ostatnie 2 h)
+- **kafelki filtrują po ruchomym oknie** `_startTime .. _endTime` (domyślnie ostatnie 15 min)
   — bez tego filtru każdy kafelek agregował całą tabelę i nic się nie zmieniało;
+
+> **Okno musi być krótsze niż jeden cykl odtwarzania.** Wcześniejsze ustawienia (tempo 300x,
+> okno 2 h) mieściły w kadrze całą 14-dniową scenę naraz: w oknie leżało ponad 480 tys.
+> odczytów hydrologicznych, nowe punkty ginęły w masie i dashboard wyglądał na zamrożony,
+> mimo że opóźnienie strumienia wynosiło 2 s. Przy tempie 60x cykl trwa 24 min, a okno 15 min
+> obejmuje ok. 2,1 tys. odczytów i widać przyrost między odświeżeniami.
+
 - dashboard odświeża się co 10 s i widać przyrost danych;
 - kafelek **„Świeżość danych"** pokazuje opóźnienie strumienia w sekundach, co jest
   najprostszym dowodem, że demo naprawdę żyje.
@@ -92,11 +99,18 @@ ponawiana przy przeciążeniu pojemności.
 
 | Wariant | Tempo | Okno live | Czas trwania fazy live |
 |---|---|---|---|
-| `demo` (domyślny) | 300x | 24 h (D0) | ok. 4,8 min |
-| `szybki` | 900x | 24 h (D0) | ok. 1,6 min |
-| `kulminacja` | 120x | 12 h od 15.09 06:00 | ok. 6 min |
-| `wolny` | 60x | 12 h | ok. 12 min |
-| `ciagly` | 300x | 24 h, zapętlone | bez końca |
+| `demo` (domyślny) | 60x | 24 h (D0) | ok. 24 min |
+| `szybki` | 300x | 24 h (D0) | ok. 5 min — tylko smoke-test, cykl mieści się w oknie dashboardu |
+| `kulminacja` | 30x | 12 h od 15.09 06:00 | ok. 24 min |
+| `wolny` | 15x | 12 h | ok. 48 min |
+| `ciagly` | 60x | 24 h, zapętlone | bez końca |
+
+Uruchomienie w tle (zalecane dla trybu ciągłego):
+
+```powershell
+.\scenario\run_scenario.ps1 -Preset ciagly -Background   # PID w scenario\_ciagly.pid
+.\scenario\run_scenario.ps1 -Stop                        # zatrzymanie
+```
 
 ### Tryb znaczników czasu
 

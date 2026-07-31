@@ -95,7 +95,7 @@ Write-Host "  znaczniki: $TimeMode"
 $python = Get-Command python -ErrorAction SilentlyContinue
 if (-not $python) { throw 'Brak python w PATH.' }
 
-$argv = @((Join-Path $PSScriptRoot 'replay.py'), '--speed', $selected.Speed,
+$argv = @('-u', (Join-Path $PSScriptRoot 'replay.py'), '--speed', $selected.Speed,
           '--live-hours', $selected.LiveHours, '--time-mode', $TimeMode)
 if (-not $NoReset) { $argv += @('--reset', '--bulk') }
 if ($ResetOnly) { $argv += @('--reset', '--reset-only') }

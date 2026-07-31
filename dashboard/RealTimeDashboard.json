@@ -26,12 +26,12 @@
         "queryId": "c5f6996f-7f13-b5ac-e9ce-a8469472c338"
       },
       "visualOptions": {
-        "hideLegend": false,
-        "map__minBubbleSizeColumn": "level_cm",
+        "map__bubbleFormat": "bubble",
+        "map__longitudeColumn": "lon",
         "legendLocation": "bottom",
         "map__latitudeColumn": "lat",
-        "map__longitudeColumn": "lon",
-        "map__bubbleFormat": "bubble"
+        "hideLegend": false,
+        "map__minBubbleSizeColumn": "level_cm"
       }
     },
     {
@@ -50,36 +50,36 @@
         "queryId": "8019ec6b-2308-296c-c51d-a51946201cb8"
       },
       "visualOptions": {
-        "yColumns": [
-          "avg_level",
-          "max_level"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "timestamp",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Czas",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": [
-          "gauge_id"
-        ],
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": [
+          "gauge_id"
+        ],
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "avg_level",
+          "max_level"
+        ]
       }
     },
     {
@@ -98,17 +98,17 @@
         "queryId": "b38f0b51-ca66-6e80-132e-54ece2c59d4e"
       },
       "visualOptions": {
-        "multiStat__textSize": "auto",
+        "colorRulesDisabled": true,
         "multiStat__valueColumn": "Wartosc",
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "colorStyle": "light",
-        "multiStat__labelColumn": "Wskaznik",
         "colorRules": [],
-        "multiStat__displayOrientation": "horizontal",
-        "colorRulesDisabled": true
+        "colorStyle": "light",
+        "multiStat__textSize": "auto",
+        "multiStat__labelColumn": "Wskaznik",
+        "multiStat__displayOrientation": "horizontal"
       }
     },
     {
@@ -127,34 +127,34 @@
         "queryId": "424aca17-b492-824d-984b-979842ba808d"
       },
       "visualOptions": {
-        "yColumns": [
-          "incidents",
-          "affected"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "timestamp",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Czas",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "incidents",
+          "affected"
+        ]
       }
     },
     {
@@ -173,33 +173,33 @@
         "queryId": "daadb2f3-2236-339a-ad76-690e03765cab"
       },
       "visualOptions": {
-        "yColumns": [
-          "Zgloszenia"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "Gmina",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Gmina",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "Gmina",
+        "xColumnTitle": "Gmina",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "Zgloszenia"
+        ]
       }
     },
     {
@@ -218,33 +218,33 @@
         "queryId": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a"
       },
       "visualOptions": {
-        "yColumns": [
-          "customers_offline"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "timestamp",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Czas",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "customers_offline"
+        ]
       }
     },
     {
@@ -263,33 +263,33 @@
         "queryId": "3475e7da-d41d-bb3a-db61-00ad4c9b333f"
       },
       "visualOptions": {
-        "yColumns": [
-          "Odbiorcy"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "Gmina",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Gmina",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "Gmina",
+        "xColumnTitle": "Gmina",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "Odbiorcy"
+        ]
       }
     },
     {
@@ -308,33 +308,33 @@
         "queryId": "9917d286-54e8-2a72-6264-1569804cc108"
       },
       "visualOptions": {
-        "yColumns": [
-          "Pokrycie"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "Gmina",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Gmina",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "Gmina",
+        "xColumnTitle": "Gmina",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "Pokrycie"
+        ]
       }
     },
     {
@@ -353,17 +353,17 @@
         "queryId": "df1690d1-2cf7-1098-8737-98e73453ea75"
       },
       "visualOptions": {
-        "multiStat__textSize": "auto",
+        "colorRulesDisabled": true,
         "multiStat__valueColumn": "Wartosc",
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "colorStyle": "light",
-        "multiStat__labelColumn": "Wskaznik",
         "colorRules": [],
-        "multiStat__displayOrientation": "horizontal",
-        "colorRulesDisabled": true
+        "colorStyle": "light",
+        "multiStat__textSize": "auto",
+        "multiStat__labelColumn": "Wskaznik",
+        "multiStat__displayOrientation": "horizontal"
       }
     },
     {
@@ -382,37 +382,37 @@
         "queryId": "286746ee-7e9a-cb49-51e8-31fc6d717dc7"
       },
       "visualOptions": {
+        "multipleYAxes": {
+          "additional": [],
+          "base": {
+            "horizontalLines": [],
+            "yAxisScale": "linear",
+            "id": "-1",
+            "label": "",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "Wojewodztwo",
+        "xColumnTitle": "Wojewodztwo",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
         "yColumns": [
           "PSP",
           "WOT",
           "Pompy",
           "Agregaty",
           "Smiglowce"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "Wojewodztwo",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Wojewodztwo",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
-        "multipleYAxes": {
-          "additional": [],
-          "showMultiplePanels": false,
-          "base": {
-            "horizontalLines": [],
-            "yAxisScale": "linear",
-            "id": "-1",
-            "yAxisMinimumValue": null,
-            "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+        ]
       }
     },
     {
@@ -431,15 +431,15 @@
         "queryId": "057690da-f91a-d3a0-1eb1-daf8d55e79b8"
       },
       "visualOptions": {
-        "drillthrough": [],
-        "crossFilterDisabled": false,
-        "colorRules": [],
-        "colorRulesDisabled": true,
+        "colorStyle": "light",
         "table__enableRenderLinks": true,
+        "colorRules": [],
         "drillthroughDisabled": false,
         "table__renderLinks": [],
-        "colorStyle": "light",
-        "crossFilter": []
+        "crossFilter": [],
+        "colorRulesDisabled": true,
+        "drillthrough": [],
+        "crossFilterDisabled": false
       }
     },
     {
@@ -458,34 +458,34 @@
         "queryId": "29192ae9-2d70-7fc6-076f-06771a87ad63"
       },
       "visualOptions": {
-        "yColumns": [
-          "disinfo_signals",
-          "disinfo_reach"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "timestamp",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Czas",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "disinfo_signals",
+          "disinfo_reach"
+        ]
       }
     },
     {
@@ -505,17 +505,17 @@
       },
       "visualOptions": {
         "hideLegend": false,
-        "pie__orderBy": "size",
-        "legendLocation": "right",
-        "xColumn": "Kanal",
-        "yColumns": [
-          "Zasieg"
-        ],
         "pie__label": [
           "name",
           "percentage"
         ],
-        "pie__kind": "donut"
+        "legendLocation": "right",
+        "pie__kind": "donut",
+        "xColumn": "Kanal",
+        "yColumns": [
+          "Zasieg"
+        ],
+        "pie__orderBy": "size"
       }
     },
     {
@@ -534,15 +534,15 @@
         "queryId": "67cede41-377e-ca16-6e0f-4431e2d6e78d"
       },
       "visualOptions": {
-        "drillthrough": [],
-        "crossFilterDisabled": false,
-        "colorRules": [],
-        "colorRulesDisabled": true,
+        "colorStyle": "light",
         "table__enableRenderLinks": true,
+        "colorRules": [],
         "drillthroughDisabled": false,
         "table__renderLinks": [],
-        "colorStyle": "light",
-        "crossFilter": []
+        "crossFilter": [],
+        "colorRulesDisabled": true,
+        "drillthrough": [],
+        "crossFilterDisabled": false
       }
     },
     {
@@ -561,12 +561,12 @@
         "queryId": "64927ecc-2324-888d-c648-bc28c19172f5"
       },
       "visualOptions": {
-        "heatMap__colorPaletteKey": "orange",
-        "yColumn": "Wojewodztwo",
+        "colorRulesDisabled": true,
         "xColumn": "Doba",
         "heatMap__dataColumn": "Zgloszenia",
-        "colorRulesDisabled": true,
-        "colorRules": []
+        "colorRules": [],
+        "yColumn": "Wojewodztwo",
+        "heatMap__colorPaletteKey": "orange"
       }
     },
     {
@@ -585,33 +585,33 @@
         "queryId": "86a0e303-e60a-e04c-9b29-13b317bd3148"
       },
       "visualOptions": {
-        "yColumns": [
-          "Skumulowane"
-        ],
-        "xAxisScale": "linear",
-        "xColumn": "Czas",
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "Czas",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": "Czas",
+        "xColumnTitle": "Czas",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": [
+          "Skumulowane"
+        ]
       }
     },
     {
@@ -630,12 +630,12 @@
         "queryId": "9dcf4a32-4b32-d331-344b-c68e22465a33"
       },
       "visualOptions": {
-        "hideLegend": false,
-        "map__minBubbleSizeColumn": "Zgloszenia",
+        "map__bubbleFormat": "bubble",
+        "map__longitudeColumn": "lon",
         "legendLocation": "bottom",
         "map__latitudeColumn": "lat",
-        "map__longitudeColumn": "lon",
-        "map__bubbleFormat": "bubble"
+        "hideLegend": false,
+        "map__minBubbleSizeColumn": "Zgloszenia"
       }
     },
     {
@@ -654,31 +654,31 @@
         "queryId": "97d4d0b5-a1a8-db74-4568-4a857d07518d"
       },
       "visualOptions": {
-        "yColumns": [],
-        "xAxisScale": "linear",
-        "xColumn": null,
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "xColumnTitle": "",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": []
       }
     },
     {
@@ -697,31 +697,31 @@
         "queryId": "c11360b4-b487-73c3-ed38-3e9d682470c0"
       },
       "visualOptions": {
-        "yColumns": [],
-        "xAxisScale": "linear",
-        "xColumn": null,
-        "drillthroughDisabled": false,
-        "crossFilter": [],
-        "xColumnTitle": "",
-        "hideLegend": false,
-        "legendLocation": "bottom",
-        "drillthrough": [],
-        "seriesColumns": null,
-        "verticalLine": "",
-        "crossFilterDisabled": false,
         "multipleYAxes": {
           "additional": [],
-          "showMultiplePanels": false,
           "base": {
             "horizontalLines": [],
             "yAxisScale": "linear",
             "id": "-1",
+            "label": "",
             "yAxisMinimumValue": null,
             "yAxisMaximumValue": null,
-            "columns": [],
-            "label": ""
-          }
-        }
+            "columns": []
+          },
+          "showMultiplePanels": false
+        },
+        "verticalLine": "",
+        "seriesColumns": null,
+        "crossFilter": [],
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "xColumnTitle": "",
+        "hideLegend": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "yColumns": []
       }
     }
   ],
