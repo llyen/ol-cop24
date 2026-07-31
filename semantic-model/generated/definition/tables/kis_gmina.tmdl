@@ -1,0 +1,130 @@
+table kis_gmina
+	sourceLineageTag: [dbo].[kis_gmina]
+
+	column gmina_code
+		dataType: string
+		sourceLineageTag: gmina_code
+		summarizeBy: none
+		sourceColumn: gmina_code
+
+	column powiat_code
+		dataType: string
+		sourceLineageTag: powiat_code
+		summarizeBy: none
+		sourceColumn: powiat_code
+
+	column hydro_score
+		dataType: double
+		sourceLineageTag: hydro_score
+		summarizeBy: sum
+		sourceColumn: hydro_score
+
+	column incident_score
+		dataType: double
+		sourceLineageTag: incident_score
+		summarizeBy: sum
+		sourceColumn: incident_score
+
+	column affected_people
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: affected_people
+		summarizeBy: sum
+		sourceColumn: affected_people
+
+	column power_score
+		dataType: double
+		sourceLineageTag: power_score
+		summarizeBy: sum
+		sourceColumn: power_score
+
+	column telecom_score
+		dataType: double
+		sourceLineageTag: telecom_score
+		summarizeBy: sum
+		sourceColumn: telecom_score
+
+	column evac_score
+		dataType: double
+		sourceLineageTag: evac_score
+		summarizeBy: sum
+		sourceColumn: evac_score
+
+	column resource_score
+		dataType: int64
+		formatString: 0
+		sourceLineageTag: resource_score
+		summarizeBy: sum
+		sourceColumn: resource_score
+
+	column kis
+		dataType: double
+		sourceLineageTag: kis
+		summarizeBy: sum
+		sourceColumn: kis
+
+	measure KIS = AVERAGE(kis_gmina[kis])
+		formatString: 0.0
+
+	measure 'KIS Max Lokalny' = MAX(kis_gmina[kis])
+		formatString: 0.0
+
+	measure 'Liczba Ewakuowanych' = SUM(evacuation_status[people_count])
+		formatString: #,0
+
+	measure 'Odbiorcy Bez Prądu' = SUM(power_grid_events[customers_offline])
+		formatString: #,0
+
+	measure Incydenty = COUNTROWS(incident_reports)
+		formatString: #,0
+
+	measure 'Incydenty Priorytet 4 Plus' = CALCULATE(COUNTROWS(incident_reports), incident_reports[priority] >= 4)
+		formatString: #,0
+
+	measure 'Osoby Dotkniete' = SUM(incident_reports[affected_people])
+		formatString: #,0
+
+	measure 'Zgloszenia 15 Min' = COUNTROWS(incident_reports)
+		formatString: #,0
+
+	measure 'Sygnały Dezinformacji' = CALCULATE(COUNTROWS(media_signals), media_signals[disinformation_flag] = TRUE())
+		formatString: #,0
+
+	measure 'Zasieg Dezinformacji' = CALCULATE(SUM(media_signals[reach]), media_signals[disinformation_flag] = TRUE())
+		formatString: #,0
+
+	measure 'PSP Zastepy' = SUM(resource_deployment[psp_units])
+		formatString: #,0
+
+	measure 'WOT Zolnierze' = SUM(resource_deployment[wot_soldiers])
+		formatString: #,0
+
+	measure Pompy = SUM(resource_deployment[pumps])
+		formatString: #,0
+
+	measure Agregaty = SUM(resource_deployment[generators])
+		formatString: #,0
+
+	measure Smiglowce = SUM(resource_deployment[helicopters])
+		formatString: #,0
+
+	measure 'Czas Reakcji Min' = AVERAGEX(escalation_events, DATEDIFF(escalation_events[timestamp], NOW(), MINUTE))
+		formatString: #,0
+
+	measure 'Rekomendacje RZZK' = CALCULATE(COUNTROWS(escalation_recommendations), escalation_recommendations[recommended_level] = "RZZK")
+		formatString: #,0
+
+	measure 'Gminy KIS Powiat Plus' = CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 25)
+		formatString: #,0
+
+	measure 'Gminy KIS Wojewoda Plus' = CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 45)
+		formatString: #,0
+
+	measure 'Gminy KIS RZZK' = CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 85)
+		formatString: #,0
+
+	partition kis_gmina = entity
+		mode: directLake
+		source
+			entityName: kis_gmina
+			expressionSource: DirectLakeConnection

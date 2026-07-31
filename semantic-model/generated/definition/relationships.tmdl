@@ -1,0 +1,4 @@
+relationship rel_kis_gmina_dim_gmina
+	fromColumn: kis_gmina.gmina_code
+	toColumn: dim_gmina.gmina_code
+

@@ -151,8 +151,8 @@ function Get-VisualOptions([string]$number, [string]$visualType) {
         return @{
             multiStat__textSize = 'auto'
             multiStat__displayOrientation = 'horizontal'
-            multiStat__valueColumn = $null
-            multiStat__labelColumn = $null
+            multiStat__valueColumn = 'Wartosc'
+            multiStat__labelColumn = 'Wskaznik'
             colorRulesDisabled = $true
             colorStyle = 'light'
             multiStat__slot = @{ width = 4; height = 1 }
@@ -162,13 +162,13 @@ function Get-VisualOptions([string]$number, [string]$visualType) {
     if ($visualType -eq 'map') {
         return @{
             map__type = 'bubble'
-            map__geoType = 'geocoding'
+            map__geoType = 'latlong'
             map__geoPointColumn = $null
-            map__labelColumn = 'gauge_id'
+            map__labelColumn = 'gauge_name'
             map__sizeColumn = 'level_cm'
             map__sizeDisabled = $false
-            map__latitudeColumn = $null
-            map__longitudeColumn = $null
+            map__latitudeColumn = 'lat'
+            map__longitudeColumn = 'lon'
         }
     }
 

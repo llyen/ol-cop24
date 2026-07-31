@@ -25,14 +25,14 @@
         "queryId": "c5f6996f-7f13-b5ac-e9ce-a8469472c338"
       },
       "visualOptions": {
-        "map__type": "bubble",
+        "map__longitudeColumn": "lon",
         "map__sizeColumn": "level_cm",
-        "map__labelColumn": "gauge_id",
-        "map__latitudeColumn": null,
-        "map__longitudeColumn": null,
+        "map__type": "bubble",
+        "map__labelColumn": "gauge_name",
         "map__sizeDisabled": false,
-        "map__geoType": "geocoding",
-        "map__geoPointColumn": null
+        "map__geoType": "latlong",
+        "map__geoPointColumn": null,
+        "map__latitudeColumn": "lat"
       }
     },
     {
@@ -51,36 +51,36 @@
         "queryId": "8019ec6b-2308-296c-c51d-a51946201cb8"
       },
       "visualOptions": {
-        "crossFilterDisabled": false,
-        "yColumns": [
-          "avg_level",
-          "max_level"
-        ],
         "legendLocation": "bottom",
-        "drillthrough": [],
-        "xAxisScale": "linear",
-        "verticalLine": "",
-        "seriesColumns": [
-          "gauge_id"
-        ],
-        "hideLegend": false,
-        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
         "multipleYAxes": {
           "base": {
             "horizontalLines": [],
-            "id": "-1",
-            "label": "",
             "yAxisMaximumValue": null,
+            "columns": [],
             "yAxisMinimumValue": null,
+            "label": "",
             "yAxisScale": "linear",
-            "columns": []
+            "id": "-1"
           },
           "showMultiplePanels": false,
           "additional": []
         },
-        "xColumnTitle": "Czas",
+        "yColumns": [
+          "avg_level",
+          "max_level"
+        ],
+        "crossFilter": [],
+        "seriesColumns": [
+          "gauge_id"
+        ],
         "xColumn": "timestamp",
-        "crossFilter": []
+        "drillthrough": [],
+        "verticalLine": "",
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -101,15 +101,15 @@
       "visualOptions": {
         "colorStyle": "light",
         "colorRulesDisabled": true,
+        "multiStat__labelColumn": "Wskaznik",
+        "multiStat__displayOrientation": "horizontal",
         "multiStat__textSize": "auto",
+        "multiStat__valueColumn": "Wartosc",
         "colorRules": [],
         "multiStat__slot": {
           "height": 1,
           "width": 4
-        },
-        "multiStat__labelColumn": null,
-        "multiStat__displayOrientation": "horizontal",
-        "multiStat__valueColumn": null
+        }
       }
     },
     {
@@ -128,34 +128,34 @@
         "queryId": "424aca17-b492-824d-984b-979842ba808d"
       },
       "visualOptions": {
-        "crossFilterDisabled": false,
-        "yColumns": [
-          "incidents",
-          "affected"
-        ],
         "legendLocation": "bottom",
-        "drillthrough": [],
-        "xAxisScale": "linear",
-        "verticalLine": "",
-        "seriesColumns": null,
-        "hideLegend": false,
-        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
         "multipleYAxes": {
           "base": {
             "horizontalLines": [],
-            "id": "-1",
-            "label": "",
             "yAxisMaximumValue": null,
+            "columns": [],
             "yAxisMinimumValue": null,
+            "label": "",
             "yAxisScale": "linear",
-            "columns": []
+            "id": "-1"
           },
           "showMultiplePanels": false,
           "additional": []
         },
-        "xColumnTitle": "Czas",
+        "yColumns": [
+          "incidents",
+          "affected"
+        ],
+        "crossFilter": [],
+        "seriesColumns": null,
         "xColumn": "timestamp",
-        "crossFilter": []
+        "drillthrough": [],
+        "verticalLine": "",
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -174,15 +174,15 @@
         "queryId": "daadb2f3-2236-339a-ad76-690e03765cab"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "colorRules": [],
-        "table__renderLinks": [],
-        "drillthroughDisabled": false,
         "drillthrough": [],
-        "crossFilterDisabled": false,
-        "crossFilter": [],
         "colorRulesDisabled": true,
-        "colorStyle": "light"
+        "table__renderLinks": [],
+        "crossFilter": [],
+        "table__enableRenderLinks": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "colorRules": [],
+        "drillthroughDisabled": false
       }
     },
     {
@@ -201,33 +201,33 @@
         "queryId": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a"
       },
       "visualOptions": {
-        "crossFilterDisabled": false,
-        "yColumns": [
-          "customers_offline"
-        ],
         "legendLocation": "bottom",
-        "drillthrough": [],
-        "xAxisScale": "linear",
-        "verticalLine": "",
-        "seriesColumns": null,
-        "hideLegend": false,
-        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
         "multipleYAxes": {
           "base": {
             "horizontalLines": [],
-            "id": "-1",
-            "label": "",
             "yAxisMaximumValue": null,
+            "columns": [],
             "yAxisMinimumValue": null,
+            "label": "",
             "yAxisScale": "linear",
-            "columns": []
+            "id": "-1"
           },
           "showMultiplePanels": false,
           "additional": []
         },
-        "xColumnTitle": "Czas",
+        "yColumns": [
+          "customers_offline"
+        ],
+        "crossFilter": [],
+        "seriesColumns": null,
         "xColumn": "timestamp",
-        "crossFilter": []
+        "drillthrough": [],
+        "verticalLine": "",
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -246,33 +246,33 @@
         "queryId": "3475e7da-d41d-bb3a-db61-00ad4c9b333f"
       },
       "visualOptions": {
-        "crossFilterDisabled": false,
-        "yColumns": [
-          "customers_offline"
-        ],
         "legendLocation": "bottom",
-        "drillthrough": [],
-        "xAxisScale": "linear",
-        "verticalLine": "",
-        "seriesColumns": null,
-        "hideLegend": false,
-        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
         "multipleYAxes": {
           "base": {
             "horizontalLines": [],
-            "id": "-1",
-            "label": "",
             "yAxisMaximumValue": null,
+            "columns": [],
             "yAxisMinimumValue": null,
+            "label": "",
             "yAxisScale": "linear",
-            "columns": []
+            "id": "-1"
           },
           "showMultiplePanels": false,
           "additional": []
         },
-        "xColumnTitle": "Gmina",
+        "yColumns": [
+          "customers_offline"
+        ],
+        "crossFilter": [],
+        "seriesColumns": null,
         "xColumn": "gmina_code",
-        "crossFilter": []
+        "drillthrough": [],
+        "verticalLine": "",
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "xColumnTitle": "Gmina"
       }
     },
     {
@@ -291,15 +291,15 @@
         "queryId": "9917d286-54e8-2a72-6264-1569804cc108"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "colorRules": [],
-        "table__renderLinks": [],
-        "drillthroughDisabled": false,
         "drillthrough": [],
-        "crossFilterDisabled": false,
-        "crossFilter": [],
         "colorRulesDisabled": true,
-        "colorStyle": "light"
+        "table__renderLinks": [],
+        "crossFilter": [],
+        "table__enableRenderLinks": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "colorRules": [],
+        "drillthroughDisabled": false
       }
     },
     {
@@ -320,15 +320,15 @@
       "visualOptions": {
         "colorStyle": "light",
         "colorRulesDisabled": true,
+        "multiStat__labelColumn": "Wskaznik",
+        "multiStat__displayOrientation": "horizontal",
         "multiStat__textSize": "auto",
+        "multiStat__valueColumn": "Wartosc",
         "colorRules": [],
         "multiStat__slot": {
           "height": 1,
           "width": 4
-        },
-        "multiStat__labelColumn": null,
-        "multiStat__displayOrientation": "horizontal",
-        "multiStat__valueColumn": null
+        }
       }
     },
     {
@@ -347,15 +347,15 @@
         "queryId": "286746ee-7e9a-cb49-51e8-31fc6d717dc7"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "colorRules": [],
-        "table__renderLinks": [],
-        "drillthroughDisabled": false,
         "drillthrough": [],
-        "crossFilterDisabled": false,
-        "crossFilter": [],
         "colorRulesDisabled": true,
-        "colorStyle": "light"
+        "table__renderLinks": [],
+        "crossFilter": [],
+        "table__enableRenderLinks": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "colorRules": [],
+        "drillthroughDisabled": false
       }
     },
     {
@@ -374,15 +374,15 @@
         "queryId": "057690da-f91a-d3a0-1eb1-daf8d55e79b8"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "colorRules": [],
-        "table__renderLinks": [],
-        "drillthroughDisabled": false,
         "drillthrough": [],
-        "crossFilterDisabled": false,
-        "crossFilter": [],
         "colorRulesDisabled": true,
-        "colorStyle": "light"
+        "table__renderLinks": [],
+        "crossFilter": [],
+        "table__enableRenderLinks": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "colorRules": [],
+        "drillthroughDisabled": false
       }
     },
     {
@@ -401,34 +401,34 @@
         "queryId": "29192ae9-2d70-7fc6-076f-06771a87ad63"
       },
       "visualOptions": {
-        "crossFilterDisabled": false,
-        "yColumns": [
-          "disinfo_signals",
-          "disinfo_reach"
-        ],
         "legendLocation": "bottom",
-        "drillthrough": [],
-        "xAxisScale": "linear",
-        "verticalLine": "",
-        "seriesColumns": null,
-        "hideLegend": false,
-        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
         "multipleYAxes": {
           "base": {
             "horizontalLines": [],
-            "id": "-1",
-            "label": "",
             "yAxisMaximumValue": null,
+            "columns": [],
             "yAxisMinimumValue": null,
+            "label": "",
             "yAxisScale": "linear",
-            "columns": []
+            "id": "-1"
           },
           "showMultiplePanels": false,
           "additional": []
         },
-        "xColumnTitle": "Czas",
+        "yColumns": [
+          "disinfo_signals",
+          "disinfo_reach"
+        ],
+        "crossFilter": [],
+        "seriesColumns": null,
         "xColumn": "timestamp",
-        "crossFilter": []
+        "drillthrough": [],
+        "verticalLine": "",
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -447,35 +447,35 @@
         "queryId": "599e29ef-6c06-3a19-86d0-b79bf91c9aaf"
       },
       "visualOptions": {
-        "crossFilterDisabled": false,
-        "yColumns": [
-          "reach"
-        ],
         "legendLocation": "bottom",
-        "drillthrough": [],
-        "xAxisScale": "linear",
-        "verticalLine": "",
-        "seriesColumns": [
-          "channel"
-        ],
-        "hideLegend": false,
-        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
         "multipleYAxes": {
           "base": {
             "horizontalLines": [],
-            "id": "-1",
-            "label": "",
             "yAxisMaximumValue": null,
+            "columns": [],
             "yAxisMinimumValue": null,
+            "label": "",
             "yAxisScale": "linear",
-            "columns": []
+            "id": "-1"
           },
           "showMultiplePanels": false,
           "additional": []
         },
-        "xColumnTitle": "Temat",
+        "yColumns": [
+          "reach"
+        ],
+        "crossFilter": [],
+        "seriesColumns": [
+          "channel"
+        ],
         "xColumn": "topic",
-        "crossFilter": []
+        "drillthrough": [],
+        "verticalLine": "",
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "drillthroughDisabled": false,
+        "xColumnTitle": "Temat"
       }
     },
     {
@@ -494,15 +494,15 @@
         "queryId": "67cede41-377e-ca16-6e0f-4431e2d6e78d"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "colorRules": [],
-        "table__renderLinks": [],
-        "drillthroughDisabled": false,
         "drillthrough": [],
-        "crossFilterDisabled": false,
-        "crossFilter": [],
         "colorRulesDisabled": true,
-        "colorStyle": "light"
+        "table__renderLinks": [],
+        "crossFilter": [],
+        "table__enableRenderLinks": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "colorRules": [],
+        "drillthroughDisabled": false
       }
     }
   ],
@@ -564,7 +564,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "hydro_latest\n| extend status = case(level_cm >= alarm_level_cm, \"alarm\", level_cm >= warning_level_cm, \"warning\", \"normal\")\n| project timestamp, gauge_id, gmina_code, river, level_cm, warning_level_cm, alarm_level_cm, trend, status\n| order by status asc, level_cm desc",
+      "text": "hydro_latest\n| extend status = case(level_cm >= alarm_level_cm, \"alarm\", level_cm >= warning_level_cm, \"ostrzegawczy\", \"normalny\")\n| join kind=inner (dim_river_gauge | project gauge_id, gauge_name, lat, lon) on gauge_id\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| project gauge_name, river, gmina_name, level_cm, warning_level_cm, alarm_level_cm, trend, status, lat, lon\n| order by level_cm desc",
       "id": "c5f6996f-7f13-b5ac-e9ce-a8469472c338",
       "usedVariables": []
     },
@@ -582,7 +582,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "hydro_readings\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where level_cm >= alarm_level_cm\n| summarize alarm_gminas=dcount(gmina_code), alarm_gauges=dcount(gauge_id), first_alarm=min(timestamp), last_alarm=max(timestamp)",
+      "text": "hydro_readings\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where level_cm >= alarm_level_cm\n| summarize [\"Gminy w alarmie\"]=dcount(gmina_code), [\"Wodowskazy w alarmie\"]=dcount(gauge_id), [\"Rzeki w alarmie\"]=dcount(river)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
       "id": "b38f0b51-ca66-6e80-132e-54ece2c59d4e",
       "usedVariables": []
     },
@@ -636,7 +636,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "evacuation_status\n| summarize arg_max(timestamp, *) by gmina_code\n| summarize people=sum(people_count), gminas=dcount(gmina_code), capacity=sum(reception_capacity) by status\n| order by status asc",
+      "text": "evacuation_status\n| summarize arg_max(timestamp, *) by gmina_code\n| summarize [\"Osoby w ewakuacji\"]=sum(people_count), [\"Gminy z ewakuacja\"]=dcount(gmina_code), [\"Miejsca w punktach przyjecia\"]=sum(reception_capacity)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
       "id": "df1690d1-2cf7-1098-8737-98e73453ea75",
       "usedVariables": []
     },

@@ -199,6 +199,28 @@ if ($Step -in 'all', 'ingest') {
         try { Invoke-KustoMgmt $clusterUri $kqlDbName $cmd | Out-Null; Write-Ok "zaladowano $table" }
         catch { Write-Warn "$table :: $($_.Exception.Message)" }
     }
+
+    # Wymiary sa potrzebne w Eventhouse, bo kafelki dashboardu (mapa, etykiety gmin)
+    # nie moga siegac do tabel Delta w Lakehouse.
+    Write-Step 'Ladowanie wymiarow do Eventhouse'
+    $dims = [ordered]@{
+        'dim_river_gauge' = 'gauge_id:string, gauge_name:string, river:string, gmina_code:string, warning_level_cm:real, alarm_level_cm:real, lat:real, lon:real, wave_delay_h:real'
+        'dim_gmina'       = 'gmina_code:string, gmina_name:string, powiat_code:string, gmina_type:string, population:long, lat:real, lon:real'
+        'dim_powiat'      = 'powiat_code:string, powiat_name:string, voivodeship_code:string, population:long, area_km2:real, lat:real, lon:real'
+        'dim_voivodeship' = 'voivodeship_code:string, voivodeship_name:string, population:long, wczk_seat:string, lat:real, lon:real'
+        'dim_hazard'      = 'hazard_code:string, hazard_name:string, lead_minister:string, cooperating_ministers:string'
+        'dim_spo'         = 'spo_code:string, spo_name:string'
+    }
+    foreach ($table in $dims.Keys) {
+        $url = "https://onelake.dfs.fabric.microsoft.com/$($ws.id)/$($lakehouse.id)/Files/datasets/$table.csv"
+        try {
+            Invoke-KustoMgmt $clusterUri $kqlDbName ".create-merge table $table ($($dims[$table]))" | Out-Null
+            Invoke-KustoMgmt $clusterUri $kqlDbName ".clear table $table data" | Out-Null
+            Invoke-KustoMgmt $clusterUri $kqlDbName ".ingest into table $table ('$url;impersonate') with (format='csv', ignoreFirstRecord=true)" | Out-Null
+            Write-Ok "zaladowano $table"
+        }
+        catch { Write-Warn "$table :: $($_.Exception.Message)" }
+    }
 }
 
 if ($Step -in 'all', 'verify') {

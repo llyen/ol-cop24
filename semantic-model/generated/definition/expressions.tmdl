@@ -1,0 +1,7 @@
+expression DirectLakeConnection =
+		let
+		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/8ea0556f-7368-4b36-ad84-adf995e19a80/2d840a79-be01-4f82-be45-d4d45e0992ea/Tables", [HierarchicalNavigation=true])
+		in
+		    Source
+
+	annotation PBI_IncludeFutureArtifacts = False
