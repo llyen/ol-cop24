@@ -41,6 +41,30 @@ class TokenCache:
         self._expires = datetime.now(timezone.utc)
         self._lock = threading.Lock()
 
+    def invalidate(self):
+        """Wymusza pobranie nowego tokenu przy najblizszym get()."""
+        with self._lock:
+            self._token = None
+
+    @staticmethod
+    def _expiry_from(data: dict) -> datetime:
+        """Rzeczywisty czas waznosci tokenu zwrocony przez az CLI.
+
+        Sztywne zalozenie 45 minut bylo bledne: az potrafi oddac token z wlasnego
+        cache, ktoremu zostalo kilkanascie minut. Odtwarzanie dostawalo wtedy 401
+        w polowie przebiegu i caly tryb ciagly sie zatrzymywal.
+        """
+        epoch = data.get("expires_on")
+        if epoch is not None:
+            return datetime.fromtimestamp(int(epoch), timezone.utc)
+        raw = data.get("expiresOn")
+        if raw:
+            parsed = datetime.fromisoformat(raw)
+            if parsed.tzinfo is None:
+                parsed = parsed.astimezone()
+            return parsed.astimezone(timezone.utc)
+        return datetime.now(timezone.utc) + timedelta(minutes=45)
+
     def get(self) -> str:
         with self._lock:
             if self._token and datetime.now(timezone.utc) < self._expires:
@@ -51,7 +75,8 @@ class TokenCache:
                 raise SystemExit(f"az account get-access-token nie powiodlo sie: {out.stderr.strip()}")
             data = json.loads(out.stdout)
             self._token = data["accessToken"]
-            self._expires = datetime.now(timezone.utc) + timedelta(minutes=45)
+            # Margines 5 minut, zeby token nie wygasl w trakcie dluzszej partii.
+            self._expires = self._expiry_from(data) - timedelta(minutes=5)
             return self._token
 
 
@@ -75,8 +100,12 @@ class KustoClient:
             except urllib.error.HTTPError as exc:
                 detail = exc.read().decode("utf-8", "replace")[:400]
                 last = f"HTTP {exc.code}: {detail}"
+                if exc.code == 401:
+                    # Token wygasl w trakcie przebiegu. Unieważniamy cache, zeby
+                    # kolejna proba poszla z nowym tokenem, zamiast konczyc odtwarzanie.
+                    self.tokens.invalidate()
                 # 429 i 5xx sa przejsciowe, pozostalych nie ma sensu ponawiac
-                if exc.code not in (429, 500, 502, 503, 504):
+                elif exc.code not in (429, 500, 502, 503, 504):
                     raise SystemExit(f"{url}\n{last}")
             except urllib.error.URLError as exc:
                 last = str(exc)
@@ -202,6 +231,11 @@ class IngestPool:
         self.queue.join()
         if self.error:
             raise SystemExit(f"Blad wysylki: {self.error}")
+
+    def reset_error(self):
+        """Kasuje blad, zeby tryb ciagly mogl wznowic kolejnym cyklem."""
+        with self._lock:
+            self.error = None
 
     def close(self):
         for _ in self._threads:
@@ -457,7 +491,22 @@ def run(args):
     cycle = 1
     try:
         while True:
-            play(anchor, cycle)
+            try:
+                play(anchor, cycle)
+            except SystemExit as exc:
+                # Demo w trybie ciaglym ma stac wlaczone godzinami. Pojedyncza awaria
+                # (wygasly token, chwilowa niedostepnosc pojemnosci) nie moze konczyc
+                # calego przebiegu - wznawiamy nastepnym cyklem od biezacej chwili.
+                if not args.loop:
+                    raise
+                print(f"  [cykl {cycle} przerwany] {exc}; wznawiam za 30 s", flush=True)
+                pool.reset_error()
+                buffers.clear()
+                buffered = 0
+                time.sleep(30)
+                cycle += 1
+                anchor = datetime.now(timezone.utc)
+                continue
             if not args.loop:
                 break
             # Tryb ciagly: kolejny przebieg startuje od biezacej chwili, wiec dashboard
