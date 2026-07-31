@@ -1,0 +1,135 @@
+// 📊 COP-24 — zapytania kafelków Real-Time Dashboard
+// Parametry używane w dashboardzie (do podstawienia w UI):
+//   _startTime / _endTime — przedział czasu, np. D-3...D+10
+//   _voivodeshipCode — kod TERYT województwa lub pusty/all
+//   _hazardCode — domyślnie Z02, dla strony dezinformacji Z20
+// Uwaga: część zapytań pokazuje sam fakt operacyjny bez joinu do wymiarów, bo w Eventhouse
+// typowo trzymamy telemetrię. Drill-down geograficzny można realizować przez Lakehouse/Power BI.
+
+// 01. Kafelek: „Mapa wodowskazów” | Strona: Hydrologia
+// Co liczy: ostatni status każdego wodowskazu względem progów ostrzegawczych i alarmowych.
+// Parametry: przedział czasu opcjonalny; województwo przez join do wymiaru w modelu semantycznym.
+// Oczekiwany wynik na danych demo: 120 rekordów w `hydro_latest`; statusy normal/warning/alarm.
+hydro_latest
+| extend status = case(level_cm >= alarm_level_cm, "alarm", level_cm >= warning_level_cm, "warning", "normal")
+| project timestamp, gauge_id, gmina_code, river, level_cm, warning_level_cm, alarm_level_cm, trend, status
+| order by status asc, level_cm desc
+
+// 02. Kafelek: „Fala Kłodzko → Nysa → Opole → Wrocław” | Strona: Hydrologia
+// Co liczy: przebieg poziomu wody dla kluczowych wodowskazów trasy fali wezbraniowej.
+// Parametry: _startTime, _endTime; domyślnie 2026-09-12T12:00:00+02:00 ... 2026-09-25T12:00:00+02:00.
+// Oczekiwany wynik: piki przesunięte w czasie: Kłodzko 493 cm, Nysa 512 cm, Opole 520 cm, Wrocław 536 cm.
+hydro_readings
+| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))
+| where gauge_id in ("WG-001", "WG-003", "WG-004", "WG-007")
+| summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river
+| order by timestamp asc
+
+// 03. Kafelek: „Gminy w alarmie” | Strona: Obraz kraju
+// Co liczy: unikalne gminy, w których dowolny wodowskaz przekroczył stan alarmowy.
+// Parametry: _startTime/_endTime; filtr województwa przez relację gmina→powiat→woj.
+// Oczekiwany wynik dla pełnego zakresu demo: 10 gmin w alarmie.
+hydro_readings
+| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))
+| where level_cm >= alarm_level_cm
+| summarize alarm_gminas=dcount(gmina_code), alarm_gauges=dcount(gauge_id), first_alarm=min(timestamp), last_alarm=max(timestamp)
+
+// 04. Kafelek: „Zgłoszenia 112/PSP 15 min” | Strona: Obraz kraju
+// Co liczy: liczbę incydentów, osoby objęte zgłoszeniami i najwyższy priorytet w oknach 15 min.
+// Parametry: _hazardCode=Z02, _startTime/_endTime, opcjonalnie województwo po gminie.
+// Oczekiwany wynik: 4943 incydenty w pełnym zbiorze, peak 15-min = 12.
+incident_reports
+| where hazard_code == "Z02"
+| summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 15m)
+| order by timestamp asc
+
+// 05. Kafelek: „Top gmin według incydentów” | Strona: Obraz kraju
+// Co liczy: ranking gmin z największą liczbą zgłoszeń i osób objętych zgłoszeniami.
+// Parametry: _startTime/_endTime, _hazardCode. Wynik: tabela do drill-down dla oficera dyżurnego.
+incident_reports
+| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))
+| where hazard_code == "Z02"
+| summarize incidents=count(), affected=sum(affected_people), high_priority=countif(priority >= 4) by gmina_code
+| top 20 by incidents desc
+
+// 06. Kafelek: „Odbiorcy bez prądu” | Strona: Infrastruktura krytyczna
+// Co liczy: godzinową sumę odbiorców bez prądu i liczbę zdarzeń energetycznych.
+// Parametry: _startTime/_endTime, opcjonalnie województwo. Oczekiwany peak demo: 24057 w 2026-09-17T08:00.
+power_grid_events
+| summarize customers_offline=sum(customers_offline), events=count(), max_eta=max(eta_restore_min) by bin(timestamp, 1h)
+| order by timestamp asc
+
+// 07. Kafelek: „Awarie energetyczne — najcięższe gminy” | Strona: Infrastruktura krytyczna
+// Co liczy: gminy z największą sumą odbiorców bez prądu i najdłuższym ETA.
+// Parametry: _startTime/_endTime; używane do rozmowy z PSE/OSD i wojewodą.
+power_grid_events
+| summarize customers_offline=sum(customers_offline), events=count(), max_eta_restore_min=max(eta_restore_min), causes=make_set(cause, 5) by gmina_code
+| top 15 by customers_offline desc
+
+// 08. Kafelek: „Gminy z pokryciem telco <50%” | Strona: Infrastruktura krytyczna
+// Co liczy: najnowsze zdarzenia telekomunikacyjne z istotnym spadkiem pokrycia.
+// Parametry: _startTime/_endTime. Oczekiwany wynik: 80 gmin miało co najmniej jeden event poniżej 50%.
+telecom_events
+| where coverage_pct < 50
+| summarize arg_max(timestamp, *) by gmina_code, operator
+| project timestamp, gmina_code, operator, coverage_pct, base_stations_down, cause
+| order by coverage_pct asc
+
+// 09. Kafelek: „Status ewakuacji” | Strona: Obraz kraju / RZZK i SPO
+// Co liczy: najnowszy status per gmina oraz sumę osób w ewakuacjach.
+// Parametry: przedział czasu; opcjonalnie województwo. Oczekiwany wynik: suma najnowszych statusów 56212 osób.
+evacuation_status
+| summarize arg_max(timestamp, *) by gmina_code
+| summarize people=sum(people_count), gminas=dcount(gmina_code), capacity=sum(reception_capacity) by status
+| order by status asc
+
+// 10. Kafelek: „Zaangażowane siły i środki” | Strona: Obraz kraju / Karta województwa
+// Co liczy: ostatni raport zasobów per województwo: PSP, WOT, pompy, agregaty, śmigłowce.
+// Parametry: _voivodeshipCode. Oczekiwany wynik: widoczny wzrost zasobów D0-D+3 w woj. 02 i 16.
+resource_deployment
+| summarize arg_max(timestamp, *) by voivodeship_code
+| project timestamp, voivodeship_code, psp_units, wot_soldiers, pumps, generators, helicopters,
+          total_resources=psp_units + wot_soldiers + pumps + generators + helicopters
+| order by total_resources desc
+
+// 11. Kafelek: „Ostatnie eskalacje i SPO” | Strona: RZZK i SPO
+// Co liczy: sekwencję eskalacji gmina→powiat→wojewoda→minister→RZZK oraz rekomendowaną SPO.
+// Parametry: _hazardCode=Z02, _startTime/_endTime. Oczekiwany wynik: 5 zdarzeń, w tym minister wiodący→RZZK w D0.
+escalation_events
+| where hazard_code == "Z02"
+| order by timestamp asc
+| project timestamp, from_level, to_level, area, recommended_spo, reason
+
+// 12. Kafelek: „Sygnały dezinformacyjne Z20” | Strona: Z20 Dezinformacja
+// Co liczy: liczbę sygnałów z flagą dezinformacji i ich zasięg w czasie.
+// Parametry: _hazardCode=Z20 albo disinformation_flag=true, _startTime/_endTime.
+// Oczekiwany wynik: 363 sygnały dezinformacyjne, łączny zasięg 39854793.
+media_signals
+| where disinformation_flag == true or hazard_code == "Z20"
+| summarize disinfo_signals=count(), disinfo_reach=sum(reach), topics=make_set(topic, 5) by bin(timestamp, 1h)
+| order by timestamp asc
+
+// 13. Kafelek: „Kanały i tematy Z20” | Strona: Z20 Dezinformacja
+// Co liczy: ranking kanałów i tematów, aby oficer komunikacji wiedział, gdzie reagować.
+// Parametry: _startTime/_endTime. Wynik: tabela kanał+temat+zasięg.
+media_signals
+| where disinformation_flag == true
+| summarize signals=count(), reach=sum(reach) by channel, topic
+| top 20 by reach desc
+
+// 14. Kafelek: „Korelacja hydro → energia → telco” | Strona: Infrastruktura krytyczna
+// Co liczy: dla gmin z alarmem hydro pokazuje pierwszą awarię energii i telco oraz opóźnienia godzinowe.
+// Parametry: _startTime/_endTime, opcjonalnie województwo. Wynik: tabela do rozmowy o kaskadzie IK.
+let hydro_alarm = hydro_readings
+| where level_cm >= alarm_level_cm
+| summarize first_alarm=min(timestamp) by gmina_code;
+let power_first = power_grid_events
+| summarize first_power=min(timestamp), customers=sum(customers_offline) by gmina_code;
+let telco_first = telecom_events
+| summarize first_telco=min(timestamp), min_coverage=min(coverage_pct) by gmina_code;
+hydro_alarm
+| join kind=leftouter power_first on gmina_code
+| join kind=leftouter telco_first on gmina_code
+| extend power_delay_h=datetime_diff('hour', first_power, first_alarm), telco_delay_h=datetime_diff('hour', first_telco, first_alarm)
+| project gmina_code, first_alarm, first_power, power_delay_h, customers, first_telco, telco_delay_h, min_coverage
+| order by first_alarm asc

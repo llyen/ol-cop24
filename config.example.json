@@ -1,0 +1,6 @@
+{
+  "eventhub_connection_string": "Endpoint=sb://<namespace>.servicebus.windows.net/;SharedAccessKeyName=<key-name>;SharedAccessKey=<key>;EntityPath=<eventhub>",
+  "eventhub_name": "ol-cop24-events",
+  "default_stream": "hydro_readings",
+  "batch_size": 100
+}

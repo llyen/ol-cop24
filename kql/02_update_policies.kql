@@ -1,0 +1,75 @@
+// 🔄 COP-24 — widoki materializowane i agregacje operacyjne
+// Cel pliku: przygotować warstwę pośrednią dla Real-Time Dashboard, Activator i Data Agent.
+// Dlaczego: dashboard decyzyjny nie powinien za każdym odświeżeniem liczyć pełnych tabel raw.
+// Widoki latest służą do map i tabel stanu bieżącego, a agregacje 15-min/1h do trendów.
+
+// Widok: hydro_latest
+// Po co istnieje: pokazuje ostatni odczyt każdego wodowskazu. Zasila mapę hydrologiczną
+// oraz szybkie sprawdzenie, które obiekty są w statusie normal/warning/alarm.
+// Na danych demo powinien zwrócić 120 rekordów — po jednym na wodowskaz.
+.create-or-alter materialized-view with (backfill=true) hydro_latest on table hydro_readings {
+    hydro_readings
+    | summarize arg_max(timestamp, *) by gauge_id
+}
+
+// Widok: incidents_agg_15min
+// Po co istnieje: agreguje zgłoszenia 112/PSP do okien 15-minutowych per gmina i zagrożenie.
+// Użycie: kafel „Zgłoszenia 112/PSP 15 min”, reguły Activator i Data Agent.
+// W demo peak okna 15-min wynosi 12 zdarzeń, więc progi produkcyjne można omawiać oddzielnie.
+.create-or-alter materialized-view with (backfill=true) incidents_agg_15min on table incident_reports {
+    incident_reports
+    | summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority)
+      by bin(timestamp, 15m), gmina_code, hazard_code
+}
+
+// Widok: power_hourly
+// Po co istnieje: liczy godzinowe obciążenie awariami zasilania. W dashboardzie nie interesuje nas
+// każdy event z osobna, lecz suma odbiorców bez prądu w oknie czasu.
+// W danych demo najwyższa godzina to 2026-09-17T08:00 i 24057 odbiorców bez prądu.
+.create-or-alter materialized-view with (backfill=true) power_hourly on table power_grid_events {
+    power_grid_events
+    | summarize customers_offline=sum(customers_offline), events=count(), max_eta_restore_min=max(eta_restore_min)
+      by bin(timestamp, 1h), gmina_code
+}
+
+// Widok: telecom_latest_by_gmina
+// Po co istnieje: pokazuje najnowszy stan usług telco w gminie/operatorze i pozwala szybko znaleźć
+// obszary z pokryciem poniżej 50%. W demo 80 gmin ma co najmniej jeden event z pokryciem <50%.
+.create-or-alter materialized-view with (backfill=true) telecom_latest_by_gmina on table telecom_events {
+    telecom_events
+    | summarize arg_max(timestamp, *) by gmina_code, operator
+}
+
+// Widok: evacuation_latest
+// Po co istnieje: status ewakuacji jest aktualizowany etapami planned/in_progress/completed.
+// Dashboard i aplikacja potrzebują ostatniego statusu per gmina, a nie historii każdej aktualizacji.
+// W danych demo suma najnowszych statusów to 56212 osób.
+.create-or-alter materialized-view with (backfill=true) evacuation_latest on table evacuation_status {
+    evacuation_status
+    | summarize arg_max(timestamp, *) by gmina_code
+}
+
+// Widok: resources_latest_by_voivodeship
+// Po co istnieje: raport sił i środków jest periodyczny. Widok trzyma ostatni raport dla województwa,
+// aby karta województwa pokazywała aktualne PSP/WOT/pompy/agregaty/śmigłowce.
+.create-or-alter materialized-view with (backfill=true) resources_latest_by_voivodeship on table resource_deployment {
+    resource_deployment
+    | summarize arg_max(timestamp, *) by voivodeship_code
+}
+
+// Widok: media_disinfo_15min
+// Po co istnieje: agreguje sygnały medialne i dezinformacyjne w oknach 15-minutowych.
+// Wspiera stronę „Z20 Dezinformacja” i regułę powiadomienia SPO-3.
+.create-or-alter materialized-view with (backfill=true) media_disinfo_15min on table media_signals {
+    media_signals
+    | summarize signals=count(), reach=sum(reach), disinfo_signals=countif(disinformation_flag == true), disinfo_reach=sumif(reach, disinformation_flag == true)
+      by bin(timestamp, 15m), topic, channel
+}
+
+// Widok: escalation_latest
+// Po co istnieje: trzyma najnowsze zdarzenie eskalacji dla obszaru i poziomu docelowego.
+// Zasila kafel „Ostatnie eskalacje” oraz przycisk „Zwołaj RZZK (SPO-1)”.
+.create-or-alter materialized-view with (backfill=true) escalation_latest on table escalation_events {
+    escalation_events
+    | summarize arg_max(timestamp, *) by area, to_level
+}

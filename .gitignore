@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+.env.*
+!.env.example
+.vscode/
+.ipynb_checkpoints/
+*.log
+.DS_Store
+
+# Duze pliki danych - regenerowane deterministycznie (seed=42) przez generate_datasets.py
+datasets/hydro_readings.jsonl

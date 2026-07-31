@@ -1,0 +1,423 @@
+institution_id,institution_code,institution_name,level,seat
+INST-001,RCB,Rządowe Centrum Bezpieczeństwa,krajowy,Warszawa
+INST-002,KG_PSP,Komenda Główna PSP,krajowy,Warszawa
+INST-003,POLICJA,Komenda Główna Policji,krajowy,Warszawa
+INST-004,IMGW,IMGW-PIB,krajowy,Warszawa
+INST-005,WODY_POLSKIE,PGW Wody Polskie,krajowy,Warszawa
+INST-006,PSE,Polskie Sieci Elektroenergetyczne,krajowy,Konstancin-Jeziorna
+INST-007,TELCO,Operatorzy telekomunikacyjni,krajowy,Warszawa
+INST-008,NFZ,NFZ i szpitale,krajowy,Warszawa
+INST-009,SG,Straż Graniczna,krajowy,Warszawa
+INST-010,WOT,Wojska Obrony Terytorialnej,krajowy,Zegrze
+INST-WCZK-02,WCZK_02,Wojewódzkie Centrum Zarządzania Kryzysowego - dolnośląskie,wojewódzki,Wrocław
+INST-KWPSP-02,KW_PSP_02,Komenda Wojewódzka PSP - dolnośląskie,wojewódzki,Wrocław
+INST-WCZK-04,WCZK_04,Wojewódzkie Centrum Zarządzania Kryzysowego - kujawsko-pomorskie,wojewódzki,Bydgoszcz/Toruń
+INST-KWPSP-04,KW_PSP_04,Komenda Wojewódzka PSP - kujawsko-pomorskie,wojewódzki,Bydgoszcz/Toruń
+INST-WCZK-06,WCZK_06,Wojewódzkie Centrum Zarządzania Kryzysowego - lubelskie,wojewódzki,Lublin
+INST-KWPSP-06,KW_PSP_06,Komenda Wojewódzka PSP - lubelskie,wojewódzki,Lublin
+INST-WCZK-08,WCZK_08,Wojewódzkie Centrum Zarządzania Kryzysowego - lubuskie,wojewódzki,Gorzów Wlkp./Zielona Góra
+INST-KWPSP-08,KW_PSP_08,Komenda Wojewódzka PSP - lubuskie,wojewódzki,Gorzów Wlkp./Zielona Góra
+INST-WCZK-10,WCZK_10,Wojewódzkie Centrum Zarządzania Kryzysowego - łódzkie,wojewódzki,Łódź
+INST-KWPSP-10,KW_PSP_10,Komenda Wojewódzka PSP - łódzkie,wojewódzki,Łódź
+INST-WCZK-12,WCZK_12,Wojewódzkie Centrum Zarządzania Kryzysowego - małopolskie,wojewódzki,Kraków
+INST-KWPSP-12,KW_PSP_12,Komenda Wojewódzka PSP - małopolskie,wojewódzki,Kraków
+INST-WCZK-14,WCZK_14,Wojewódzkie Centrum Zarządzania Kryzysowego - mazowieckie,wojewódzki,Warszawa
+INST-KWPSP-14,KW_PSP_14,Komenda Wojewódzka PSP - mazowieckie,wojewódzki,Warszawa
+INST-WCZK-16,WCZK_16,Wojewódzkie Centrum Zarządzania Kryzysowego - opolskie,wojewódzki,Opole
+INST-KWPSP-16,KW_PSP_16,Komenda Wojewódzka PSP - opolskie,wojewódzki,Opole
+INST-WCZK-18,WCZK_18,Wojewódzkie Centrum Zarządzania Kryzysowego - podkarpackie,wojewódzki,Rzeszów
+INST-KWPSP-18,KW_PSP_18,Komenda Wojewódzka PSP - podkarpackie,wojewódzki,Rzeszów
+INST-WCZK-20,WCZK_20,Wojewódzkie Centrum Zarządzania Kryzysowego - podlaskie,wojewódzki,Białystok
+INST-KWPSP-20,KW_PSP_20,Komenda Wojewódzka PSP - podlaskie,wojewódzki,Białystok
+INST-WCZK-22,WCZK_22,Wojewódzkie Centrum Zarządzania Kryzysowego - pomorskie,wojewódzki,Gdańsk
+INST-KWPSP-22,KW_PSP_22,Komenda Wojewódzka PSP - pomorskie,wojewódzki,Gdańsk
+INST-WCZK-24,WCZK_24,Wojewódzkie Centrum Zarządzania Kryzysowego - śląskie,wojewódzki,Katowice
+INST-KWPSP-24,KW_PSP_24,Komenda Wojewódzka PSP - śląskie,wojewódzki,Katowice
+INST-WCZK-26,WCZK_26,Wojewódzkie Centrum Zarządzania Kryzysowego - świętokrzyskie,wojewódzki,Kielce
+INST-KWPSP-26,KW_PSP_26,Komenda Wojewódzka PSP - świętokrzyskie,wojewódzki,Kielce
+INST-WCZK-28,WCZK_28,Wojewódzkie Centrum Zarządzania Kryzysowego - warmińsko-mazurskie,wojewódzki,Olsztyn
+INST-KWPSP-28,KW_PSP_28,Komenda Wojewódzka PSP - warmińsko-mazurskie,wojewódzki,Olsztyn
+INST-WCZK-30,WCZK_30,Wojewódzkie Centrum Zarządzania Kryzysowego - wielkopolskie,wojewódzki,Poznań
+INST-KWPSP-30,KW_PSP_30,Komenda Wojewódzka PSP - wielkopolskie,wojewódzki,Poznań
+INST-WCZK-32,WCZK_32,Wojewódzkie Centrum Zarządzania Kryzysowego - zachodniopomorskie,wojewódzki,Szczecin
+INST-KWPSP-32,KW_PSP_32,Komenda Wojewódzka PSP - zachodniopomorskie,wojewódzki,Szczecin
+INST-PCZK-0201,PCZK_0201,Powiatowe Centrum Zarządzania Kryzysowego - kłodzki,powiatowy,kłodzki
+INST-PCZK-0202,PCZK_0202,Powiatowe Centrum Zarządzania Kryzysowego - wrocławski,powiatowy,wrocławski
+INST-PCZK-0203,PCZK_0203,Powiatowe Centrum Zarządzania Kryzysowego - Wrocław,powiatowy,Wrocław
+INST-PCZK-0204,PCZK_0204,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 04,powiatowy,dolnośląskie powiat 04
+INST-PCZK-0205,PCZK_0205,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 05,powiatowy,dolnośląskie powiat 05
+INST-PCZK-0206,PCZK_0206,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 06,powiatowy,dolnośląskie powiat 06
+INST-PCZK-0207,PCZK_0207,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 07,powiatowy,dolnośląskie powiat 07
+INST-PCZK-0208,PCZK_0208,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 08,powiatowy,dolnośląskie powiat 08
+INST-PCZK-0209,PCZK_0209,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 09,powiatowy,dolnośląskie powiat 09
+INST-PCZK-0210,PCZK_0210,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 10,powiatowy,dolnośląskie powiat 10
+INST-PCZK-0211,PCZK_0211,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 11,powiatowy,dolnośląskie powiat 11
+INST-PCZK-0212,PCZK_0212,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 12,powiatowy,dolnośląskie powiat 12
+INST-PCZK-0213,PCZK_0213,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 13,powiatowy,dolnośląskie powiat 13
+INST-PCZK-0214,PCZK_0214,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 14,powiatowy,dolnośląskie powiat 14
+INST-PCZK-0215,PCZK_0215,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 15,powiatowy,dolnośląskie powiat 15
+INST-PCZK-0216,PCZK_0216,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 16,powiatowy,dolnośląskie powiat 16
+INST-PCZK-0217,PCZK_0217,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 17,powiatowy,dolnośląskie powiat 17
+INST-PCZK-0218,PCZK_0218,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 18,powiatowy,dolnośląskie powiat 18
+INST-PCZK-0219,PCZK_0219,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 19,powiatowy,dolnośląskie powiat 19
+INST-PCZK-0220,PCZK_0220,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 20,powiatowy,dolnośląskie powiat 20
+INST-PCZK-0221,PCZK_0221,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 21,powiatowy,dolnośląskie powiat 21
+INST-PCZK-0222,PCZK_0222,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 22,powiatowy,dolnośląskie powiat 22
+INST-PCZK-0223,PCZK_0223,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 23,powiatowy,dolnośląskie powiat 23
+INST-PCZK-0224,PCZK_0224,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 24,powiatowy,dolnośląskie powiat 24
+INST-PCZK-0225,PCZK_0225,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 25,powiatowy,dolnośląskie powiat 25
+INST-PCZK-0226,PCZK_0226,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 26,powiatowy,dolnośląskie powiat 26
+INST-PCZK-0227,PCZK_0227,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 27,powiatowy,dolnośląskie powiat 27
+INST-PCZK-0228,PCZK_0228,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 28,powiatowy,dolnośląskie powiat 28
+INST-PCZK-0229,PCZK_0229,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 29,powiatowy,dolnośląskie powiat 29
+INST-PCZK-0230,PCZK_0230,Powiatowe Centrum Zarządzania Kryzysowego - dolnośląskie powiat 30,powiatowy,dolnośląskie powiat 30
+INST-PCZK-0401,PCZK_0401,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 01,powiatowy,kujawsko powiat 01
+INST-PCZK-0402,PCZK_0402,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 02,powiatowy,kujawsko powiat 02
+INST-PCZK-0403,PCZK_0403,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 03,powiatowy,kujawsko powiat 03
+INST-PCZK-0404,PCZK_0404,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 04,powiatowy,kujawsko powiat 04
+INST-PCZK-0405,PCZK_0405,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 05,powiatowy,kujawsko powiat 05
+INST-PCZK-0406,PCZK_0406,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 06,powiatowy,kujawsko powiat 06
+INST-PCZK-0407,PCZK_0407,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 07,powiatowy,kujawsko powiat 07
+INST-PCZK-0408,PCZK_0408,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 08,powiatowy,kujawsko powiat 08
+INST-PCZK-0409,PCZK_0409,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 09,powiatowy,kujawsko powiat 09
+INST-PCZK-0410,PCZK_0410,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 10,powiatowy,kujawsko powiat 10
+INST-PCZK-0411,PCZK_0411,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 11,powiatowy,kujawsko powiat 11
+INST-PCZK-0412,PCZK_0412,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 12,powiatowy,kujawsko powiat 12
+INST-PCZK-0413,PCZK_0413,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 13,powiatowy,kujawsko powiat 13
+INST-PCZK-0414,PCZK_0414,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 14,powiatowy,kujawsko powiat 14
+INST-PCZK-0415,PCZK_0415,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 15,powiatowy,kujawsko powiat 15
+INST-PCZK-0416,PCZK_0416,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 16,powiatowy,kujawsko powiat 16
+INST-PCZK-0417,PCZK_0417,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 17,powiatowy,kujawsko powiat 17
+INST-PCZK-0418,PCZK_0418,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 18,powiatowy,kujawsko powiat 18
+INST-PCZK-0419,PCZK_0419,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 19,powiatowy,kujawsko powiat 19
+INST-PCZK-0420,PCZK_0420,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 20,powiatowy,kujawsko powiat 20
+INST-PCZK-0421,PCZK_0421,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 21,powiatowy,kujawsko powiat 21
+INST-PCZK-0422,PCZK_0422,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 22,powiatowy,kujawsko powiat 22
+INST-PCZK-0423,PCZK_0423,Powiatowe Centrum Zarządzania Kryzysowego - kujawsko powiat 23,powiatowy,kujawsko powiat 23
+INST-PCZK-0601,PCZK_0601,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 01,powiatowy,lubelskie powiat 01
+INST-PCZK-0602,PCZK_0602,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 02,powiatowy,lubelskie powiat 02
+INST-PCZK-0603,PCZK_0603,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 03,powiatowy,lubelskie powiat 03
+INST-PCZK-0604,PCZK_0604,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 04,powiatowy,lubelskie powiat 04
+INST-PCZK-0605,PCZK_0605,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 05,powiatowy,lubelskie powiat 05
+INST-PCZK-0606,PCZK_0606,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 06,powiatowy,lubelskie powiat 06
+INST-PCZK-0607,PCZK_0607,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 07,powiatowy,lubelskie powiat 07
+INST-PCZK-0608,PCZK_0608,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 08,powiatowy,lubelskie powiat 08
+INST-PCZK-0609,PCZK_0609,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 09,powiatowy,lubelskie powiat 09
+INST-PCZK-0610,PCZK_0610,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 10,powiatowy,lubelskie powiat 10
+INST-PCZK-0611,PCZK_0611,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 11,powiatowy,lubelskie powiat 11
+INST-PCZK-0612,PCZK_0612,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 12,powiatowy,lubelskie powiat 12
+INST-PCZK-0613,PCZK_0613,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 13,powiatowy,lubelskie powiat 13
+INST-PCZK-0614,PCZK_0614,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 14,powiatowy,lubelskie powiat 14
+INST-PCZK-0615,PCZK_0615,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 15,powiatowy,lubelskie powiat 15
+INST-PCZK-0616,PCZK_0616,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 16,powiatowy,lubelskie powiat 16
+INST-PCZK-0617,PCZK_0617,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 17,powiatowy,lubelskie powiat 17
+INST-PCZK-0618,PCZK_0618,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 18,powiatowy,lubelskie powiat 18
+INST-PCZK-0619,PCZK_0619,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 19,powiatowy,lubelskie powiat 19
+INST-PCZK-0620,PCZK_0620,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 20,powiatowy,lubelskie powiat 20
+INST-PCZK-0621,PCZK_0621,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 21,powiatowy,lubelskie powiat 21
+INST-PCZK-0622,PCZK_0622,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 22,powiatowy,lubelskie powiat 22
+INST-PCZK-0623,PCZK_0623,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 23,powiatowy,lubelskie powiat 23
+INST-PCZK-0624,PCZK_0624,Powiatowe Centrum Zarządzania Kryzysowego - lubelskie powiat 24,powiatowy,lubelskie powiat 24
+INST-PCZK-0801,PCZK_0801,Powiatowe Centrum Zarządzania Kryzysowego - krośnieński,powiatowy,krośnieński
+INST-PCZK-0802,PCZK_0802,Powiatowe Centrum Zarządzania Kryzysowego - nowosolski,powiatowy,nowosolski
+INST-PCZK-0803,PCZK_0803,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 03,powiatowy,lubuskie powiat 03
+INST-PCZK-0804,PCZK_0804,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 04,powiatowy,lubuskie powiat 04
+INST-PCZK-0805,PCZK_0805,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 05,powiatowy,lubuskie powiat 05
+INST-PCZK-0806,PCZK_0806,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 06,powiatowy,lubuskie powiat 06
+INST-PCZK-0807,PCZK_0807,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 07,powiatowy,lubuskie powiat 07
+INST-PCZK-0808,PCZK_0808,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 08,powiatowy,lubuskie powiat 08
+INST-PCZK-0809,PCZK_0809,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 09,powiatowy,lubuskie powiat 09
+INST-PCZK-0810,PCZK_0810,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 10,powiatowy,lubuskie powiat 10
+INST-PCZK-0811,PCZK_0811,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 11,powiatowy,lubuskie powiat 11
+INST-PCZK-0812,PCZK_0812,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 12,powiatowy,lubuskie powiat 12
+INST-PCZK-0813,PCZK_0813,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 13,powiatowy,lubuskie powiat 13
+INST-PCZK-0814,PCZK_0814,Powiatowe Centrum Zarządzania Kryzysowego - lubuskie powiat 14,powiatowy,lubuskie powiat 14
+INST-PCZK-1001,PCZK_1001,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 01,powiatowy,łódzkie powiat 01
+INST-PCZK-1002,PCZK_1002,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 02,powiatowy,łódzkie powiat 02
+INST-PCZK-1003,PCZK_1003,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 03,powiatowy,łódzkie powiat 03
+INST-PCZK-1004,PCZK_1004,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 04,powiatowy,łódzkie powiat 04
+INST-PCZK-1005,PCZK_1005,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 05,powiatowy,łódzkie powiat 05
+INST-PCZK-1006,PCZK_1006,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 06,powiatowy,łódzkie powiat 06
+INST-PCZK-1007,PCZK_1007,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 07,powiatowy,łódzkie powiat 07
+INST-PCZK-1008,PCZK_1008,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 08,powiatowy,łódzkie powiat 08
+INST-PCZK-1009,PCZK_1009,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 09,powiatowy,łódzkie powiat 09
+INST-PCZK-1010,PCZK_1010,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 10,powiatowy,łódzkie powiat 10
+INST-PCZK-1011,PCZK_1011,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 11,powiatowy,łódzkie powiat 11
+INST-PCZK-1012,PCZK_1012,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 12,powiatowy,łódzkie powiat 12
+INST-PCZK-1013,PCZK_1013,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 13,powiatowy,łódzkie powiat 13
+INST-PCZK-1014,PCZK_1014,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 14,powiatowy,łódzkie powiat 14
+INST-PCZK-1015,PCZK_1015,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 15,powiatowy,łódzkie powiat 15
+INST-PCZK-1016,PCZK_1016,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 16,powiatowy,łódzkie powiat 16
+INST-PCZK-1017,PCZK_1017,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 17,powiatowy,łódzkie powiat 17
+INST-PCZK-1018,PCZK_1018,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 18,powiatowy,łódzkie powiat 18
+INST-PCZK-1019,PCZK_1019,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 19,powiatowy,łódzkie powiat 19
+INST-PCZK-1020,PCZK_1020,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 20,powiatowy,łódzkie powiat 20
+INST-PCZK-1021,PCZK_1021,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 21,powiatowy,łódzkie powiat 21
+INST-PCZK-1022,PCZK_1022,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 22,powiatowy,łódzkie powiat 22
+INST-PCZK-1023,PCZK_1023,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 23,powiatowy,łódzkie powiat 23
+INST-PCZK-1024,PCZK_1024,Powiatowe Centrum Zarządzania Kryzysowego - łódzkie powiat 24,powiatowy,łódzkie powiat 24
+INST-PCZK-1201,PCZK_1201,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 01,powiatowy,małopolskie powiat 01
+INST-PCZK-1202,PCZK_1202,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 02,powiatowy,małopolskie powiat 02
+INST-PCZK-1203,PCZK_1203,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 03,powiatowy,małopolskie powiat 03
+INST-PCZK-1204,PCZK_1204,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 04,powiatowy,małopolskie powiat 04
+INST-PCZK-1205,PCZK_1205,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 05,powiatowy,małopolskie powiat 05
+INST-PCZK-1206,PCZK_1206,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 06,powiatowy,małopolskie powiat 06
+INST-PCZK-1207,PCZK_1207,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 07,powiatowy,małopolskie powiat 07
+INST-PCZK-1208,PCZK_1208,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 08,powiatowy,małopolskie powiat 08
+INST-PCZK-1209,PCZK_1209,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 09,powiatowy,małopolskie powiat 09
+INST-PCZK-1210,PCZK_1210,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 10,powiatowy,małopolskie powiat 10
+INST-PCZK-1211,PCZK_1211,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 11,powiatowy,małopolskie powiat 11
+INST-PCZK-1212,PCZK_1212,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 12,powiatowy,małopolskie powiat 12
+INST-PCZK-1213,PCZK_1213,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 13,powiatowy,małopolskie powiat 13
+INST-PCZK-1214,PCZK_1214,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 14,powiatowy,małopolskie powiat 14
+INST-PCZK-1215,PCZK_1215,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 15,powiatowy,małopolskie powiat 15
+INST-PCZK-1216,PCZK_1216,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 16,powiatowy,małopolskie powiat 16
+INST-PCZK-1217,PCZK_1217,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 17,powiatowy,małopolskie powiat 17
+INST-PCZK-1218,PCZK_1218,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 18,powiatowy,małopolskie powiat 18
+INST-PCZK-1219,PCZK_1219,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 19,powiatowy,małopolskie powiat 19
+INST-PCZK-1220,PCZK_1220,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 20,powiatowy,małopolskie powiat 20
+INST-PCZK-1221,PCZK_1221,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 21,powiatowy,małopolskie powiat 21
+INST-PCZK-1222,PCZK_1222,Powiatowe Centrum Zarządzania Kryzysowego - małopolskie powiat 22,powiatowy,małopolskie powiat 22
+INST-PCZK-1401,PCZK_1401,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 01,powiatowy,mazowieckie powiat 01
+INST-PCZK-1402,PCZK_1402,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 02,powiatowy,mazowieckie powiat 02
+INST-PCZK-1403,PCZK_1403,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 03,powiatowy,mazowieckie powiat 03
+INST-PCZK-1404,PCZK_1404,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 04,powiatowy,mazowieckie powiat 04
+INST-PCZK-1405,PCZK_1405,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 05,powiatowy,mazowieckie powiat 05
+INST-PCZK-1406,PCZK_1406,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 06,powiatowy,mazowieckie powiat 06
+INST-PCZK-1407,PCZK_1407,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 07,powiatowy,mazowieckie powiat 07
+INST-PCZK-1408,PCZK_1408,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 08,powiatowy,mazowieckie powiat 08
+INST-PCZK-1409,PCZK_1409,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 09,powiatowy,mazowieckie powiat 09
+INST-PCZK-1410,PCZK_1410,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 10,powiatowy,mazowieckie powiat 10
+INST-PCZK-1411,PCZK_1411,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 11,powiatowy,mazowieckie powiat 11
+INST-PCZK-1412,PCZK_1412,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 12,powiatowy,mazowieckie powiat 12
+INST-PCZK-1413,PCZK_1413,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 13,powiatowy,mazowieckie powiat 13
+INST-PCZK-1414,PCZK_1414,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 14,powiatowy,mazowieckie powiat 14
+INST-PCZK-1415,PCZK_1415,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 15,powiatowy,mazowieckie powiat 15
+INST-PCZK-1416,PCZK_1416,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 16,powiatowy,mazowieckie powiat 16
+INST-PCZK-1417,PCZK_1417,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 17,powiatowy,mazowieckie powiat 17
+INST-PCZK-1418,PCZK_1418,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 18,powiatowy,mazowieckie powiat 18
+INST-PCZK-1419,PCZK_1419,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 19,powiatowy,mazowieckie powiat 19
+INST-PCZK-1420,PCZK_1420,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 20,powiatowy,mazowieckie powiat 20
+INST-PCZK-1421,PCZK_1421,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 21,powiatowy,mazowieckie powiat 21
+INST-PCZK-1422,PCZK_1422,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 22,powiatowy,mazowieckie powiat 22
+INST-PCZK-1423,PCZK_1423,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 23,powiatowy,mazowieckie powiat 23
+INST-PCZK-1424,PCZK_1424,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 24,powiatowy,mazowieckie powiat 24
+INST-PCZK-1425,PCZK_1425,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 25,powiatowy,mazowieckie powiat 25
+INST-PCZK-1426,PCZK_1426,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 26,powiatowy,mazowieckie powiat 26
+INST-PCZK-1427,PCZK_1427,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 27,powiatowy,mazowieckie powiat 27
+INST-PCZK-1428,PCZK_1428,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 28,powiatowy,mazowieckie powiat 28
+INST-PCZK-1429,PCZK_1429,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 29,powiatowy,mazowieckie powiat 29
+INST-PCZK-1430,PCZK_1430,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 30,powiatowy,mazowieckie powiat 30
+INST-PCZK-1431,PCZK_1431,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 31,powiatowy,mazowieckie powiat 31
+INST-PCZK-1432,PCZK_1432,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 32,powiatowy,mazowieckie powiat 32
+INST-PCZK-1433,PCZK_1433,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 33,powiatowy,mazowieckie powiat 33
+INST-PCZK-1434,PCZK_1434,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 34,powiatowy,mazowieckie powiat 34
+INST-PCZK-1435,PCZK_1435,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 35,powiatowy,mazowieckie powiat 35
+INST-PCZK-1436,PCZK_1436,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 36,powiatowy,mazowieckie powiat 36
+INST-PCZK-1437,PCZK_1437,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 37,powiatowy,mazowieckie powiat 37
+INST-PCZK-1438,PCZK_1438,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 38,powiatowy,mazowieckie powiat 38
+INST-PCZK-1439,PCZK_1439,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 39,powiatowy,mazowieckie powiat 39
+INST-PCZK-1440,PCZK_1440,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 40,powiatowy,mazowieckie powiat 40
+INST-PCZK-1441,PCZK_1441,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 41,powiatowy,mazowieckie powiat 41
+INST-PCZK-1442,PCZK_1442,Powiatowe Centrum Zarządzania Kryzysowego - mazowieckie powiat 42,powiatowy,mazowieckie powiat 42
+INST-PCZK-1601,PCZK_1601,Powiatowe Centrum Zarządzania Kryzysowego - nyski,powiatowy,nyski
+INST-PCZK-1602,PCZK_1602,Powiatowe Centrum Zarządzania Kryzysowego - opolski,powiatowy,opolski
+INST-PCZK-1603,PCZK_1603,Powiatowe Centrum Zarządzania Kryzysowego - Opole,powiatowy,Opole
+INST-PCZK-1604,PCZK_1604,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 04,powiatowy,opolskie powiat 04
+INST-PCZK-1605,PCZK_1605,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 05,powiatowy,opolskie powiat 05
+INST-PCZK-1606,PCZK_1606,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 06,powiatowy,opolskie powiat 06
+INST-PCZK-1607,PCZK_1607,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 07,powiatowy,opolskie powiat 07
+INST-PCZK-1608,PCZK_1608,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 08,powiatowy,opolskie powiat 08
+INST-PCZK-1609,PCZK_1609,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 09,powiatowy,opolskie powiat 09
+INST-PCZK-1610,PCZK_1610,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 10,powiatowy,opolskie powiat 10
+INST-PCZK-1611,PCZK_1611,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 11,powiatowy,opolskie powiat 11
+INST-PCZK-1612,PCZK_1612,Powiatowe Centrum Zarządzania Kryzysowego - opolskie powiat 12,powiatowy,opolskie powiat 12
+INST-PCZK-1801,PCZK_1801,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 01,powiatowy,podkarpackie powiat 01
+INST-PCZK-1802,PCZK_1802,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 02,powiatowy,podkarpackie powiat 02
+INST-PCZK-1803,PCZK_1803,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 03,powiatowy,podkarpackie powiat 03
+INST-PCZK-1804,PCZK_1804,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 04,powiatowy,podkarpackie powiat 04
+INST-PCZK-1805,PCZK_1805,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 05,powiatowy,podkarpackie powiat 05
+INST-PCZK-1806,PCZK_1806,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 06,powiatowy,podkarpackie powiat 06
+INST-PCZK-1807,PCZK_1807,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 07,powiatowy,podkarpackie powiat 07
+INST-PCZK-1808,PCZK_1808,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 08,powiatowy,podkarpackie powiat 08
+INST-PCZK-1809,PCZK_1809,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 09,powiatowy,podkarpackie powiat 09
+INST-PCZK-1810,PCZK_1810,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 10,powiatowy,podkarpackie powiat 10
+INST-PCZK-1811,PCZK_1811,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 11,powiatowy,podkarpackie powiat 11
+INST-PCZK-1812,PCZK_1812,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 12,powiatowy,podkarpackie powiat 12
+INST-PCZK-1813,PCZK_1813,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 13,powiatowy,podkarpackie powiat 13
+INST-PCZK-1814,PCZK_1814,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 14,powiatowy,podkarpackie powiat 14
+INST-PCZK-1815,PCZK_1815,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 15,powiatowy,podkarpackie powiat 15
+INST-PCZK-1816,PCZK_1816,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 16,powiatowy,podkarpackie powiat 16
+INST-PCZK-1817,PCZK_1817,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 17,powiatowy,podkarpackie powiat 17
+INST-PCZK-1818,PCZK_1818,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 18,powiatowy,podkarpackie powiat 18
+INST-PCZK-1819,PCZK_1819,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 19,powiatowy,podkarpackie powiat 19
+INST-PCZK-1820,PCZK_1820,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 20,powiatowy,podkarpackie powiat 20
+INST-PCZK-1821,PCZK_1821,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 21,powiatowy,podkarpackie powiat 21
+INST-PCZK-1822,PCZK_1822,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 22,powiatowy,podkarpackie powiat 22
+INST-PCZK-1823,PCZK_1823,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 23,powiatowy,podkarpackie powiat 23
+INST-PCZK-1824,PCZK_1824,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 24,powiatowy,podkarpackie powiat 24
+INST-PCZK-1825,PCZK_1825,Powiatowe Centrum Zarządzania Kryzysowego - podkarpackie powiat 25,powiatowy,podkarpackie powiat 25
+INST-PCZK-2001,PCZK_2001,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 01,powiatowy,podlaskie powiat 01
+INST-PCZK-2002,PCZK_2002,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 02,powiatowy,podlaskie powiat 02
+INST-PCZK-2003,PCZK_2003,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 03,powiatowy,podlaskie powiat 03
+INST-PCZK-2004,PCZK_2004,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 04,powiatowy,podlaskie powiat 04
+INST-PCZK-2005,PCZK_2005,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 05,powiatowy,podlaskie powiat 05
+INST-PCZK-2006,PCZK_2006,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 06,powiatowy,podlaskie powiat 06
+INST-PCZK-2007,PCZK_2007,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 07,powiatowy,podlaskie powiat 07
+INST-PCZK-2008,PCZK_2008,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 08,powiatowy,podlaskie powiat 08
+INST-PCZK-2009,PCZK_2009,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 09,powiatowy,podlaskie powiat 09
+INST-PCZK-2010,PCZK_2010,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 10,powiatowy,podlaskie powiat 10
+INST-PCZK-2011,PCZK_2011,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 11,powiatowy,podlaskie powiat 11
+INST-PCZK-2012,PCZK_2012,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 12,powiatowy,podlaskie powiat 12
+INST-PCZK-2013,PCZK_2013,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 13,powiatowy,podlaskie powiat 13
+INST-PCZK-2014,PCZK_2014,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 14,powiatowy,podlaskie powiat 14
+INST-PCZK-2015,PCZK_2015,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 15,powiatowy,podlaskie powiat 15
+INST-PCZK-2016,PCZK_2016,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 16,powiatowy,podlaskie powiat 16
+INST-PCZK-2017,PCZK_2017,Powiatowe Centrum Zarządzania Kryzysowego - podlaskie powiat 17,powiatowy,podlaskie powiat 17
+INST-PCZK-2201,PCZK_2201,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 01,powiatowy,pomorskie powiat 01
+INST-PCZK-2202,PCZK_2202,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 02,powiatowy,pomorskie powiat 02
+INST-PCZK-2203,PCZK_2203,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 03,powiatowy,pomorskie powiat 03
+INST-PCZK-2204,PCZK_2204,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 04,powiatowy,pomorskie powiat 04
+INST-PCZK-2205,PCZK_2205,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 05,powiatowy,pomorskie powiat 05
+INST-PCZK-2206,PCZK_2206,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 06,powiatowy,pomorskie powiat 06
+INST-PCZK-2207,PCZK_2207,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 07,powiatowy,pomorskie powiat 07
+INST-PCZK-2208,PCZK_2208,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 08,powiatowy,pomorskie powiat 08
+INST-PCZK-2209,PCZK_2209,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 09,powiatowy,pomorskie powiat 09
+INST-PCZK-2210,PCZK_2210,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 10,powiatowy,pomorskie powiat 10
+INST-PCZK-2211,PCZK_2211,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 11,powiatowy,pomorskie powiat 11
+INST-PCZK-2212,PCZK_2212,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 12,powiatowy,pomorskie powiat 12
+INST-PCZK-2213,PCZK_2213,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 13,powiatowy,pomorskie powiat 13
+INST-PCZK-2214,PCZK_2214,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 14,powiatowy,pomorskie powiat 14
+INST-PCZK-2215,PCZK_2215,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 15,powiatowy,pomorskie powiat 15
+INST-PCZK-2216,PCZK_2216,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 16,powiatowy,pomorskie powiat 16
+INST-PCZK-2217,PCZK_2217,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 17,powiatowy,pomorskie powiat 17
+INST-PCZK-2218,PCZK_2218,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 18,powiatowy,pomorskie powiat 18
+INST-PCZK-2219,PCZK_2219,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 19,powiatowy,pomorskie powiat 19
+INST-PCZK-2220,PCZK_2220,Powiatowe Centrum Zarządzania Kryzysowego - pomorskie powiat 20,powiatowy,pomorskie powiat 20
+INST-PCZK-2401,PCZK_2401,Powiatowe Centrum Zarządzania Kryzysowego - raciborski,powiatowy,raciborski
+INST-PCZK-2402,PCZK_2402,Powiatowe Centrum Zarządzania Kryzysowego - wodzisławski,powiatowy,wodzisławski
+INST-PCZK-2403,PCZK_2403,Powiatowe Centrum Zarządzania Kryzysowego - Gliwice,powiatowy,Gliwice
+INST-PCZK-2404,PCZK_2404,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 04,powiatowy,śląskie powiat 04
+INST-PCZK-2405,PCZK_2405,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 05,powiatowy,śląskie powiat 05
+INST-PCZK-2406,PCZK_2406,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 06,powiatowy,śląskie powiat 06
+INST-PCZK-2407,PCZK_2407,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 07,powiatowy,śląskie powiat 07
+INST-PCZK-2408,PCZK_2408,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 08,powiatowy,śląskie powiat 08
+INST-PCZK-2409,PCZK_2409,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 09,powiatowy,śląskie powiat 09
+INST-PCZK-2410,PCZK_2410,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 10,powiatowy,śląskie powiat 10
+INST-PCZK-2411,PCZK_2411,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 11,powiatowy,śląskie powiat 11
+INST-PCZK-2412,PCZK_2412,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 12,powiatowy,śląskie powiat 12
+INST-PCZK-2413,PCZK_2413,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 13,powiatowy,śląskie powiat 13
+INST-PCZK-2414,PCZK_2414,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 14,powiatowy,śląskie powiat 14
+INST-PCZK-2415,PCZK_2415,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 15,powiatowy,śląskie powiat 15
+INST-PCZK-2416,PCZK_2416,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 16,powiatowy,śląskie powiat 16
+INST-PCZK-2417,PCZK_2417,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 17,powiatowy,śląskie powiat 17
+INST-PCZK-2418,PCZK_2418,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 18,powiatowy,śląskie powiat 18
+INST-PCZK-2419,PCZK_2419,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 19,powiatowy,śląskie powiat 19
+INST-PCZK-2420,PCZK_2420,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 20,powiatowy,śląskie powiat 20
+INST-PCZK-2421,PCZK_2421,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 21,powiatowy,śląskie powiat 21
+INST-PCZK-2422,PCZK_2422,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 22,powiatowy,śląskie powiat 22
+INST-PCZK-2423,PCZK_2423,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 23,powiatowy,śląskie powiat 23
+INST-PCZK-2424,PCZK_2424,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 24,powiatowy,śląskie powiat 24
+INST-PCZK-2425,PCZK_2425,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 25,powiatowy,śląskie powiat 25
+INST-PCZK-2426,PCZK_2426,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 26,powiatowy,śląskie powiat 26
+INST-PCZK-2427,PCZK_2427,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 27,powiatowy,śląskie powiat 27
+INST-PCZK-2428,PCZK_2428,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 28,powiatowy,śląskie powiat 28
+INST-PCZK-2429,PCZK_2429,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 29,powiatowy,śląskie powiat 29
+INST-PCZK-2430,PCZK_2430,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 30,powiatowy,śląskie powiat 30
+INST-PCZK-2431,PCZK_2431,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 31,powiatowy,śląskie powiat 31
+INST-PCZK-2432,PCZK_2432,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 32,powiatowy,śląskie powiat 32
+INST-PCZK-2433,PCZK_2433,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 33,powiatowy,śląskie powiat 33
+INST-PCZK-2434,PCZK_2434,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 34,powiatowy,śląskie powiat 34
+INST-PCZK-2435,PCZK_2435,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 35,powiatowy,śląskie powiat 35
+INST-PCZK-2436,PCZK_2436,Powiatowe Centrum Zarządzania Kryzysowego - śląskie powiat 36,powiatowy,śląskie powiat 36
+INST-PCZK-2601,PCZK_2601,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 01,powiatowy,świętokrzyskie powiat 01
+INST-PCZK-2602,PCZK_2602,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 02,powiatowy,świętokrzyskie powiat 02
+INST-PCZK-2603,PCZK_2603,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 03,powiatowy,świętokrzyskie powiat 03
+INST-PCZK-2604,PCZK_2604,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 04,powiatowy,świętokrzyskie powiat 04
+INST-PCZK-2605,PCZK_2605,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 05,powiatowy,świętokrzyskie powiat 05
+INST-PCZK-2606,PCZK_2606,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 06,powiatowy,świętokrzyskie powiat 06
+INST-PCZK-2607,PCZK_2607,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 07,powiatowy,świętokrzyskie powiat 07
+INST-PCZK-2608,PCZK_2608,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 08,powiatowy,świętokrzyskie powiat 08
+INST-PCZK-2609,PCZK_2609,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 09,powiatowy,świętokrzyskie powiat 09
+INST-PCZK-2610,PCZK_2610,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 10,powiatowy,świętokrzyskie powiat 10
+INST-PCZK-2611,PCZK_2611,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 11,powiatowy,świętokrzyskie powiat 11
+INST-PCZK-2612,PCZK_2612,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 12,powiatowy,świętokrzyskie powiat 12
+INST-PCZK-2613,PCZK_2613,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 13,powiatowy,świętokrzyskie powiat 13
+INST-PCZK-2614,PCZK_2614,Powiatowe Centrum Zarządzania Kryzysowego - świętokrzyskie powiat 14,powiatowy,świętokrzyskie powiat 14
+INST-PCZK-2801,PCZK_2801,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 01,powiatowy,warmińsko powiat 01
+INST-PCZK-2802,PCZK_2802,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 02,powiatowy,warmińsko powiat 02
+INST-PCZK-2803,PCZK_2803,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 03,powiatowy,warmińsko powiat 03
+INST-PCZK-2804,PCZK_2804,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 04,powiatowy,warmińsko powiat 04
+INST-PCZK-2805,PCZK_2805,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 05,powiatowy,warmińsko powiat 05
+INST-PCZK-2806,PCZK_2806,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 06,powiatowy,warmińsko powiat 06
+INST-PCZK-2807,PCZK_2807,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 07,powiatowy,warmińsko powiat 07
+INST-PCZK-2808,PCZK_2808,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 08,powiatowy,warmińsko powiat 08
+INST-PCZK-2809,PCZK_2809,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 09,powiatowy,warmińsko powiat 09
+INST-PCZK-2810,PCZK_2810,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 10,powiatowy,warmińsko powiat 10
+INST-PCZK-2811,PCZK_2811,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 11,powiatowy,warmińsko powiat 11
+INST-PCZK-2812,PCZK_2812,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 12,powiatowy,warmińsko powiat 12
+INST-PCZK-2813,PCZK_2813,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 13,powiatowy,warmińsko powiat 13
+INST-PCZK-2814,PCZK_2814,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 14,powiatowy,warmińsko powiat 14
+INST-PCZK-2815,PCZK_2815,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 15,powiatowy,warmińsko powiat 15
+INST-PCZK-2816,PCZK_2816,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 16,powiatowy,warmińsko powiat 16
+INST-PCZK-2817,PCZK_2817,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 17,powiatowy,warmińsko powiat 17
+INST-PCZK-2818,PCZK_2818,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 18,powiatowy,warmińsko powiat 18
+INST-PCZK-2819,PCZK_2819,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 19,powiatowy,warmińsko powiat 19
+INST-PCZK-2820,PCZK_2820,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 20,powiatowy,warmińsko powiat 20
+INST-PCZK-2821,PCZK_2821,Powiatowe Centrum Zarządzania Kryzysowego - warmińsko powiat 21,powiatowy,warmińsko powiat 21
+INST-PCZK-3001,PCZK_3001,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 01,powiatowy,wielkopolskie powiat 01
+INST-PCZK-3002,PCZK_3002,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 02,powiatowy,wielkopolskie powiat 02
+INST-PCZK-3003,PCZK_3003,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 03,powiatowy,wielkopolskie powiat 03
+INST-PCZK-3004,PCZK_3004,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 04,powiatowy,wielkopolskie powiat 04
+INST-PCZK-3005,PCZK_3005,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 05,powiatowy,wielkopolskie powiat 05
+INST-PCZK-3006,PCZK_3006,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 06,powiatowy,wielkopolskie powiat 06
+INST-PCZK-3007,PCZK_3007,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 07,powiatowy,wielkopolskie powiat 07
+INST-PCZK-3008,PCZK_3008,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 08,powiatowy,wielkopolskie powiat 08
+INST-PCZK-3009,PCZK_3009,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 09,powiatowy,wielkopolskie powiat 09
+INST-PCZK-3010,PCZK_3010,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 10,powiatowy,wielkopolskie powiat 10
+INST-PCZK-3011,PCZK_3011,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 11,powiatowy,wielkopolskie powiat 11
+INST-PCZK-3012,PCZK_3012,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 12,powiatowy,wielkopolskie powiat 12
+INST-PCZK-3013,PCZK_3013,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 13,powiatowy,wielkopolskie powiat 13
+INST-PCZK-3014,PCZK_3014,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 14,powiatowy,wielkopolskie powiat 14
+INST-PCZK-3015,PCZK_3015,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 15,powiatowy,wielkopolskie powiat 15
+INST-PCZK-3016,PCZK_3016,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 16,powiatowy,wielkopolskie powiat 16
+INST-PCZK-3017,PCZK_3017,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 17,powiatowy,wielkopolskie powiat 17
+INST-PCZK-3018,PCZK_3018,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 18,powiatowy,wielkopolskie powiat 18
+INST-PCZK-3019,PCZK_3019,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 19,powiatowy,wielkopolskie powiat 19
+INST-PCZK-3020,PCZK_3020,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 20,powiatowy,wielkopolskie powiat 20
+INST-PCZK-3021,PCZK_3021,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 21,powiatowy,wielkopolskie powiat 21
+INST-PCZK-3022,PCZK_3022,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 22,powiatowy,wielkopolskie powiat 22
+INST-PCZK-3023,PCZK_3023,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 23,powiatowy,wielkopolskie powiat 23
+INST-PCZK-3024,PCZK_3024,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 24,powiatowy,wielkopolskie powiat 24
+INST-PCZK-3025,PCZK_3025,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 25,powiatowy,wielkopolskie powiat 25
+INST-PCZK-3026,PCZK_3026,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 26,powiatowy,wielkopolskie powiat 26
+INST-PCZK-3027,PCZK_3027,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 27,powiatowy,wielkopolskie powiat 27
+INST-PCZK-3028,PCZK_3028,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 28,powiatowy,wielkopolskie powiat 28
+INST-PCZK-3029,PCZK_3029,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 29,powiatowy,wielkopolskie powiat 29
+INST-PCZK-3030,PCZK_3030,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 30,powiatowy,wielkopolskie powiat 30
+INST-PCZK-3031,PCZK_3031,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 31,powiatowy,wielkopolskie powiat 31
+INST-PCZK-3032,PCZK_3032,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 32,powiatowy,wielkopolskie powiat 32
+INST-PCZK-3033,PCZK_3033,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 33,powiatowy,wielkopolskie powiat 33
+INST-PCZK-3034,PCZK_3034,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 34,powiatowy,wielkopolskie powiat 34
+INST-PCZK-3035,PCZK_3035,Powiatowe Centrum Zarządzania Kryzysowego - wielkopolskie powiat 35,powiatowy,wielkopolskie powiat 35
+INST-PCZK-3201,PCZK_3201,Powiatowe Centrum Zarządzania Kryzysowego - gryfiński,powiatowy,gryfiński
+INST-PCZK-3202,PCZK_3202,Powiatowe Centrum Zarządzania Kryzysowego - Szczecin,powiatowy,Szczecin
+INST-PCZK-3203,PCZK_3203,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 03,powiatowy,zachodniopomorskie powiat 03
+INST-PCZK-3204,PCZK_3204,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 04,powiatowy,zachodniopomorskie powiat 04
+INST-PCZK-3205,PCZK_3205,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 05,powiatowy,zachodniopomorskie powiat 05
+INST-PCZK-3206,PCZK_3206,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 06,powiatowy,zachodniopomorskie powiat 06
+INST-PCZK-3207,PCZK_3207,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 07,powiatowy,zachodniopomorskie powiat 07
+INST-PCZK-3208,PCZK_3208,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 08,powiatowy,zachodniopomorskie powiat 08
+INST-PCZK-3209,PCZK_3209,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 09,powiatowy,zachodniopomorskie powiat 09
+INST-PCZK-3210,PCZK_3210,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 10,powiatowy,zachodniopomorskie powiat 10
+INST-PCZK-3211,PCZK_3211,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 11,powiatowy,zachodniopomorskie powiat 11
+INST-PCZK-3212,PCZK_3212,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 12,powiatowy,zachodniopomorskie powiat 12
+INST-PCZK-3213,PCZK_3213,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 13,powiatowy,zachodniopomorskie powiat 13
+INST-PCZK-3214,PCZK_3214,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 14,powiatowy,zachodniopomorskie powiat 14
+INST-PCZK-3215,PCZK_3215,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 15,powiatowy,zachodniopomorskie powiat 15
+INST-PCZK-3216,PCZK_3216,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 16,powiatowy,zachodniopomorskie powiat 16
+INST-PCZK-3217,PCZK_3217,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 17,powiatowy,zachodniopomorskie powiat 17
+INST-PCZK-3218,PCZK_3218,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 18,powiatowy,zachodniopomorskie powiat 18
+INST-PCZK-3219,PCZK_3219,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 19,powiatowy,zachodniopomorskie powiat 19
+INST-PCZK-3220,PCZK_3220,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 20,powiatowy,zachodniopomorskie powiat 20
+INST-PCZK-3221,PCZK_3221,Powiatowe Centrum Zarządzania Kryzysowego - zachodniopomorskie powiat 21,powiatowy,zachodniopomorskie powiat 21

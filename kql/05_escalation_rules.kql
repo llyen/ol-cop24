@@ -1,0 +1,76 @@
+// 🚦 COP-24 — reguły rekomendacji poziomu reagowania
+// Cel: wyliczyć rekomendowany poziom reagowania dla gmin na podstawie wielu strumieni.
+// Poziomy zgodne z konwencją demo: gmina → powiat → wojewoda → minister wiodący → RZZK.
+// Ważne: wynik jest rekomendacją analityczną, nie decyzją administracyjną. Decyzję podejmuje człowiek.
+
+// Progi punktowe:
+// - <25: gmina / monitorowanie
+// - 25–44.9: powiat, bo sygnał przekracza rutynę gminną
+// - 45–64.9: wojewoda, bo skala wymaga koordynacji regionalnej
+// - 65–84.9: minister wiodący, bo pojawia się komponent resortowy lub IK
+// - >=85: RZZK, bo zdarzenie jest wieloresortowe albo brakuje zasobów jednego poziomu
+// Składowe: alarm hydro, incydenty 15-min, energia, telco, ewakuacja, dezinformacja.
+
+let hydro_alarm = hydro_readings
+| where level_cm >= alarm_level_cm
+| summarize gauges_alarm=dcount(gauge_id), first_alarm=min(timestamp), max_level=max(level_cm) by gmina_code;
+
+let incidents = incident_reports
+| summarize incidents_15m=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 15m), gmina_code
+| summarize max_incidents_15m=max(incidents_15m), affected=sum(affected), max_priority=max(max_priority) by gmina_code;
+
+let power = power_grid_events
+| summarize customers_offline=sum(customers_offline), power_events=count(), max_eta_restore_min=max(eta_restore_min) by gmina_code;
+
+let telco = telecom_events
+| summarize min_coverage=min(coverage_pct), telco_events=count(), max_base_stations_down=max(base_stations_down) by gmina_code;
+
+let evacuation = evacuation_status
+| summarize arg_max(timestamp, *) by gmina_code
+| summarize evacuated_people=sum(people_count), latest_status=any(status) by gmina_code;
+
+let disinfo_country = media_signals
+| where disinformation_flag == true
+| summarize disinfo_signals=count(), disinfo_reach=sum(reach);
+
+// Reguła główna: punktacja gminy.
+// Uzasadnienie wag/progów w KQL:
+// - każde alarmowe przekroczenie hydro daje 25 pkt, bo jest formalnym sygnałem zagrożenia Z02;
+// - każdy incydent w peak 15-min dodaje 2 pkt, bo reprezentuje wpływ na ludność;
+// - 500 odbiorców bez prądu ≈ 1 pkt, aby peak energetyczny realnie wpływał na poziom;
+// - pokrycie telco <50% dodaje 15 pkt, bo ogranicza alarmowanie;
+// - ewakuacja >1000 osób dodaje 10 pkt;
+// - dezinformacja jest sygnałem krajowym i wzmacnia rekomendację SPO-3, ale nie zastępuje hydro/IK.
+hydro_alarm
+| join kind=leftouter incidents on gmina_code
+| join kind=leftouter power on gmina_code
+| join kind=leftouter telco on gmina_code
+| join kind=leftouter evacuation on gmina_code
+| extend score = 25*gauges_alarm
+              + 2*coalesce(max_incidents_15m, 0)
+              + coalesce(customers_offline, 0)/500
+              + iff(coalesce(min_coverage, 100.0) < 50, 15, 0)
+              + iff(coalesce(evacuated_people, 0) > 1000, 10, 0)
+| extend recommended_level = case(score >= 85, "RZZK", score >= 65, "minister wiodący", score >= 45, "wojewoda", score >= 25, "powiat", "gmina")
+| extend recommended_spo = case(recommended_level == "RZZK", "SPO-1;SPO-2;SPO-3;SPO-10",
+                                recommended_level == "minister wiodący", "SPO-12;SPO-3;SPO-10",
+                                recommended_level == "wojewoda", "SPO-12;SPO-3",
+                                "SPO-3;SPO-12")
+| extend explanation = strcat("score=", round(score, 1), "; hydro gauges=", gauges_alarm,
+                              "; incidents15m=", coalesce(max_incidents_15m, 0),
+                              "; customers_offline=", coalesce(customers_offline, 0),
+                              "; min_coverage=", coalesce(min_coverage, 100.0),
+                              "; evacuated=", coalesce(evacuated_people, 0))
+| project gmina_code, first_alarm, max_level, score, recommended_level, recommended_spo,
+          gauges_alarm, max_incidents_15m, affected, customers_offline, min_coverage, evacuated_people, explanation
+| order by score desc
+
+// Reguła pomocnicza: wykrycie przesłanki RZZK niezależnej od jednej gminy.
+// Jeżeli w tym samym okresie występują Z02, Z07, Z12 i Z20, rekomendacja powinna być omawiana
+// na poziomie RZZK nawet wtedy, gdy średni KIS krajowy jest niski.
+let z02 = toscalar(hydro_readings | where level_cm >= alarm_level_cm | summarize dcount(gmina_code));
+let z07 = toscalar(power_grid_events | summarize sum(customers_offline));
+let z12 = toscalar(telecom_events | where coverage_pct < 50 | summarize dcount(gmina_code));
+let z20 = toscalar(media_signals | where disinformation_flag == true | summarize count());
+print alarm_gminas=z02, customers_offline=z07, telco_gminas_below_50=z12, disinfo_signals=z20,
+      national_recommendation=iff(z02 >= 3 and z07 > 100000 and z12 >= 10 and z20 > 100, "RZZK / SPO-1", "monitoruj")

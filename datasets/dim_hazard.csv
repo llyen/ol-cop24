@@ -1,0 +1,21 @@
+hazard_code,hazard_name,lead_minister,cooperating_ministers
+Z01,Epidemia,Minister Zdrowia,MSWiA; MON; wojewodowie
+Z02,Powódź,Minister Infrastruktury,MSWiA; Klimat; Aktywa Państwowe; Zdrowie; MON
+Z03,Zakłócenie funkcjonowania systemów i sieci teleinformatycznych,Minister Cyfryzacji,MSWiA; ABW; operatorzy IK
+Z04,Działania hybrydowe,Minister Spraw Wewnętrznych i Administracji,MON; MSZ; służby specjalne
+Z05,Susza/upał,Minister Klimatu i Środowiska,Rolnictwo; Zdrowie; Wody Polskie
+Z06,Epizootia,Minister Rolnictwa i Rozwoju Wsi,Zdrowie; MSWiA; wojewodowie
+Z07,Zakłócenie w systemie energetycznym,Minister Klimatu i Środowiska,Aktywa Państwowe; URE; PSE; OSD
+Z08,Silny wiatr,Minister Spraw Wewnętrznych i Administracji,IMGW-PIB; PSP; wojewodowie
+Z09,Zakłócenie w systemie paliwowym,Minister Aktywów Państwowych,Klimat; Transport; RARS
+Z10,Pożar wielkopowierzchniowy,Minister Spraw Wewnętrznych i Administracji,PSP; Lasy Państwowe; MON
+Z11,Epifitoza,Minister Rolnictwa i Rozwoju Wsi,Klimat; wojewodowie
+Z12,Zakłócenie funkcjonowania systemów i usług telekomunikacyjnych,Minister Cyfryzacji,UKE; operatorzy; MSWiA
+Z13,Skażenie chemiczne na lądzie,Minister Spraw Wewnętrznych i Administracji,PSP; Zdrowie; Klimat
+Z14,Zakłócenie w systemie gazowym,Minister Klimatu i Środowiska,GAZ-SYSTEM; URE; MSWiA
+Z15,Katastrofa morska,Minister Infrastruktury,MSWiA; SAR; MON
+Z16,Zdarzenie o charakterze terrorystycznym,Minister Spraw Wewnętrznych i Administracji,ABW; Policja; MON
+Z17,Skażenie promieniotwórcze,Minister Klimatu i Środowiska,PAA; Zdrowie; MSWiA
+Z18,Zbiorowe zakłócenie porządku publicznego,Minister Spraw Wewnętrznych i Administracji,Policja; wojewodowie
+Z19,Silny mróz/intensywne opady śniegu,Minister Spraw Wewnętrznych i Administracji,IMGW-PIB; Energia; Zdrowie
+Z20,Dezinformacja,Minister Cyfryzacji,RCB; NASK; MSWiA; CIR

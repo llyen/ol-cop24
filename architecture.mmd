@@ -1,0 +1,17 @@
+flowchart LR
+    A1[PSP / 112] --> ES[Fabric Eventstream]
+    A2[IMGW-PIB i wodowskazy] --> ES
+    A3[PSE / OSD] --> ES
+    A4[Operatorzy telco] --> ES
+    A5[WCZK / PCZK / WOT] --> ES
+    A6[Media i social listening] --> ES
+    ES --> EH[(Eventhouse / KQL DB)]
+    EH --> RTD[Real-Time Dashboard COP-24]
+    EH --> LH[(Lakehouse Delta)]
+    LH --> PBI[Power BI / model semantyczny]
+    EH --> ACT[Data Activator / Reflex]
+    EH --> DA[Data Agent]
+    ACT --> TEAMS[Teams / e-mail / SPO]
+    DA --> APP[Fabric App: Pulpit RZZK]
+    PBI --> APP
+    RTD --> APP

@@ -1,0 +1,76 @@
+// 🧪 COP-24 — detekcja anomalii i korelacja czasowo-przestrzenna
+// Cel: pokazać, że Eventhouse/KQL nie tylko agreguje dane, ale potrafi wykrywać nietypowe przebiegi
+// i łączyć sygnały z różnych domen: hydrologia, incydenty, energetyka, telekomunikacja.
+// Zakres demo: 2026-09-12T12:00:00+02:00 ... 2026-09-25T12:00:00+02:00.
+
+// 01. Anomalie poziomu wód per wodowskaz
+// Metoda: `make-series` buduje serię 1h, a `series_decompose_anomalies` wykrywa odchylenia od trendu.
+// Interpretacja: wynik nie jest formalnym alarmem hydrologicznym; jest sygnałem do sprawdzenia.
+// Oczekiwane w demo: anomalie w kluczowych posterunkach na osi Nysa Kłodzka → Odra.
+hydro_readings
+| make-series avg_level=avg(level_cm) on timestamp from datetime(2026-09-12T12:00:00+02:00) to datetime(2026-09-25T12:00:00+02:00) step 1h by gauge_id
+| extend anomalies=series_decompose_anomalies(avg_level, 2.5, -1, 'linefit')
+| mv-expand timestamp to typeof(datetime), avg_level to typeof(real), anomalies to typeof(real)
+| where anomalies != 0
+| project timestamp, gauge_id, avg_level, anomaly_score=anomalies
+| order by timestamp asc
+
+// 02. Anomalie zgłoszeń 112/PSP per gmina
+// Metoda: okna 15-minutowe są naturalne dla triage operacyjnego i zgodne z kaflem dashboardu.
+// Interpretacja: nagły wzrost zgłoszeń po przekroczeniach hydro wzmacnia uzasadnienie eskalacji.
+incident_reports
+| make-series incidents=count() on timestamp from datetime(2026-09-12T12:00:00+02:00) to datetime(2026-09-25T12:00:00+02:00) step 15m by gmina_code
+| extend anomalies=series_decompose_anomalies(incidents, 3)
+| mv-expand timestamp to typeof(datetime), incidents to typeof(long), anomalies to typeof(real)
+| where anomalies > 0
+| project timestamp, gmina_code, incidents, anomaly_score=anomalies
+| order by incidents desc
+
+// 03. Przekroczenie alarmu hydro jako zdarzenie bazowe do korelacji
+// Wynik: pierwsze przekroczenie alarmu w gminie. Na danych demo łącznie 10 gmin ma alarm hydro.
+let hydro_alarm = hydro_readings
+| where level_cm >= alarm_level_cm
+| summarize first_alarm=min(timestamp), max_level=max(level_cm), alarm_gauges=dcount(gauge_id) by gmina_code;
+hydro_alarm
+| order by first_alarm asc
+
+// 04. Korelacja powódź ↔ energetyka ↔ telekomunikacja
+// Metoda: do pierwszego alarmu hydro dołączamy pierwsze zdarzenie energetyczne i telekomunikacyjne w tej samej gminie.
+// `power_delay_h` i `telco_delay_h` pokazują, czy awarie pojawiły się przed czy po alarmie hydro.
+// Wynik zasila kafel „Korelacja hydro → energia → telco”.
+let power_first = power_grid_events
+| summarize first_power=min(timestamp), customers=sum(customers_offline), power_events=count() by gmina_code;
+let telco_first = telecom_events
+| summarize first_telco=min(timestamp), min_coverage=min(coverage_pct), telco_events=count() by gmina_code;
+hydro_alarm
+| join kind=leftouter power_first on gmina_code
+| join kind=leftouter telco_first on gmina_code
+| extend power_delay_h=datetime_diff('hour', first_power, first_alarm), telco_delay_h=datetime_diff('hour', first_telco, first_alarm)
+| extend cascade_flag = iff(isnotnull(first_power) or isnotnull(first_telco), true, false)
+| project gmina_code, first_alarm, max_level, alarm_gauges, first_power, power_delay_h, customers, first_telco, telco_delay_h, min_coverage, cascade_flag
+| order by first_alarm asc
+
+// 05. Korelacja zgłoszeń i energii w oknach godzinowych
+// Metoda: porównujemy liczbę incydentów i liczbę odbiorców bez prądu w tej samej gminie i godzinie.
+// Interpretacja: wysoka wartość obu metryk wzmacnia priorytet działań ochrony ludności i IK.
+let inc_hourly = incident_reports
+| summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 1h), gmina_code;
+let pwr_hourly = power_grid_events
+| summarize customers_offline=sum(customers_offline), power_events=count() by bin(timestamp, 1h), gmina_code;
+inc_hourly
+| join kind=inner pwr_hourly on timestamp, gmina_code
+| extend combined_pressure = incidents * 10 + customers_offline / 100
+| top 50 by combined_pressure desc
+| project timestamp, gmina_code, incidents, affected, max_priority, customers_offline, power_events, combined_pressure
+
+// 06. Sygnał komunikacyjny: dezinformacja podczas kaskady IK
+// Metoda: zestawiamy liczbę sygnałów Z20 z awariami telco, bo utrata łączności utrudnia prostowanie narracji.
+let disinfo_hourly = media_signals
+| where disinformation_flag == true
+| summarize disinfo_signals=count(), disinfo_reach=sum(reach) by bin(timestamp, 1h);
+let telco_hourly = telecom_events
+| summarize telco_events=count(), min_coverage=min(coverage_pct) by bin(timestamp, 1h);
+disinfo_hourly
+| join kind=leftouter telco_hourly on timestamp
+| extend communication_risk = disinfo_signals * 10 + iff(min_coverage < 50, 25, 0)
+| order by communication_risk desc
