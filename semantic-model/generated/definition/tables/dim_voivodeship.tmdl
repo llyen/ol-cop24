@@ -47,4 +47,4 @@ table dim_voivodeship
 		mode: directLake
 		source
 			entityName: dim_voivodeship
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

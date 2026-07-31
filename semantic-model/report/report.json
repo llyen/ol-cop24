@@ -2,30 +2,30 @@
   "resourcePackages": [],
   "sections": [
     {
-      "displayOption": "FitToPage",
+      "visualContainers": [],
       "displayName": "Obraz kraju",
       "name": "ReportSectionObrazKraju",
-      "visualContainers": [],
-      "width": 1280,
-      "height": 720
+      "displayOption": "FitToPage",
+      "height": 720,
+      "width": 1280
     },
     {
-      "displayOption": "FitToPage",
+      "visualContainers": [],
       "displayName": "Województwo i gminy",
       "name": "ReportSectionWojGminy",
-      "visualContainers": [],
-      "width": 1280,
-      "height": 720
+      "displayOption": "FitToPage",
+      "height": 720,
+      "width": 1280
     },
     {
-      "displayOption": "FitToPage",
+      "visualContainers": [],
       "displayName": "Eskalacja i SPO",
       "name": "ReportSectionEskalacjaSpo",
-      "visualContainers": [],
-      "width": 1280,
-      "height": 720
+      "displayOption": "FitToPage",
+      "height": 720,
+      "width": 1280
     }
   ],
-  "layoutOptimization": 0,
-  "config": "{}"
+  "config": "{}",
+  "layoutOptimization": 0
 }

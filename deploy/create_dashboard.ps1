@@ -262,7 +262,7 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
         eTag = ''
         schema_version = $schemaVersion
         title = $DashboardName
-        autoRefresh = [ordered]@{ enabled = $true; defaultDuration = '30s'; minimumDuration = '30s' }
+        autoRefresh = [ordered]@{ enabled = $true }
         tiles = $tiles
         baseQueries = @()
         parameters = @(
@@ -270,10 +270,11 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
                 kind = 'duration'
                 id = New-StableGuid 'parameter-time-range'
                 displayName = 'Zakres czasu'
-                description = 'Domyślnie ostatnia godzina; zapytania demo używają pełnego zakresu 2026-09-12...2026-09-25.'
+                description = 'Domyślnie pełny zakres scenariusza powodziowego: 2026-09-12 ... 2026-09-26 UTC.'
                 beginVariableName = '_startTime'
                 endVariableName = '_endTime'
-                defaultValue = [ordered]@{ kind = 'fixed'; start = '2026-09-12T00:00:00.000Z'; end = '2026-09-26T00:00:00.000Z' }
+                # Schemat wymaga liczb: epoch w milisekundach (2026-09-12 ... 2026-09-26 UTC).
+                defaultValue = [ordered]@{ kind = 'fixed'; start = 1789171200000; end = 1790380800000 }
                 showOnPages = [ordered]@{ kind = 'all' }
             }
         )

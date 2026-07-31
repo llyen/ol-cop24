@@ -55,4 +55,4 @@ table telecom_events
 		mode: directLake
 		source
 			entityName: telecom_events
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

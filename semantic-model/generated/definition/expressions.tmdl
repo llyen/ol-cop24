@@ -1,6 +1,6 @@
-expression 'DirectLake - OL_COP24_Lakehouse' =
+expression DirectLakeSqlEndpoint =
 		let
-		    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/8ea0556f-7368-4b36-ad84-adf995e19a80/2d840a79-be01-4f82-be45-d4d45e0992ea", [HierarchicalNavigation=true])
+		    Source = Sql.Database("6sgnu6v6yshurkcenu364zeety-n5k2bdtiom3exlmevx4zlym2qa.datawarehouse.fabric.microsoft.com", "OL_COP24_Lakehouse")
 		in
 		    Source
 

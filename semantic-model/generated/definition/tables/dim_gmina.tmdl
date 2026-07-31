@@ -53,4 +53,4 @@ table dim_gmina
 		mode: directLake
 		source
 			entityName: dim_gmina
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

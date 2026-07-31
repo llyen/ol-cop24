@@ -75,4 +75,4 @@ table incident_reports
 		mode: directLake
 		source
 			entityName: incident_reports
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

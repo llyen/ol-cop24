@@ -85,4 +85,4 @@ table escalation_recommendations
 		mode: directLake
 		source
 			entityName: escalation_recommendations
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

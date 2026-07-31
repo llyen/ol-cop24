@@ -69,4 +69,4 @@ table hydro_readings
 		mode: directLake
 		source
 			entityName: hydro_readings
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

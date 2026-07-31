@@ -65,4 +65,4 @@ table resource_deployment
 		mode: directLake
 		source
 			entityName: resource_deployment
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

@@ -56,4 +56,4 @@ table power_grid_events
 		mode: directLake
 		source
 			entityName: power_grid_events
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

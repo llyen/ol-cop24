@@ -241,7 +241,7 @@ function New-TableTmdl([string]$TableName, [array]$Columns, [string]$ExpressionN
     return ($lines -join "`r`n")
 }
 
-function New-SemanticDefinition([string[]]$Tables, [string]$ExpressionName, [string]$SourceUrl, [bool]$UseSchemaName) {
+function New-SemanticDefinition([string[]]$Tables, [string]$ExpressionName, [string]$SourceUrl, [bool]$UseSchemaName, [string]$SourceKind = 'OneLake', [string]$SqlServer = '') {
     $parts = [System.Collections.Generic.List[object]]::new()
     $db = "database`r`n`tcompatibilityLevel: 1604`r`n"
     $modelLines = [System.Collections.Generic.List[string]]::new()
@@ -262,7 +262,19 @@ function New-SemanticDefinition([string[]]$Tables, [string]$ExpressionName, [str
     foreach ($t in $Tables) { $modelLines.Add("ref table $(Quote-TmdlName $t)") }
     $model = $modelLines -join "`r`n"
 
-    $expr = @"
+    if ($SourceKind -eq 'SqlEndpoint') {
+        $expr = @"
+expression $(Quote-TmdlName $ExpressionName) =
+		let
+		    Source = Sql.Database("$SqlServer", "$LakehouseName")
+		in
+		    Source
+
+	annotation PBI_IncludeFutureArtifacts = False
+"@
+    }
+    else {
+        $expr = @"
 expression $(Quote-TmdlName $ExpressionName) =
 		let
 		    Source = AzureStorage.DataLake("$SourceUrl", [HierarchicalNavigation=true])
@@ -271,6 +283,7 @@ expression $(Quote-TmdlName $ExpressionName) =
 
 	annotation PBI_IncludeFutureArtifacts = False
 "@
+    }
 
     $relLines = [System.Collections.Generic.List[string]]::new()
     foreach ($r in $Relationships) {
@@ -327,6 +340,8 @@ expression $(Quote-TmdlName $ExpressionName) =
 
 function Upsert-SemanticModel([hashtable]$Headers) {
     $existing = Find-Item -Headers $Headers -DisplayName $SemanticModelName -Type 'SemanticModel'
+    $lakePropsForSql = Get-LakehouseProperties $Headers
+    $sqlServer = $lakePropsForSql.sqlEndpointProperties.connectionString
     $minimalTables = @('dim_gmina','kis_gmina','incident_reports')
     $fullTables = @(
         'dim_voivodeship','dim_powiat','dim_gmina','dim_hazard','dim_institution','dim_spo','dim_river_gauge',
@@ -334,14 +349,15 @@ function Upsert-SemanticModel([hashtable]$Headers) {
         'kis_gmina','kis_powiat','kis_voivodeship','kis_country','escalation_recommendations'
     )
     $candidates = @(
-        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$true },
-        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$false },
-        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$true },
-        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$false },
-        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$true },
-        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$false },
-        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$true },
-        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$false }
+        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$true; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$false; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$true; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId"; UseSchemaName=$false; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$true; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLake - OL_COP24_Lakehouse'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$false; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$true; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLakeConnection'; SourceUrl="https://onelake.dfs.fabric.microsoft.com/$WorkspaceId/$LakehouseId/Tables"; UseSchemaName=$false; SourceKind='OneLake'; SqlServer='' },
+        @{ ExpressionName='DirectLakeSqlEndpoint'; SourceUrl=''; UseSchemaName=$false; SourceKind='SqlEndpoint'; SqlServer=$sqlServer }
     )
     $successCandidate = $null
     if (-not $existing) {
@@ -349,7 +365,7 @@ function Upsert-SemanticModel([hashtable]$Headers) {
             $c = $candidates[$i]
             Write-Host "Próba Direct Lake $($i+1)/8: minimalny model, source=$($c.SourceUrl), schemaName=$($c.UseSchemaName), expression=$($c.ExpressionName)"
             try {
-                $definition = New-SemanticDefinition -Tables $minimalTables -ExpressionName $c.ExpressionName -SourceUrl $c.SourceUrl -UseSchemaName $c.UseSchemaName
+                $definition = New-SemanticDefinition -Tables $minimalTables -ExpressionName $c.ExpressionName -SourceUrl $c.SourceUrl -UseSchemaName $c.UseSchemaName -SourceKind $c.SourceKind -SqlServer $c.SqlServer
                 $body = @{ displayName = $SemanticModelName; description = 'Model semantyczny Direct Lake COP-24 utworzony przez Fabric REST API'; definition = $definition }
                 $resp = Invoke-FabricJson -Method POST -Uri "https://api.fabric.microsoft.com/v1/workspaces/$WorkspaceId/semanticModels" -Headers $Headers -Body $body
                 Wait-FabricOperation -Response $resp -Headers $Headers
@@ -365,14 +381,14 @@ function Upsert-SemanticModel([hashtable]$Headers) {
         }
     }
     else {
-        # Przy aktualizacji preferujemy wariant bez schemaName; Lakehouse Delta zwykle publikuje tabele bez jawnego dbo.
-        $successCandidate = $candidates[1]
+        # Jeśli model już istnieje, użyj stabilnego wariantu Direct Lake on SQL przez SQL endpoint Lakehouse.
+        $successCandidate = $candidates[8]
         Write-Host "Model $SemanticModelName już istnieje: $($existing.id). Używam updateDefinition."
     }
     if (-not $existing -or -not $successCandidate) { throw 'Nie udało się utworzyć minimalnego modelu Direct Lake po 8 próbach.' }
 
     Write-Host "Aktualizacja do pełnego modelu: $($fullTables.Count) tabel."
-    $fullDefinition = New-SemanticDefinition -Tables $fullTables -ExpressionName $successCandidate.ExpressionName -SourceUrl $successCandidate.SourceUrl -UseSchemaName $successCandidate.UseSchemaName
+    $fullDefinition = New-SemanticDefinition -Tables $fullTables -ExpressionName $successCandidate.ExpressionName -SourceUrl $successCandidate.SourceUrl -UseSchemaName $successCandidate.UseSchemaName -SourceKind $successCandidate.SourceKind -SqlServer $successCandidate.SqlServer
     try {
         $body = @{ definition = $fullDefinition }
         $resp = Invoke-FabricJson -Method POST -Uri "https://api.fabric.microsoft.com/v1/workspaces/$WorkspaceId/items/$($existing.id)/updateDefinition?updateMetadata=True" -Headers $Headers -Body $body
@@ -382,7 +398,7 @@ function Upsert-SemanticModel([hashtable]$Headers) {
         Write-Warning "Pełny model z hydro_readings nie powiódł się: $($_.Exception.Message)"
         $reducedTables = @($fullTables | Where-Object { $_ -ne 'hydro_readings' })
         Write-Host "Ponawiam pełny zakres bez dużej tabeli hydro_readings: $($reducedTables.Count) tabel."
-        $fullDefinition = New-SemanticDefinition -Tables $reducedTables -ExpressionName $successCandidate.ExpressionName -SourceUrl $successCandidate.SourceUrl -UseSchemaName $successCandidate.UseSchemaName
+        $fullDefinition = New-SemanticDefinition -Tables $reducedTables -ExpressionName $successCandidate.ExpressionName -SourceUrl $successCandidate.SourceUrl -UseSchemaName $successCandidate.UseSchemaName -SourceKind $successCandidate.SourceKind -SqlServer $successCandidate.SqlServer
         $body = @{ definition = $fullDefinition }
         $resp = Invoke-FabricJson -Method POST -Uri "https://api.fabric.microsoft.com/v1/workspaces/$WorkspaceId/items/$($existing.id)/updateDefinition?updateMetadata=True" -Headers $Headers -Body $body
         Wait-FabricOperation -Response $resp -Headers $Headers
@@ -411,7 +427,10 @@ function New-ReportDefinition([string]$SemanticModelId, [string]$Mode) {
             themeCollection = @{ baseTheme = @{ name = 'CY25SU12'; type = 'SharedResources'; reportVersionAtImport = @{ visual = '2.5.0'; page = '2.3.0'; report = '3.1.0' } } }
             settings = @{ useStylableVisualContainerHeader = $true; defaultFilterActionIsDataFilter = $true; useEnhancedTooltips = $true }
         } | ConvertTo-Json -Depth 20
-        $version = @{ version = '4.0' } | ConvertTo-Json -Depth 5
+        $version = @{
+            '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/version/1.0.0/schema.json'
+            version = '4.0'
+        } | ConvertTo-Json -Depth 5
         $pageIds = @('obraz-kraju','wojewodztwo-gminy','eskalacja-spo')
         $pages = @{ pageOrder = $pageIds; activePage = $pageIds[0] } | ConvertTo-Json -Depth 10
         $parts.Add((New-Part 'definition/report.json' $report)); Save-DefinitionPart $ReportOutRoot 'definition\report.json' $report
@@ -480,7 +499,21 @@ function Get-DefinitionStats([hashtable]$Headers, [string]$ItemId, [string]$Form
     $uri = "https://api.fabric.microsoft.com/v1/workspaces/$WorkspaceId/items/$ItemId/getDefinition"
     if ($Format) { $uri += "?format=$Format" }
     $resp = Invoke-FabricJson -Method POST -Uri $uri -Headers $Headers -Body @{}
-    Wait-FabricOperation -Response $resp -Headers $Headers
+    if ([int]$resp.StatusCode -eq 202) {
+        $location = @($resp.Headers.Location) | Select-Object -First 1
+        do {
+            Start-Sleep -Seconds 3
+            $op = Invoke-FabricJson -Method GET -Uri $location -Headers $Headers
+            $body = if ($op.Content) { $op.Content | ConvertFrom-Json } else { $null }
+            $status = $body.status
+            $nextLocation = @($op.Headers.Location) | Select-Object -First 1
+            if ($nextLocation) { $location = $nextLocation }
+            if ($status -eq 'Failed') { throw "getDefinition failed: $($body.error.errorCode) $($body.error.message)" }
+        } while ($status -in @('Running','NotStarted'))
+        $result = Invoke-FabricJson -Method GET -Uri $location -Headers $Headers
+        if (-not $result.Content) { return $null }
+        return $result.Content | ConvertFrom-Json
+    }
     if (-not $resp.Content) { return $null }
     return $resp.Content | ConvertFrom-Json
 }
@@ -554,7 +587,9 @@ if ($report) {
 $daxResult = $null
 try {
     $daxResult = Invoke-DaxCheck $semantic.id
-    $n = $daxResult.results[0].tables[0].rows[0].n
+    $row = $daxResult.results[0].tables[0].rows[0]
+    $n = $row.PSObject.Properties['[n]'].Value
+    if ($null -eq $n) { $n = $row.n }
     Write-Host "DAX OK: COUNTROWS(dim_gmina) = $n"
 }
 catch {
@@ -569,7 +604,7 @@ catch {
     Relationships = $relCount
     Measures = $measureCount
     ReportPages = $pageCount
-    DaxCountRowsDimGmina = if ($daxResult) { $daxResult.results[0].tables[0].rows[0].n } else { $null }
+    DaxCountRowsDimGmina = if ($daxResult) { $daxResult.results[0].tables[0].rows[0].PSObject.Properties['[n]'].Value } else { $null }
     LocalSemanticDefinition = $OutRoot
     LocalReportDefinition = $ReportOutRoot
     SemanticModelsInWorkspace = @($models).Count

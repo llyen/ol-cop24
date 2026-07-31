@@ -67,4 +67,4 @@ table kis_gmina
 		mode: directLake
 		source
 			entityName: kis_gmina
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

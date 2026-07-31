@@ -33,3 +33,24 @@ W demo nie ma danych osobowych, ale w produkcji należy zastosować RLS po wojew
 ## Nazewnictwo
 
 Nazwy tabel i kolumn pozostają angielskie oraz bez polskich znaków, aby były bezpieczne technicznie w KQL, Spark i DAX. Nazwy miar i etykiety raportu mogą być po polsku. Słownik biznesowy powinien mapować `gmina_code`, `powiat_code`, `voivodeship_code` na język administracyjny TERYT.
+
+## Wdrożenie
+
+Model i raport wdraża skrypt:
+
+```powershell
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\deploy\create_semantic_model.ps1 `
+  -WorkspaceName 'OL-ZK-Demo-COP24'
+```
+
+Skrypt pobiera tokeny przez `az account get-access-token`, tworzy lub aktualizuje model `OL_COP24_SemanticModel` oraz raport `OL_COP24_Raport`. Definicja modelu jest generowana w TMDL do `semantic-model\generated\` i wdrażana przez Fabric REST API `semanticModels` / `updateDefinition`. W modelu użyto partycji `mode: directLake` oraz źródła `DirectLakeSqlEndpoint` przez SQL endpoint Lakehouse; wcześniejsze próby `AzureStorage.DataLake` dla Direct Lake on OneLake zwracały brak dostępu lub brak tabel przy weryfikacji DAX.
+
+Raport jest tworzony przez REST API z trzema stronami narracji: `Obraz kraju`, `Województwo i gminy`, `Eskalacja i SPO`. Definicja lokalna jest zapisywana w `semantic-model\report\`. Skrypt najpierw próbuje formatu PBIR, a jeżeli usługa odrzuci definicję, przechodzi na PBIR-Legacy z tym samym powiązaniem `semanticmodelid`.
+
+Po wdrożeniu skrypt wykonuje `getDefinition` i zapytanie DAX przez Power BI REST API:
+
+```dax
+EVALUATE ROW("n", COUNTROWS('dim_gmina'))
+```
+
+Oczekiwany wynik kontrolny dla danych demo to `2477`. Jeżeli raport trzeba dopracować wizualnie, otwórz `OL_COP24_Raport` w Power BI Service albo zaimportuj lokalną definicję z `semantic-model\report\` i dodaj docelowe wizualizacje na przygotowanych stronach.

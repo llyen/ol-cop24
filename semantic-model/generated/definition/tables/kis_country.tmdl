@@ -92,4 +92,4 @@ table kis_country
 		mode: directLake
 		source
 			entityName: kis_country
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

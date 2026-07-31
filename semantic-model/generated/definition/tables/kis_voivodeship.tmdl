@@ -23,4 +23,4 @@ table kis_voivodeship
 		mode: directLake
 		source
 			entityName: kis_voivodeship
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

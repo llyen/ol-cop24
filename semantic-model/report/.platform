@@ -1,11 +1,11 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "Report",
     "displayName": "OL_COP24_Raport"
   },
   "config": {
-    "logicalId": "293ea488-f017-4838-9ed9-3d6eb5217df1",
+    "logicalId": "70cd1f04-2c37-4c6c-915e-b61816711a48",
     "version": "2.0"
-  }
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json"
 }

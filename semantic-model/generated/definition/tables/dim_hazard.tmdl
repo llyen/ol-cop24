@@ -35,4 +35,4 @@ table dim_hazard
 		mode: directLake
 		source
 			entityName: dim_hazard
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

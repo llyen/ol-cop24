@@ -59,4 +59,4 @@ table escalation_events
 		mode: directLake
 		source
 			entityName: escalation_events
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

@@ -60,4 +60,4 @@ table media_signals
 		mode: directLake
 		source
 			entityName: media_signals
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

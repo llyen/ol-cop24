@@ -65,4 +65,4 @@ table dim_river_gauge
 		mode: directLake
 		source
 			entityName: dim_river_gauge
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint

@@ -56,4 +56,4 @@ table evacuation_status
 		mode: directLake
 		source
 			entityName: evacuation_status
-			expressionSource: 'DirectLake - OL_COP24_Lakehouse'
+			expressionSource: DirectLakeSqlEndpoint
