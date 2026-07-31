@@ -2,6 +2,9 @@
   "cluster": "https://trd-tmsdqpz0s6cg6aewj9.z3.kusto.fabric.microsoft.com",
   "database": "OL_COP24_Eventhouse",
   "workspaceId": "8ea0556f-7368-4b36-ad84-adf995e19a80",
+  "lakehouseId": "2d840a79-be01-4f82-be45-d4d45e0992ea",
+  "onelake": "https://onelake.dfs.fabric.microsoft.com/8ea0556f-7368-4b36-ad84-adf995e19a80/2d840a79-be01-4f82-be45-d4d45e0992ea/Files/streams",
+  "liveStart": "2026-09-15T00:00:00+02:00",
   "streams": [
     "hydro_readings",
     "weather_observations",

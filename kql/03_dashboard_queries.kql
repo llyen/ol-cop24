@@ -23,7 +23,6 @@ hydro_latest
 // Parametry: _startTime, _endTime; domyślnie 2026-09-12T12:00:00+02:00 ... 2026-09-25T12:00:00+02:00.
 // Oczekiwany wynik: piki przesunięte w czasie: Kłodzko 493 cm, Nysa 512 cm, Opole 520 cm, Wrocław 536 cm.
 hydro_readings
-| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))
 | where gauge_id in ("WG-001", "WG-003", "WG-004", "WG-007")
 | summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river
 | order by timestamp asc
@@ -34,7 +33,6 @@ hydro_readings
 // Oczekiwany wynik dla pełnego zakresu demo: 10 gmin w alarmie.
 // Kafelek typu multistat wymaga par etykieta-wartość, stąd `evaluate narrow()`.
 hydro_readings
-| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))
 | where level_cm >= alarm_level_cm
 | summarize ["Gminy w alarmie"]=dcount(gmina_code), ["Wodowskazy w alarmie"]=dcount(gauge_id), ["Rzeki w alarmie"]=dcount(river)
 | evaluate narrow()

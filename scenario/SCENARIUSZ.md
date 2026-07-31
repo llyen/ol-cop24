@@ -6,45 +6,62 @@ przyspieszonym, zasilając Real-Time Dashboard na oczach widowni.
 
 ## Jak to działa
 
+Scenariusz ma **dwie fazy**, bo to warunek zarówno szybkości, jak i wiarygodnego efektu „na żywo":
+
 ```
-datasets/*.jsonl  ──►  scenario/replay.py  ──►  streaming ingestion (REST)  ──►  Eventhouse
-                            │                                                       │
-                       tempo 1:3600                                        Real-Time Dashboard
-                       reset + replay                                      (auto-odświeżanie)
+                    FAZA 1 — TŁO (wsadowo)              FAZA 2 — LIVE (strumieniowo)
+OneLake Files/streams/*.jsonl                    datasets/*.jsonl
+        │                                                │
+        │ .ingest async into (impersonate)               │ streaming ingestion REST
+        ▼                                                ▼
+   ekstenty Eventhouse  ──────────────────────────►  Eventhouse  ──►  Real-Time Dashboard
+   (zapytania ~200 ms)                                                (auto-odświeżanie 30 s)
 ```
 
-Zasilanie idzie **bezpośrednio przez streaming ingestion Eventhouse**, a nie przez
-Event Hub. Zaleta: brak zarządzania kluczami, typowany zapis do dziewięciu tabel
-docelowych i opóźnienie poniżej sekundy między wysłaniem a widocznością w dashboardzie.
+- **Faza 1 — tło.** Wszystko sprzed momentu startu narracji ląduje ingestią wsadową
+  prosto z OneLake, a następnie jest obcinane do tego momentu (`.delete`). Dane trafiają
+  do ekstentów, więc kafelki odpowiadają w ok. 200 ms.
+- **Faza 2 — live.** Wyłącznie okno narracyjne (domyślnie doba D0, ok. 45 tys. zdarzeń)
+  idzie przez streaming ingestion w tempie demo. Widać, jak sytuacja narasta.
+
+Dlaczego nie wszystko strumieniowo: streaming ingestion trzyma dane w buforze, zanim
+zbuduje ekstenty. Przy 578 tys. wierszy tabela `hydro_readings` miała `TotalExtents = 0`
+i kafelki ładowały się zauważalnie wolniej. Podział na fazy usuwa ten problem.
 
 ## Uruchomienie
 
 ```powershell
-# pełny scenariusz od zera: 13 dób w ok. 5 minut
+# pełny scenariusz od zera: tło + doba D0 odtworzona w ok. 5 minut
 .\scenario\run_scenario.ps1
 
-# doba kulminacyjna D0 rozciągnięta na ok. 4 minuty - do narracji na żywo
+# kulminacja rozciągnięta na dłużej, do narracji na żywo
 .\scenario\run_scenario.ps1 -Preset kulminacja
 
 # samo wyczyszczenie środowiska przed prezentacją
 .\scenario\run_scenario.ps1 -ResetOnly
 ```
 
+Każde uruchomienie daje **te same liczby** — reset jest weryfikowany, a ingestia wsadowa
+ponawiana przy przeciążeniu pojemności.
+
 ### Warianty
 
-| Wariant | Tempo | Zakres | Czas trwania |
+| Wariant | Tempo | Okno live | Czas trwania fazy live |
 |---|---|---|---|
-| `demo` (domyślny) | 3600x | całe 13 dób | ok. 5 min |
-| `szybki` | 10800x | całe 13 dób | ok. 2 min |
-| `kulminacja` | 300x | 15–16.09 (D0) | ok. 4 min |
-| `wolny` | 900x | całe 13 dób | ok. 21 min |
+| `demo` (domyślny) | 300x | 24 h (D0) | ok. 4,8 min |
+| `szybki` | 900x | 24 h (D0) | ok. 1,6 min |
+| `kulminacja` | 120x | 12 h od 15.09 06:00 | ok. 6 min |
+| `wolny` | 60x | 12 h | ok. 12 min |
 
 ### Tryb znaczników czasu
 
-- `-TimeMode source` (domyślny) — zachowuje oryginalne znaczniki 2026-09-12 … 2026-09-25.
-  Zakres czasu dashboardu jest do nich dopasowany, więc kafelki wypełniają się w miarę napływu.
+- `-TimeMode source` (domyślny) — zachowuje oryginalne znaczniki scenariusza.
+  Zakres czasu dashboardu jest do nich dopasowany, kafelki wypełniają się w miarę napływu.
 - `-TimeMode now` — przesuwa scenariusz tak, by zaczynał się w chwili uruchomienia.
-  Przydatne, gdy chcemy pokazać kafelki z filtrem „ostatnia godzina".
+  Przydatne przy filtrach typu „ostatnia godzina".
+
+Dashboard ma włączone auto-odświeżanie co 30 s (minimum 10 s), więc w trakcie
+odtwarzania kafelki aktualizują się samoczynnie.
 
 ## Przebieg scenariusza — narracja
 

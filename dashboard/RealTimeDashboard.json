@@ -5,7 +5,9 @@
   "schema_version": "60",
   "title": "OL_COP24_Dashboard",
   "autoRefresh": {
-    "enabled": true
+    "enabled": true,
+    "defaultInterval": "30s",
+    "minInterval": "10s"
   },
   "tiles": [
     {
@@ -25,11 +27,11 @@
       },
       "visualOptions": {
         "hideLegend": false,
-        "map__bubbleFormat": "bubble",
+        "legendLocation": "bottom",
+        "map__longitudeColumn": "lon",
         "map__minBubbleSizeColumn": "level_cm",
         "map__latitudeColumn": "lat",
-        "map__longitudeColumn": "lon",
-        "legendLocation": "bottom"
+        "map__bubbleFormat": "bubble"
       }
     },
     {
@@ -48,36 +50,36 @@
         "queryId": "8019ec6b-2308-296c-c51d-a51946201cb8"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Czas",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "timestamp",
+        "verticalLine": "",
         "yColumns": [
           "avg_level",
           "max_level"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "timestamp",
         "seriesColumns": [
           "gauge_id"
-        ],
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        ]
       }
     },
     {
@@ -96,17 +98,17 @@
         "queryId": "b38f0b51-ca66-6e80-132e-54ece2c59d4e"
       },
       "visualOptions": {
-        "multiStat__textSize": "auto",
         "multiStat__displayOrientation": "horizontal",
         "colorRules": [],
+        "multiStat__valueColumn": "Wartosc",
         "multiStat__labelColumn": "Wskaznik",
         "colorStyle": "light",
+        "colorRulesDisabled": true,
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "colorRulesDisabled": true,
-        "multiStat__valueColumn": "Wartosc"
+        "multiStat__textSize": "auto"
       }
     },
     {
@@ -125,34 +127,34 @@
         "queryId": "424aca17-b492-824d-984b-979842ba808d"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Czas",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "timestamp",
+        "verticalLine": "",
         "yColumns": [
           "incidents",
           "affected"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "timestamp",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -171,33 +173,33 @@
         "queryId": "daadb2f3-2236-339a-ad76-690e03765cab"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Gmina",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "Gmina",
+        "verticalLine": "",
         "yColumns": [
           "Zgloszenia"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "Gmina",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -216,33 +218,33 @@
         "queryId": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Czas",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "timestamp",
+        "verticalLine": "",
         "yColumns": [
           "customers_offline"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "timestamp",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -261,33 +263,33 @@
         "queryId": "3475e7da-d41d-bb3a-db61-00ad4c9b333f"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Gmina",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "Gmina",
+        "verticalLine": "",
         "yColumns": [
           "Odbiorcy"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "Gmina",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -306,33 +308,33 @@
         "queryId": "9917d286-54e8-2a72-6264-1569804cc108"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Gmina",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "Gmina",
+        "verticalLine": "",
         "yColumns": [
           "Pokrycie"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "Gmina",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -351,17 +353,17 @@
         "queryId": "df1690d1-2cf7-1098-8737-98e73453ea75"
       },
       "visualOptions": {
-        "multiStat__textSize": "auto",
         "multiStat__displayOrientation": "horizontal",
         "colorRules": [],
+        "multiStat__valueColumn": "Wartosc",
         "multiStat__labelColumn": "Wskaznik",
         "colorStyle": "light",
+        "colorRulesDisabled": true,
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "colorRulesDisabled": true,
-        "multiStat__valueColumn": "Wartosc"
+        "multiStat__textSize": "auto"
       }
     },
     {
@@ -380,23 +382,29 @@
         "queryId": "286746ee-7e9a-cb49-51e8-31fc6d717dc7"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Wojewodztwo",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "Wojewodztwo",
+        "verticalLine": "",
         "yColumns": [
           "PSP",
           "WOT",
@@ -404,13 +412,7 @@
           "Agregaty",
           "Smiglowce"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "Wojewodztwo",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -429,15 +431,15 @@
         "queryId": "057690da-f91a-d3a0-1eb1-daf8d55e79b8"
       },
       "visualOptions": {
+        "table__enableRenderLinks": true,
+        "drillthroughDisabled": false,
         "table__renderLinks": [],
-        "colorRules": [],
         "drillthrough": [],
         "crossFilterDisabled": false,
-        "crossFilter": [],
-        "drillthroughDisabled": false,
         "colorRulesDisabled": true,
+        "crossFilter": [],
         "colorStyle": "light",
-        "table__enableRenderLinks": true
+        "colorRules": []
       }
     },
     {
@@ -456,34 +458,34 @@
         "queryId": "29192ae9-2d70-7fc6-076f-06771a87ad63"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Czas",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "timestamp",
+        "verticalLine": "",
         "yColumns": [
           "disinfo_signals",
           "disinfo_reach"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "timestamp",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -502,18 +504,18 @@
         "queryId": "599e29ef-6c06-3a19-86d0-b79bf91c9aaf"
       },
       "visualOptions": {
-        "pie__kind": "donut",
+        "legendLocation": "right",
         "yColumns": [
           "Zasieg"
         ],
-        "xColumn": "Kanal",
+        "hideLegend": false,
         "pie__orderBy": "size",
+        "xColumn": "Kanal",
+        "pie__kind": "donut",
         "pie__label": [
           "name",
           "percentage"
-        ],
-        "hideLegend": false,
-        "legendLocation": "right"
+        ]
       }
     },
     {
@@ -532,15 +534,15 @@
         "queryId": "67cede41-377e-ca16-6e0f-4431e2d6e78d"
       },
       "visualOptions": {
+        "table__enableRenderLinks": true,
+        "drillthroughDisabled": false,
         "table__renderLinks": [],
-        "colorRules": [],
         "drillthrough": [],
         "crossFilterDisabled": false,
-        "crossFilter": [],
-        "drillthroughDisabled": false,
         "colorRulesDisabled": true,
+        "crossFilter": [],
         "colorStyle": "light",
-        "table__enableRenderLinks": true
+        "colorRules": []
       }
     },
     {
@@ -560,11 +562,11 @@
       },
       "visualOptions": {
         "colorRulesDisabled": true,
+        "heatMap__dataColumn": "Zgloszenia",
+        "colorRules": [],
         "yColumn": "Wojewodztwo",
         "xColumn": "Doba",
-        "heatMap__dataColumn": "Zgloszenia",
-        "heatMap__colorPaletteKey": "orange",
-        "colorRules": []
+        "heatMap__colorPaletteKey": "orange"
       }
     },
     {
@@ -583,33 +585,33 @@
         "queryId": "86a0e303-e60a-e04c-9b29-13b317bd3148"
       },
       "visualOptions": {
-        "drillthroughDisabled": false,
         "crossFilter": [],
-        "drillthrough": [],
+        "crossFilterDisabled": false,
         "xColumnTitle": "Czas",
+        "drillthroughDisabled": false,
+        "hideLegend": false,
+        "xAxisScale": "linear",
+        "legendLocation": "bottom",
+        "drillthrough": [],
         "multipleYAxes": {
           "additional": [],
+          "showMultiplePanels": false,
           "base": {
-            "yAxisMinimumValue": null,
-            "id": "-1",
-            "columns": [],
-            "label": "",
-            "yAxisScale": "linear",
             "yAxisMaximumValue": null,
-            "horizontalLines": []
-          },
-          "showMultiplePanels": false
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "id": "-1",
+            "horizontalLines": [],
+            "label": "",
+            "yAxisScale": "linear"
+          }
         },
+        "xColumn": "Czas",
+        "verticalLine": "",
         "yColumns": [
           "Skumulowane"
         ],
-        "legendLocation": "bottom",
-        "xColumn": "Czas",
-        "seriesColumns": null,
-        "xAxisScale": "linear",
-        "crossFilterDisabled": false,
-        "hideLegend": false,
-        "verticalLine": ""
+        "seriesColumns": null
       }
     },
     {
@@ -629,11 +631,11 @@
       },
       "visualOptions": {
         "hideLegend": false,
-        "map__bubbleFormat": "bubble",
+        "legendLocation": "bottom",
+        "map__longitudeColumn": "lon",
         "map__minBubbleSizeColumn": "Zgloszenia",
         "map__latitudeColumn": "lat",
-        "map__longitudeColumn": "lon",
-        "legendLocation": "bottom"
+        "map__bubbleFormat": "bubble"
       }
     }
   ],
@@ -704,7 +706,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "hydro_readings\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where gauge_id in (\"WG-001\", \"WG-003\", \"WG-004\", \"WG-007\")\n| summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river\n| order by timestamp asc",
+      "text": "hydro_readings\n| where gauge_id in (\"WG-001\", \"WG-003\", \"WG-004\", \"WG-007\")\n| summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river\n| order by timestamp asc",
       "id": "8019ec6b-2308-296c-c51d-a51946201cb8",
       "usedVariables": []
     },
@@ -713,7 +715,7 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "hydro_readings\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where level_cm >= alarm_level_cm\n| summarize [\"Gminy w alarmie\"]=dcount(gmina_code), [\"Wodowskazy w alarmie\"]=dcount(gauge_id), [\"Rzeki w alarmie\"]=dcount(river)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
+      "text": "hydro_readings\n| where level_cm >= alarm_level_cm\n| summarize [\"Gminy w alarmie\"]=dcount(gmina_code), [\"Wodowskazy w alarmie\"]=dcount(gauge_id), [\"Rzeki w alarmie\"]=dcount(river)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
       "id": "b38f0b51-ca66-6e80-132e-54ece2c59d4e",
       "usedVariables": []
     },

@@ -291,7 +291,7 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
         eTag = ''
         schema_version = $schemaVersion
         title = $DashboardName
-        autoRefresh = [ordered]@{ enabled = $true }
+        autoRefresh = [ordered]@{ enabled = $true; defaultInterval = '30s'; minInterval = '10s' }
         tiles = $tiles
         baseQueries = @()
         parameters = @(

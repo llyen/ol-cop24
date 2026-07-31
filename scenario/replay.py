@@ -109,6 +109,34 @@ class KustoClient:
                f"?streamFormat=json&mappingName={mapping_name}")
         self._post(url, ndjson.encode("utf-8"))
 
+    def ingest_from_onelake(self, table: str, url: str, mapping_name: str = "scenario_map") -> str:
+        """Ingestia wsadowa z OneLake. Dane trafiaja do ekstentow, wiec zapytania sa szybkie."""
+        csl = (f".ingest async into table {table} (h'{url};impersonate') "
+               f"with (format='json', ingestionMappingReference='{mapping_name}')")
+        return self.mgmt(csl)["Tables"][0]["Rows"][0][0]
+
+    def wait_for_operation(self, operation_id: str, timeout_s: int = 900) -> str:
+        """Czeka na zakonczenie operacji. Kolumne State szukamy po nazwie,
+        bo kolejnosc kolumn w .show operations nie jest gwarantowana."""
+        deadline = time.monotonic() + timeout_s
+        while time.monotonic() < deadline:
+            table = self.mgmt(f".show operations {operation_id}")["Tables"][0]
+            names = [c["ColumnName"] for c in table["Columns"]]
+            if "State" not in names:
+                raise SystemExit(f".show operations nie zwrocilo kolumny State: {names}")
+            idx = names.index("State")
+            rows = table["Rows"]
+            if rows:
+                state = rows[-1][idx]
+                if state not in ("InProgress", "Scheduled"):
+                    return state
+            time.sleep(3)
+        return "Timeout"
+
+    def delete_from(self, table: str, cutoff_iso: str):
+        csl = f".delete table {table} records <| {table} | where timestamp >= datetime({cutoff_iso})"
+        self.mgmt(csl)
+
 
 # --- rownolegla wysylka -----------------------------------------------------
 
@@ -206,14 +234,63 @@ def load_events(streams, start, end):
 
 def reset_tables(client: KustoClient, streams):
     print("=== Reset: czyszczenie tabel strumieniowych")
-    # hydro_readings_rt jest destynacja Eventstreamu i bywa zablokowana do czyszczenia,
-    # dlatego traktujemy ja jako opcjonalna.
-    for stream in list(streams) + ["hydro_readings_rt"]:
-        try:
-            client.mgmt(f".clear table {stream} data")
-            print(f"  [OK] wyczyszczono {stream}")
-        except SystemExit as exc:
-            print(f"  [POMINIETO] {stream}: {str(exc).splitlines()[-1][:120]}")
+    # Czyszczenie potrafi sie nie udac, gdy trwa jeszcze poprzednia ingestia.
+    # Bez ponowienia tlo doladowaloby sie na istniejace dane i liczby bylyby podwojone.
+    for stream in streams:
+        cleared = False
+        for attempt in range(6):
+            try:
+                client.mgmt(f".clear table {stream} data")
+                if client.scalar(f"{stream} | count") == 0:
+                    cleared = True
+                    break
+            except SystemExit:
+                pass
+            time.sleep(10 * (attempt + 1))
+            print(f"  [ponawiam] {stream}")
+        if not cleared:
+            raise SystemExit(f"Nie udalo sie wyczyscic tabeli {stream}. Poczekaj i uruchom ponownie.")
+        print(f"  [OK] wyczyszczono {stream}")
+    # hydro_readings_rt jest destynacja Eventstreamu i bywa zablokowana - jest opcjonalna.
+    try:
+        client.mgmt(".clear table hydro_readings_rt data")
+        print("  [OK] wyczyszczono hydro_readings_rt")
+    except SystemExit:
+        print("  [POMINIETO] hydro_readings_rt (destynacja Eventstreamu)")
+
+
+def bulk_load(client: KustoClient, streams, base_url: str, cutoff: datetime):
+    """Wczytuje tlo scenariusza ingestia wsadowa i obcina je do momentu startu fazy live.
+
+    Ingestia wsadowa buduje ekstenty, dzieki czemu zapytania kafelkow sa szybkie.
+    Streaming ingestion trzyma dane w buforze i przy setkach tysiecy wierszy
+    zapytania zauwazalnie zwalniaja - dlatego strumieniowo idzie wylacznie okno live.
+    """
+    cutoff_iso = cutoff.isoformat()
+    print(f"=== Tlo scenariusza: ingestia wsadowa do {cutoff_iso}")
+    # Ingestie ida sekwencyjnie: dziewiec rownoleglych zadan przekracza limit
+    # wspolbieznosci pojemnosci F8 i konczy sie stanem Throttled.
+    for stream in streams:
+        url = f"{base_url.rstrip('/')}/{stream}.jsonl"
+        loaded = 0
+        state = "NieUruchomiono"
+        for attempt in range(5):
+            operation = client.ingest_from_onelake(stream, url)
+            state = client.wait_for_operation(operation)
+            loaded = client.scalar(f"{stream} | count")
+            if state == "Completed" and loaded:
+                break
+            wait_s = 15 * (attempt + 1)
+            print(f"  [ponawiam za {wait_s}s] {stream}: stan={state}")
+            time.sleep(wait_s)
+        if state != "Completed" or not loaded:
+            raise SystemExit(f"Ingestia wsadowa {stream} nie powiodla sie: stan={state}, wierszy={loaded}")
+        print(f"  [OK] {stream}: {loaded} wierszy")
+    print("=== Obcinanie tla do okna live")
+    for stream in streams:
+        client.delete_from(stream, cutoff_iso)
+        rows = client.scalar(f"{stream} | count")
+        print(f"  [OK] {stream}: {rows} wierszy tla")
 
 
 def run(args):
@@ -235,10 +312,14 @@ def run(args):
         columns[stream] = set(cols)
         print(f"  [OK] {stream} ({len(cols)} kolumn)")
 
-    print("=== Wczytywanie scenariusza")
-    start = parse_ts(args.from_ts) if args.from_ts else None
-    end = parse_ts(args.to_ts) if args.to_ts else None
-    events = load_events(streams, start, end)
+    live_start = parse_ts(args.from_ts or cfg["liveStart"])
+    live_end = parse_ts(args.to_ts) if args.to_ts else live_start + timedelta(hours=args.live_hours)
+
+    if args.bulk:
+        bulk_load(client, streams, cfg["onelake"], live_start)
+
+    print("=== Wczytywanie okna live")
+    events = load_events(streams, live_start, live_end)
     if not events:
         raise SystemExit("Brak zdarzen do odtworzenia.")
 
@@ -247,7 +328,7 @@ def run(args):
     offset = datetime.now(timezone.utc) - t0 if args.time_mode == "now" else None
 
     print(f"  zdarzen: {len(events)}")
-    print(f"  zakres scenariusza: {t0.isoformat()} .. {t1.isoformat()} ({span / 86400:.1f} doby)")
+    print(f"  okno live: {t0.isoformat()} .. {t1.isoformat()} ({span / 3600:.1f} h)")
     print(f"  mnoznik czasu: {args.speed}x  ->  odtwarzanie potrwa ok. {span / args.speed / 60:.1f} min")
     print(f"  znaczniki czasu: {'przesuniete na teraz' if offset else 'oryginalne'}")
     if args.dry_run:
@@ -309,13 +390,17 @@ def run(args):
 
 def main():
     p = argparse.ArgumentParser(description="Odtwarzanie scenariusza COP-24 do Eventhouse")
-    p.add_argument("--speed", type=float, default=3600.0,
-                   help="ile sekund scenariusza przypada na sekunde zegara (3600 = godzina na sekunde)")
+    p.add_argument("--speed", type=float, default=300.0,
+                   help="ile sekund scenariusza przypada na sekunde zegara (300 = 5 minut na sekunde)")
     p.add_argument("--reset", action="store_true", help="wyczysc tabele przed startem")
     p.add_argument("--reset-only", action="store_true", help="tylko wyczysc i zakoncz")
+    p.add_argument("--bulk", action="store_true",
+                   help="zaladuj tlo scenariusza ingestia wsadowa z OneLake przed faza live")
+    p.add_argument("--live-hours", type=float, default=24.0,
+                   help="dlugosc okna odtwarzanego strumieniowo, w godzinach scenariusza")
     p.add_argument("--streams", help="lista strumieni po przecinku; domyslnie wszystkie z scenario.json")
-    p.add_argument("--from", dest="from_ts", help="ISO timestamp od")
-    p.add_argument("--to", dest="to_ts", help="ISO timestamp do")
+    p.add_argument("--from", dest="from_ts", help="poczatek okna live; domyslnie liveStart z scenario.json")
+    p.add_argument("--to", dest="to_ts", help="koniec okna live; domyslnie poczatek + live-hours")
     p.add_argument("--time-mode", choices=("source", "now"), default="source",
                    help="source = oryginalne znaczniki, now = przesuniete tak, by scenariusz zaczynal sie teraz")
     p.add_argument("--batch", type=int, default=4000, help="maks. liczba zdarzen w jednej partii")

@@ -47,10 +47,10 @@ $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent $PSScriptRoot
 
 $presets = @{
-    demo       = @{ Speed = 3600;  From = $null;                      To = $null }
-    szybki     = @{ Speed = 10800; From = $null;                      To = $null }
-    kulminacja = @{ Speed = 300;   From = '2026-09-15T00:00:00+02:00'; To = '2026-09-16T12:00:00+02:00' }
-    wolny      = @{ Speed = 900;   From = $null;                      To = $null }
+    demo       = @{ Speed = 300;  LiveHours = 24; From = $null }
+    szybki     = @{ Speed = 900;  LiveHours = 24; From = $null }
+    kulminacja = @{ Speed = 120;  LiveHours = 12; From = '2026-09-15T06:00:00+02:00' }
+    wolny      = @{ Speed = 60;   LiveHours = 12; From = $null }
 }
 $selected = $presets[$Preset]
 if ($PSBoundParameters.ContainsKey('Speed')) { $selected.Speed = $Speed }
@@ -58,16 +58,17 @@ if ($PSBoundParameters.ContainsKey('Speed')) { $selected.Speed = $Speed }
 Write-Host "=== Scenariusz COP-24: powodz w dorzeczu Nysy Klodzkiej" -ForegroundColor Cyan
 Write-Host "  wariant:   $Preset"
 Write-Host "  tempo:     $($selected.Speed)x czasu rzeczywistego"
+Write-Host "  okno live: $($selected.LiveHours) h scenariusza"
 Write-Host "  znaczniki: $TimeMode"
 
 $python = Get-Command python -ErrorAction SilentlyContinue
 if (-not $python) { throw 'Brak python w PATH.' }
 
-$argv = @((Join-Path $PSScriptRoot 'replay.py'), '--speed', $selected.Speed, '--time-mode', $TimeMode)
-if (-not $NoReset) { $argv += '--reset' }
+$argv = @((Join-Path $PSScriptRoot 'replay.py'), '--speed', $selected.Speed,
+          '--live-hours', $selected.LiveHours, '--time-mode', $TimeMode)
+if (-not $NoReset) { $argv += @('--reset', '--bulk') }
 if ($ResetOnly) { $argv += @('--reset', '--reset-only') }
 if ($selected.From) { $argv += @('--from', $selected.From) }
-if ($selected.To) { $argv += @('--to', $selected.To) }
 if ($Streams) { $argv += @('--streams', $Streams) }
 
 Push-Location $repo

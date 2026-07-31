@@ -181,7 +181,7 @@ $Measures = @(
     @{Name='Pompy'; Expression='SUM(resource_deployment[pumps])'; Format='#,0'},
     @{Name='Agregaty'; Expression='SUM(resource_deployment[generators])'; Format='#,0'},
     @{Name='Smiglowce'; Expression='SUM(resource_deployment[helicopters])'; Format='#,0'},
-    @{Name='Czas Reakcji Min'; Expression='AVERAGEX(escalation_events, DATEDIFF(escalation_events[timestamp], NOW(), MINUTE))'; Format='#,0'},
+    @{Name='Czas Reakcji Min'; Expression='VAR PierwszeZgloszenie = MIN(incident_reports[timestamp]) VAR PierwszaEskalacja = MIN(escalation_events[timestamp]) RETURN IF(NOT ISBLANK(PierwszeZgloszenie) && NOT ISBLANK(PierwszaEskalacja) && PierwszaEskalacja >= PierwszeZgloszenie, DATEDIFF(PierwszeZgloszenie, PierwszaEskalacja, MINUTE))'; Format='#,0'},
     @{Name='Rekomendacje RZZK'; Expression='CALCULATE(COUNTROWS(escalation_recommendations), escalation_recommendations[recommended_level] = "RZZK")'; Format='#,0'},
     @{Name='Gminy KIS Powiat Plus'; Expression='CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 25)'; Format='#,0'},
     @{Name='Gminy KIS Wojewoda Plus'; Expression='CALCULATE(DISTINCTCOUNT(kis_gmina[gmina_code]), kis_gmina[kis] >= 45)'; Format='#,0'},
@@ -572,28 +572,17 @@ function New-ReportDefinition([string]$SemanticModelId, [string]$Mode) {
 }
 
 function Upsert-Report([hashtable]$Headers, [string]$SemanticModelId) {
-    $existing = Find-Item -Headers $Headers -DisplayName $ReportName -Type 'Report'
-    foreach ($mode in @('PBIR')) {
-        try {
-            Write-Host "Tworzenie/aktualizacja raportu w formacie $mode."
-            $definition = New-ReportDefinition -SemanticModelId $SemanticModelId -Mode $mode
-            if ($existing) {
-                $body = @{ definition = $definition }
-                $resp = Invoke-FabricJson -Method POST -Uri "https://api.fabric.microsoft.com/v1/workspaces/$WorkspaceId/items/$($existing.id)/updateDefinition?updateMetadata=True" -Headers $Headers -Body $body
-            }
-            else {
-                $body = @{ displayName = $ReportName; description = 'Raport Power BI COP-24 utworzony przez Fabric REST API'; definition = $definition }
-                $resp = Invoke-FabricJson -Method POST -Uri "https://api.fabric.microsoft.com/v1/workspaces/$WorkspaceId/reports" -Headers $Headers -Body $body
-            }
-            Wait-FabricOperation -Response $resp -Headers $Headers
-            Start-Sleep -Seconds 5
-            return (Find-Item -Headers $Headers -DisplayName $ReportName -Type 'Report')
-        }
-        catch {
-            Write-Warning "Raport $mode nie powiódł się: $($_.Exception.Message)"
-        }
-    }
-    throw "Nie udało się wdrożyć raportu przez API. Pełna definicja jest zapisana lokalnie w $ReportOutRoot."
+    $reportScript = Join-Path $PSScriptRoot 'create_report.ps1'
+    if (-not (Test-Path $reportScript)) { throw "Brak skryptu raportu: $reportScript" }
+    & $reportScript `
+        -WorkspaceId $WorkspaceId `
+        -SemanticModelId $SemanticModelId `
+        -ReportId 'a0449186-59df-49f4-a151-9ceceb06726e' `
+        -ReportName $ReportName | Out-Null
+    Start-Sleep -Seconds 3
+    $report = Find-Item -Headers $Headers -DisplayName $ReportName -Type 'Report'
+    if (-not $report) { throw "Raport $ReportName nie pojawił się na liście elementów po wdrożeniu." }
+    return $report
 }
 
 function Get-DefinitionStats([hashtable]$Headers, [string]$ItemId, [string]$Format) {

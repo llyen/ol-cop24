@@ -67,7 +67,7 @@ table kis_country
 	measure Smiglowce = SUM(resource_deployment[helicopters])
 		formatString: #,0
 
-	measure 'Czas Reakcji Min' = AVERAGEX(escalation_events, DATEDIFF(escalation_events[timestamp], NOW(), MINUTE))
+	measure 'Czas Reakcji Min' = VAR PierwszeZgloszenie = MIN(incident_reports[timestamp]) VAR PierwszaEskalacja = MIN(escalation_events[timestamp]) RETURN IF(NOT ISBLANK(PierwszeZgloszenie) && NOT ISBLANK(PierwszaEskalacja) && PierwszaEskalacja >= PierwszeZgloszenie, DATEDIFF(PierwszeZgloszenie, PierwszaEskalacja, MINUTE))
 		formatString: #,0
 
 	measure 'Rekomendacje RZZK' = CALCULATE(COUNTROWS(escalation_recommendations), escalation_recommendations[recommended_level] = "RZZK")
