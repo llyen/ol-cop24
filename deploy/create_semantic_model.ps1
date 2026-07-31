@@ -407,6 +407,57 @@ function Upsert-SemanticModel([hashtable]$Headers) {
 }
 
 function New-ReportDefinition([string]$SemanticModelId, [string]$Mode) {
+    if ($Mode -ne 'PBIR') { throw 'Raport COP-24 jest generowany wyłącznie w działającym formacie PBIR.' }
+    if (Test-Path $ReportOutRoot) { Remove-Item -Recurse -Force $ReportOutRoot }
+    New-Item -ItemType Directory -Force -Path $ReportOutRoot | Out-Null
+
+    function New-Lit([string]$Value) { return @{ expr = @{ Literal = @{ Value = $Value } } } }
+    function New-Col([string]$Table, [string]$Column) { return @{ Column = @{ Expression = @{ SourceRef = @{ Entity = $Table } }; Property = $Column } } }
+    function New-Meas([string]$Table, [string]$Measure) { return @{ Measure = @{ Expression = @{ SourceRef = @{ Entity = $Table } }; Property = $Measure } } }
+    function New-Agg([string]$Table, [string]$Column, [int]$Function) { return @{ Aggregation = @{ Expression = (New-Col $Table $Column); Function = $Function } } }
+    function New-Proj($Field, [string]$QueryRef, [string]$NativeRef, [string]$DisplayName = '') {
+        $p = [ordered]@{ field = $Field; queryRef = $QueryRef; nativeQueryRef = $NativeRef }
+        if ($DisplayName) { $p.displayName = $DisplayName }
+        return $p
+    }
+    function New-TitleVco([string]$Title) {
+        return @{ title = @(@{ properties = @{ show = (New-Lit 'true'); text = (New-Lit ("'$Title'")); fontSize = (New-Lit '12D'); bold = (New-Lit 'true') } }) }
+    }
+    function New-DataVisual([string]$Name, [string]$Type, [string]$Title, [int]$X, [int]$Y, [int]$W, [int]$H, [hashtable]$Roles, $SortField = $null) {
+        $queryState = [ordered]@{}
+        foreach ($role in $Roles.Keys) { $queryState[$role] = @{ projections = @($Roles[$role]) } }
+        $query = [ordered]@{ queryState = $queryState }
+        if ($SortField) { $query.sortDefinition = @{ sort = @(@{ field = $SortField; direction = 'Descending' }); isDefaultSort = $false } }
+        $visual = [ordered]@{
+            '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json'
+            name = $Name
+            position = @{ x = $X; y = $Y; z = 1000; height = $H; width = $W; tabOrder = 1000 }
+            visual = [ordered]@{
+                visualType = $Type
+                query = $query
+                visualContainerObjects = (New-TitleVco $Title)
+                drillFilterOtherVisuals = $true
+            }
+        }
+        if ($Type -in @('tableEx','pivotTable')) {
+            $visual.visual.objects = @{ columnHeaders = @(@{ properties = @{ columnAdjustment = (New-Lit "'growToFit'"); autoSizeColumnWidth = (New-Lit 'true') } }) }
+            $visual.visual.visualContainerObjects.stylePreset = @(@{ properties = @{ name = (New-Lit "'None'") } })
+        }
+        return $visual
+    }
+    function New-TextboxVisual([string]$Name, [string]$Text, [int]$X, [int]$Y, [int]$W, [int]$H) {
+        return [ordered]@{
+            '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json'
+            name = $Name
+            position = @{ x = $X; y = $Y; z = 2000; height = $H; width = $W; tabOrder = 0 }
+            visual = [ordered]@{
+                visualType = 'textbox'
+                objects = @{ general = @(@{ properties = @{ paragraphs = @(@{ textRuns = @(@{ value = $Text; textStyle = @{ fontFamily = 'Segoe UI Semibold'; fontSize = '24px'; color = '#0F172A' } }); horizontalTextAlignment = 'left' }) } }) }
+                visualContainerObjects = @{ background = @(@{ properties = @{ show = (New-Lit 'false') } }); border = @(@{ properties = @{ show = (New-Lit 'false') } }) }
+            }
+        }
+    }
+
     $parts = [System.Collections.Generic.List[object]]::new()
     $pbir = @{
         '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json'
@@ -416,63 +467,113 @@ function New-ReportDefinition([string]$SemanticModelId, [string]$Mode) {
     $platform = @{
         '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json'
         metadata = @{ type = 'Report'; displayName = $ReportName }
-        config = @{ version = '2.0'; logicalId = ([guid]::NewGuid().ToString()) }
+        config = @{ version = '2.0'; logicalId = 'a0449186-59df-49f4-a151-9ceceb06726e' }
     } | ConvertTo-Json -Depth 10
+    $report = @{
+        '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json'
+        themeCollection = @{ baseTheme = @{ name = 'CY25SU12'; type = 'SharedResources'; reportVersionAtImport = @{ visual = '2.5.0'; page = '2.3.0'; report = '3.1.0' } } }
+        settings = @{ useStylableVisualContainerHeader = $true; defaultFilterActionIsDataFilter = $true; useEnhancedTooltips = $true }
+    } | ConvertTo-Json -Depth 20
+    $version = @{
+        '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/versionMetadata/1.0.0/schema.json'
+        version = '2.0.0'
+    } | ConvertTo-Json -Depth 5
+    $pageIds = @('obraz-kraju','wojewodztwo-gminy','infrastruktura-krytyczna','eskalacja-spo')
+    $pages = @{ '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.0.0/schema.json'; pageOrder = $pageIds; activePageName = $pageIds[0] } | ConvertTo-Json -Depth 10
     $parts.Add((New-Part 'definition.pbir' $pbir)); Save-DefinitionPart $ReportOutRoot 'definition.pbir' $pbir
     $parts.Add((New-Part '.platform' $platform)); Save-DefinitionPart $ReportOutRoot '.platform' $platform
+    $parts.Add((New-Part 'definition/report.json' $report)); Save-DefinitionPart $ReportOutRoot 'definition\report.json' $report
+    $parts.Add((New-Part 'definition/version.json' $version)); Save-DefinitionPart $ReportOutRoot 'definition\version.json' $version
+    $parts.Add((New-Part 'definition/pages/pages.json' $pages)); Save-DefinitionPart $ReportOutRoot 'definition\pages\pages.json' $pages
 
-    if ($Mode -eq 'PBIR') {
-        $report = @{
-            '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json'
-            themeCollection = @{ baseTheme = @{ name = 'CY25SU12'; type = 'SharedResources'; reportVersionAtImport = @{ visual = '2.5.0'; page = '2.3.0'; report = '3.1.0' } } }
-            settings = @{ useStylableVisualContainerHeader = $true; defaultFilterActionIsDataFilter = $true; useEnhancedTooltips = $true }
-        } | ConvertTo-Json -Depth 20
-        $version = @{
-            '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/version/1.0.0/schema.json'
-            version = '4.0'
-        } | ConvertTo-Json -Depth 5
-        $pageIds = @('obraz-kraju','wojewodztwo-gminy','eskalacja-spo')
-        $pages = @{ pageOrder = $pageIds; activePage = $pageIds[0] } | ConvertTo-Json -Depth 10
-        $parts.Add((New-Part 'definition/report.json' $report)); Save-DefinitionPart $ReportOutRoot 'definition\report.json' $report
-        $parts.Add((New-Part 'definition/version.json' $version)); Save-DefinitionPart $ReportOutRoot 'definition\version.json' $version
-        $parts.Add((New-Part 'definition/pages/pages.json' $pages)); Save-DefinitionPart $ReportOutRoot 'definition\pages\pages.json' $pages
-        $titles = @{
-            'obraz-kraju' = 'Obraz kraju'
-            'wojewodztwo-gminy' = 'Województwo i gminy'
-            'eskalacja-spo' = 'Eskalacja i SPO'
-        }
-        foreach ($p in $pageIds) {
-            $page = @{
-                '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json'
-                name = $p
-                displayName = $titles[$p]
-                displayOption = 'FitToPage'
-                height = 720
-                width = 1280
-            } | ConvertTo-Json -Depth 10
-            $parts.Add((New-Part "definition/pages/$p/page.json" $page))
-            Save-DefinitionPart $ReportOutRoot "definition\pages\$p\page.json" $page
-        }
-        return @{ format = 'PBIR'; parts = @($parts) }
+    $titles = @{
+        'obraz-kraju' = 'Obraz kraju'
+        'wojewodztwo-gminy' = 'Województwo i gminy'
+        'infrastruktura-krytyczna' = 'Infrastruktura krytyczna'
+        'eskalacja-spo' = 'Eskalacja i SPO'
+    }
+    foreach ($p in $pageIds) {
+        $page = @{
+            '$schema' = 'https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json'
+            name = $p
+            displayName = $titles[$p]
+            displayOption = 'FitToPage'
+            height = 720
+            width = 1280
+        } | ConvertTo-Json -Depth 10
+        $parts.Add((New-Part "definition/pages/$p/page.json" $page))
+        Save-DefinitionPart $ReportOutRoot "definition\pages\$p\page.json" $page
     }
 
-    $legacy = @{
-        config = '{}'
-        layoutOptimization = 0
-        resourcePackages = @()
-        sections = @(
-            @{ name = 'ReportSectionObrazKraju'; displayName = 'Obraz kraju'; displayOption = 'FitToPage'; height = 720; width = 1280; visualContainers = @() },
-            @{ name = 'ReportSectionWojGminy'; displayName = 'Województwo i gminy'; displayOption = 'FitToPage'; height = 720; width = 1280; visualContainers = @() },
-            @{ name = 'ReportSectionEskalacjaSpo'; displayName = 'Eskalacja i SPO'; displayOption = 'FitToPage'; height = 720; width = 1280; visualContainers = @() }
+    $mKis = New-Meas 'kis_country' 'KIS'
+    $mKisMax = New-Meas 'kis_country' 'KIS Max Lokalny'
+    $mAlarm = New-Meas 'kis_country' 'Alarm Hydro'
+    $mAffected = New-Meas 'kis_country' 'Osoby Dotkniete'
+    $mEvac = New-Meas 'kis_country' 'Liczba Ewakuowanych'
+    $mPower = New-Meas 'kis_country' 'Odbiorcy Bez Prądu'
+    $mInc = New-Meas 'kis_country' 'Incydenty'
+    $mTelco = New-Meas 'kis_country' 'Gminy Telco Ponizej 50'
+    $mRzzk = New-Meas 'kis_country' 'Rekomendacje RZZK'
+    $mPsp = New-Meas 'kis_country' 'PSP Zastepy'
+    $mWot = New-Meas 'kis_country' 'WOT Zolnierze'
+    $mPumps = New-Meas 'kis_country' 'Pompy'
+    $sumPower = New-Agg 'power_grid_events' 'customers_offline' 0
+    $sumBase = New-Agg 'telecom_events' 'base_stations_down' 0
+    $sumHydro = New-Agg 'hydro_readings' 'level_cm' 1
+    $countEsc = New-Agg 'escalation_events' 'event_id' 2
+
+    $visuals = @{
+        'obraz-kraju' = @(
+            (New-TextboxVisual 'v_p1_title' 'Obraz kraju — wspólny obraz sytuacji COP-24' 20 15 900 45),
+            (New-DataVisual 'v_p1_card_alarm' 'card' 'Gminy/wodowskazy w alarmie' 20 70 290 95 @{ Values = @((New-Proj $mAlarm 'kis_country.Alarm Hydro' 'Alarm Hydro' 'Alarm hydro')) }),
+            (New-DataVisual 'v_p1_card_people' 'card' 'Osoby objęte zgłoszeniami' 330 70 290 95 @{ Values = @((New-Proj $mAffected 'kis_country.Osoby Dotkniete' 'Osoby Dotkniete' 'Osoby dotknięte')) }),
+            (New-DataVisual 'v_p1_card_evac' 'card' 'Osoby w ewakuacji' 640 70 290 95 @{ Values = @((New-Proj $mEvac 'kis_country.Liczba Ewakuowanych' 'Liczba Ewakuowanych' 'Ewakuowani')) }),
+            (New-DataVisual 'v_p1_card_power' 'card' 'Odbiorcy bez prądu' 950 70 290 95 @{ Values = @((New-Proj $mPower 'kis_country.Odbiorcy Bez Prądu' 'Odbiorcy Bez Prądu' 'Bez prądu')) }),
+            (New-DataVisual 'v_p1_kis_voiv' 'clusteredColumnChart' 'KIS wg województw' 20 185 390 220 @{ Category = @((New-Proj (New-Col 'dim_voivodeship' 'voivodeship_name') 'dim_voivodeship.voivodeship_name' 'Województwo' 'Województwo')); Y = @((New-Proj $mKis 'kis_country.KIS' 'KIS' 'KIS')) } $mKis),
+            (New-DataVisual 'v_p1_inc_time' 'lineChart' 'Incydenty w czasie' 430 185 390 220 @{ Category = @((New-Proj (New-Col 'incident_reports' 'timestamp') 'incident_reports.timestamp' 'Czas' 'Czas')); Y = @((New-Proj $mInc 'kis_country.Incydenty' 'Incydenty' 'Incydenty')) }),
+            (New-DataVisual 'v_p1_map_gminy' 'azureMap' 'Mapa gmin wg KIS' 840 185 400 480 @{ Category = @((New-Proj (New-Col 'dim_gmina' 'gmina_name') 'dim_gmina.gmina_name' 'Gmina' 'Gmina')); X = @((New-Proj (New-Col 'dim_gmina' 'lon') 'dim_gmina.lon' 'Długość' 'Długość geogr.')); Y = @((New-Proj (New-Col 'dim_gmina' 'lat') 'dim_gmina.lat' 'Szerokość' 'Szerokość geogr.')); Size = @((New-Proj $mKis 'kis_country.KIS' 'KIS' 'KIS')) }),
+            (New-DataVisual 'v_p1_kis_gminy' 'clusteredBarChart' 'Top gminy wg KIS' 20 425 800 240 @{ Category = @((New-Proj (New-Col 'dim_gmina' 'gmina_name') 'dim_gmina.gmina_name' 'Gmina' 'Gmina')); Y = @((New-Proj $mKis 'kis_country.KIS' 'KIS' 'KIS')) } $mKis)
         )
-    } | ConvertTo-Json -Depth 20
-    $parts.Add((New-Part 'report.json' $legacy)); Save-DefinitionPart $ReportOutRoot 'report.json' $legacy
-    return @{ format = 'PBIR-Legacy'; parts = @($parts) }
+        'wojewodztwo-gminy' = @(
+            (New-TextboxVisual 'v_p2_title' 'Województwo i gminy — drill-down administracyjny' 20 15 900 45),
+            (New-DataVisual 'v_p2_slicer_voiv' 'slicer' 'Filtr województwa' 20 70 260 170 @{ Values = @((New-Proj (New-Col 'dim_voivodeship' 'voivodeship_name') 'dim_voivodeship.voivodeship_name' 'Województwo' 'Województwo')) }),
+            (New-DataVisual 'v_p2_table_gminy' 'tableEx' 'Gminy z KIS i skutkami' 300 70 450 595 @{ Values = @((New-Proj (New-Col 'dim_gmina' 'gmina_name') 'dim_gmina.gmina_name' 'Gmina' 'Gmina'), (New-Proj $mKis 'kis_country.KIS' 'KIS' 'KIS'), (New-Proj $mKisMax 'kis_country.KIS Max Lokalny' 'KIS Max Lokalny' 'KIS max'), (New-Proj $mAffected 'kis_country.Osoby Dotkniete' 'Osoby Dotkniete' 'Osoby dotknięte')) }),
+            (New-DataVisual 'v_p2_top15_kis' 'clusteredBarChart' 'Top 15 gmin wg KIS' 770 70 490 280 @{ Category = @((New-Proj (New-Col 'dim_gmina' 'gmina_name') 'dim_gmina.gmina_name' 'Gmina' 'Gmina')); Y = @((New-Proj $mKis 'kis_country.KIS' 'KIS' 'KIS')) } $mKis),
+            (New-DataVisual 'v_p2_hydro_line' 'lineChart' 'Poziomy wody w czasie' 770 375 490 290 @{ Category = @((New-Proj (New-Col 'hydro_readings' 'timestamp') 'hydro_readings.timestamp' 'Czas' 'Czas')); Y = @((New-Proj $sumHydro 'Average(hydro_readings.level_cm)' 'Średni poziom wody' 'Średni poziom wody')) }),
+            (New-DataVisual 'v_p2_alarm_card' 'card' 'Wodowskazy w alarmie' 20 270 260 110 @{ Values = @((New-Proj $mAlarm 'kis_country.Alarm Hydro' 'Alarm Hydro' 'Alarm hydro')) })
+        )
+        'infrastruktura-krytyczna' = @(
+            (New-TextboxVisual 'v_p3_title' 'Infrastruktura krytyczna — energia, łączność, kaskady' 20 15 1000 45),
+            (New-DataVisual 'v_p3_power_time' 'lineChart' 'Odbiorcy bez prądu w czasie' 20 80 600 270 @{ Category = @((New-Proj (New-Col 'power_grid_events' 'timestamp') 'power_grid_events.timestamp' 'Czas' 'Czas')); Y = @((New-Proj $sumPower 'Sum(power_grid_events.customers_offline)' 'Odbiorcy bez prądu' 'Odbiorcy bez prądu')) }),
+            (New-DataVisual 'v_p3_telco_gminy' 'clusteredBarChart' 'Gminy z ograniczoną łącznością' 650 80 590 270 @{ Category = @((New-Proj (New-Col 'telecom_events' 'gmina_code') 'telecom_events.gmina_code' 'Gmina' 'Gmina')); Y = @((New-Proj $sumBase 'Sum(telecom_events.base_stations_down)' 'Stacje wyłączone' 'Stacje wyłączone')) } $sumBase),
+            (New-DataVisual 'v_p3_power_gminy' 'clusteredColumnChart' 'Awaria energii wg gmin' 20 380 600 285 @{ Category = @((New-Proj (New-Col 'power_grid_events' 'gmina_code') 'power_grid_events.gmina_code' 'Gmina' 'Gmina')); Y = @((New-Proj $sumPower 'Sum(power_grid_events.customers_offline)' 'Odbiorcy bez prądu' 'Odbiorcy bez prądu')) } $sumPower),
+            (New-DataVisual 'v_p3_correlation' 'tableEx' 'Korelacja awarii: energia i łączność' 650 380 590 285 @{ Values = @((New-Proj (New-Col 'telecom_events' 'gmina_code') 'telecom_events.gmina_code' 'Gmina' 'Gmina'), (New-Proj $sumBase 'Sum(telecom_events.base_stations_down)' 'Stacje wyłączone' 'Stacje wyłączone'), (New-Proj $mPower 'kis_country.Odbiorcy Bez Prądu' 'Odbiorcy Bez Prądu' 'Odbiorcy bez prądu')) })
+        )
+        'eskalacja-spo' = @(
+            (New-TextboxVisual 'v_p4_title' 'Eskalacja i SPO — rekomendacje dla RZZK' 20 15 900 45),
+            (New-DataVisual 'v_p4_reco_table' 'tableEx' 'Rekomendacje eskalacji' 20 80 610 360 @{ Values = @((New-Proj (New-Col 'escalation_recommendations' 'gmina_code') 'escalation_recommendations.gmina_code' 'Gmina' 'Gmina'), (New-Proj (New-Col 'escalation_recommendations' 'recommended_level') 'escalation_recommendations.recommended_level' 'Poziom' 'Poziom'), (New-Proj (New-Col 'escalation_recommendations' 'recommended_spo') 'escalation_recommendations.recommended_spo' 'SPO' 'SPO'), (New-Proj (New-Col 'escalation_recommendations' 'explanation') 'escalation_recommendations.explanation' 'Uzasadnienie' 'Uzasadnienie')) }),
+            (New-DataVisual 'v_p4_spo_bar' 'clusteredColumnChart' 'Uruchomione SPO' 660 80 580 220 @{ Category = @((New-Proj (New-Col 'escalation_events' 'recommended_spo') 'escalation_events.recommended_spo' 'SPO' 'SPO')); Y = @((New-Proj $countEsc 'Count(escalation_events.event_id)' 'Liczba eskalacji' 'Liczba eskalacji')) } $countEsc),
+            (New-DataVisual 'v_p4_resources' 'clusteredBarChart' 'Zaangażowane siły i środki' 660 330 580 335 @{ Category = @((New-Proj (New-Col 'resource_deployment' 'voivodeship_code') 'resource_deployment.voivodeship_code' 'Województwo' 'Województwo')); Y = @((New-Proj $mPsp 'kis_country.PSP Zastepy' 'PSP Zastepy' 'PSP zastępy'), (New-Proj $mWot 'kis_country.WOT Zolnierze' 'WOT Zolnierze' 'WOT żołnierze'), (New-Proj $mPumps 'kis_country.Pompy' 'Pompy' 'Pompy')) }),
+            (New-DataVisual 'v_p4_rzzk_card' 'card' 'Rekomendacje RZZK' 20 470 290 95 @{ Values = @((New-Proj $mRzzk 'kis_country.Rekomendacje RZZK' 'Rekomendacje RZZK' 'Rekomendacje RZZK')) }),
+            (New-DataVisual 'v_p4_kis_card' 'card' 'Maksymalny KIS lokalny' 340 470 290 95 @{ Values = @((New-Proj $mKisMax 'kis_country.KIS Max Lokalny' 'KIS Max Lokalny' 'KIS max lokalny')) })
+        )
+    }
+
+    foreach ($pageId in $pageIds) {
+        foreach ($v in @($visuals[$pageId])) {
+            $json = $v | ConvertTo-Json -Depth 100
+            $visualName = $v.name
+            $parts.Add((New-Part "definition/pages/$pageId/visuals/$visualName/visual.json" $json))
+            Save-DefinitionPart $ReportOutRoot "definition\pages\$pageId\visuals\$visualName\visual.json" $json
+        }
+    }
+
+    return @{ format = 'PBIR'; parts = @($parts) }
 }
 
 function Upsert-Report([hashtable]$Headers, [string]$SemanticModelId) {
     $existing = Find-Item -Headers $Headers -DisplayName $ReportName -Type 'Report'
-    foreach ($mode in @('PBIR','PBIR-Legacy')) {
+    foreach ($mode in @('PBIR')) {
         try {
             Write-Host "Tworzenie/aktualizacja raportu w formacie $mode."
             $definition = New-ReportDefinition -SemanticModelId $SemanticModelId -Mode $mode
@@ -565,6 +666,7 @@ foreach ($p in @($semParts | Where-Object { $_.path -like 'definition/tables/*.t
     $measureCount += ([regex]::Matches($txt, '(?m)^\s*measure\s+')).Count
 }
 $pageCount = 0
+$visualCount = 0
 if ($report) {
     try {
         $repDef = Get-DefinitionStats -Headers $headers -ItemId $report.id -Format 'PBIR'
@@ -574,11 +676,14 @@ if ($report) {
     }
     if ($repDef) {
         $pageCount = @($repDef.definition.parts | Where-Object { $_.path -match '^definition/pages/.+/page\.json$' }).Count
+        $visualCount = @($repDef.definition.parts | Where-Object { $_.path -match '^definition/pages/.+/visuals/.+/visual\.json$' }).Count
         if ($pageCount -eq 0) {
             $legacyPart = @($repDef.definition.parts | Where-Object { $_.path -eq 'report.json' }) | Select-Object -First 1
             if ($legacyPart) {
                 $legacyText = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($legacyPart.payload))
-                $pageCount = @(($legacyText | ConvertFrom-Json).sections).Count
+                $legacySections = @(($legacyText | ConvertFrom-Json).sections)
+                $pageCount = $legacySections.Count
+                $visualCount = @($legacySections | ForEach-Object { $_.visualContainers }).Count
             }
         }
     }
@@ -604,6 +709,7 @@ catch {
     Relationships = $relCount
     Measures = $measureCount
     ReportPages = $pageCount
+    ReportVisuals = $visualCount
     DaxCountRowsDimGmina = if ($daxResult) { $daxResult.results[0].tables[0].rows[0].PSObject.Properties['[n]'].Value } else { $null }
     LocalSemanticDefinition = $OutRoot
     LocalReportDefinition = $ReportOutRoot

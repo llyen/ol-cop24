@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p4_spo_bar",
+  "position": {
+    "width": 580,
+    "height": 220,
+    "y": 80,
+    "z": 1000,
+    "x": 660,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Property": "event_id",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "escalation_events"
+                        }
+                      }
+                    }
+                  },
+                  "Function": 2
+                }
+              },
+              "queryRef": "Count(escalation_events.event_id)",
+              "nativeQueryRef": "Liczba eskalacji",
+              "displayName": "Liczba eskalacji"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "recommended_spo",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_events"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_events.recommended_spo",
+              "nativeQueryRef": "SPO",
+              "displayName": "SPO"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Property": "event_id",
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "escalation_events"
+                      }
+                    }
+                  }
+                },
+                "Function": 2
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Uruchomione SPO'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

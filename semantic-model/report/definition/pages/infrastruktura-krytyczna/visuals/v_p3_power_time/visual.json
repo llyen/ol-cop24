@@ -1,0 +1,99 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p3_power_time",
+  "position": {
+    "width": 600,
+    "height": 270,
+    "y": 80,
+    "z": 1000,
+    "x": 20,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Property": "customers_offline",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "power_grid_events"
+                        }
+                      }
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(power_grid_events.customers_offline)",
+              "nativeQueryRef": "Odbiorcy bez prądu",
+              "displayName": "Odbiorcy bez prądu"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "timestamp",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "power_grid_events"
+                    }
+                  }
+                }
+              },
+              "queryRef": "power_grid_events.timestamp",
+              "nativeQueryRef": "Czas",
+              "displayName": "Czas"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Odbiorcy bez prądu w czasie'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

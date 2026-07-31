@@ -1,0 +1,155 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p4_reco_table",
+  "position": {
+    "width": 610,
+    "height": 360,
+    "y": 80,
+    "z": 1000,
+    "x": 20,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "gmina_code",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_recommendations.gmina_code",
+              "nativeQueryRef": "Gmina",
+              "displayName": "Gmina"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Property": "recommended_level",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_recommendations.recommended_level",
+              "nativeQueryRef": "Poziom",
+              "displayName": "Poziom"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Property": "recommended_spo",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_recommendations.recommended_spo",
+              "nativeQueryRef": "SPO",
+              "displayName": "SPO"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Property": "explanation",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_recommendations.explanation",
+              "nativeQueryRef": "Uzasadnienie",
+              "displayName": "Uzasadnienie"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Rekomendacje eskalacji'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'None'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

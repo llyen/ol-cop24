@@ -1,0 +1,145 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p3_correlation",
+  "position": {
+    "width": 590,
+    "height": 285,
+    "y": 380,
+    "z": 1000,
+    "x": 650,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "gmina_code",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "telecom_events"
+                    }
+                  }
+                }
+              },
+              "queryRef": "telecom_events.gmina_code",
+              "nativeQueryRef": "Gmina",
+              "displayName": "Gmina"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Property": "base_stations_down",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "telecom_events"
+                        }
+                      }
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(telecom_events.base_stations_down)",
+              "nativeQueryRef": "Stacje wyłączone",
+              "displayName": "Stacje wyłączone"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Property": "Odbiorcy Bez Prądu",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.Odbiorcy Bez Prądu",
+              "nativeQueryRef": "Odbiorcy Bez Prądu",
+              "displayName": "Odbiorcy bez prądu"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Korelacja awarii: energia i łączność'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'None'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

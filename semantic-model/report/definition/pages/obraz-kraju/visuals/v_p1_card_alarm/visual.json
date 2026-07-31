@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p1_card_alarm",
+  "position": {
+    "width": 290,
+    "height": 95,
+    "y": 70,
+    "z": 1000,
+    "x": 20,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Property": "Alarm Hydro",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.Alarm Hydro",
+              "nativeQueryRef": "Alarm Hydro",
+              "displayName": "Alarm hydro"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Gminy/wodowskazy w alarmie'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

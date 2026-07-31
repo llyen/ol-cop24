@@ -1,19 +1,19 @@
 {
-  "settings": {
-    "defaultFilterActionIsDataFilter": true,
-    "useEnhancedTooltips": true,
-    "useStylableVisualContainerHeader": true
-  },
   "themeCollection": {
     "baseTheme": {
       "reportVersionAtImport": {
         "report": "3.1.0",
-        "visual": "2.5.0",
-        "page": "2.3.0"
+        "page": "2.3.0",
+        "visual": "2.5.0"
       },
-      "type": "SharedResources",
-      "name": "CY25SU12"
+      "name": "CY25SU12",
+      "type": "SharedResources"
     }
   },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json"
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json",
+  "settings": {
+    "useEnhancedTooltips": true,
+    "useStylableVisualContainerHeader": true,
+    "defaultFilterActionIsDataFilter": true
+  }
 }

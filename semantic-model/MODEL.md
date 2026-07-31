@@ -45,7 +45,14 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .\deploy\create_semantic_model.ps1
 
 Skrypt pobiera tokeny przez `az account get-access-token`, tworzy lub aktualizuje model `OL_COP24_SemanticModel` oraz raport `OL_COP24_Raport`. Definicja modelu jest generowana w TMDL do `semantic-model\generated\` i wdrażana przez Fabric REST API `semanticModels` / `updateDefinition`. W modelu użyto partycji `mode: directLake` oraz źródła `DirectLakeSqlEndpoint` przez SQL endpoint Lakehouse; wcześniejsze próby `AzureStorage.DataLake` dla Direct Lake on OneLake zwracały brak dostępu lub brak tabel przy weryfikacji DAX.
 
-Raport jest tworzony przez REST API z trzema stronami narracji: `Obraz kraju`, `Województwo i gminy`, `Eskalacja i SPO`. Definicja lokalna jest zapisywana w `semantic-model\report\`. Skrypt najpierw próbuje formatu PBIR, a jeżeli usługa odrzuci definicję, przechodzi na PBIR-Legacy z tym samym powiązaniem `semanticmodelid`.
+Raport jest wdrażany idempotentnie przez Fabric REST API `items/{reportId}/updateDefinition` w folderowym formacie PBIR. Definicja lokalna jest zapisywana w `semantic-model\report\` jako `definition.pbir`, `definition\report.json`, `definition\version.json`, `definition\pages\pages.json`, pliki `page.json` oraz osobne pliki `visual.json` dla każdej wizualizacji. Połączenie z modelem jest zapisane w `definition.pbir` jako `datasetReference.byConnection` z `semanticmodelid`.
+
+Raport `OL_COP24_Raport` ma cztery strony:
+
+- `Obraz kraju`: karty KPI alarmu hydro, osób objętych zgłoszeniami, ewakuacji i odbiorców bez prądu; KIS wg województw; incydenty w czasie; mapa gmin wg KIS; top gminy wg KIS.
+- `Województwo i gminy`: slicer województwa, tabela gmin z KIS i skutkami, top 15 gmin wg KIS, poziomy wody w czasie oraz karta alarmu hydro.
+- `Infrastruktura krytyczna`: odbiorcy bez prądu w czasie, gminy z ograniczoną łącznością, awarie energii wg gmin oraz tabela korelacji energii i łączności.
+- `Eskalacja i SPO`: tabela rekomendacji eskalacji, uruchomione SPO, zaangażowane siły i środki, karty rekomendacji RZZK i maksymalnego KIS lokalnego.
 
 Po wdrożeniu skrypt wykonuje `getDefinition` i zapytanie DAX przez Power BI REST API:
 
@@ -53,4 +60,4 @@ Po wdrożeniu skrypt wykonuje `getDefinition` i zapytanie DAX przez Power BI RES
 EVALUATE ROW("n", COUNTROWS('dim_gmina'))
 ```
 
-Oczekiwany wynik kontrolny dla danych demo to `2477`. Jeżeli raport trzeba dopracować wizualnie, otwórz `OL_COP24_Raport` w Power BI Service albo zaimportuj lokalną definicję z `semantic-model\report\` i dodaj docelowe wizualizacje na przygotowanych stronach.
+Oczekiwany wynik kontrolny dla danych demo to `2477`. Dodatkowo po zmianach raportu należy pobrać definicję przez `getDefinition?format=PBIR` i sprawdzić obecność części `definition/pages/*/visuals/*/visual.json`, a dla wizualizacji danych wykonać równoważne zapytania DAX przez `executeQueries`.

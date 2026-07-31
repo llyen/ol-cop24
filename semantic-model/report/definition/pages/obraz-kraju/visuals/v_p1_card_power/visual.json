@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p1_card_power",
+  "position": {
+    "width": 290,
+    "height": 95,
+    "y": 70,
+    "z": 1000,
+    "x": 950,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Property": "Odbiorcy Bez Prądu",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.Odbiorcy Bez Prądu",
+              "nativeQueryRef": "Odbiorcy Bez Prądu",
+              "displayName": "Bez prądu"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Odbiorcy bez prądu'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

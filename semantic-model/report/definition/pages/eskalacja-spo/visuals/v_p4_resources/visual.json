@@ -1,0 +1,124 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p4_resources",
+  "position": {
+    "width": 580,
+    "height": 335,
+    "y": 330,
+    "z": 1000,
+    "x": 660,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Property": "PSP Zastepy",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.PSP Zastepy",
+              "nativeQueryRef": "PSP Zastepy",
+              "displayName": "PSP zastępy"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Property": "WOT Zolnierze",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.WOT Zolnierze",
+              "nativeQueryRef": "WOT Zolnierze",
+              "displayName": "WOT żołnierze"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Property": "Pompy",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.Pompy",
+              "nativeQueryRef": "Pompy",
+              "displayName": "Pompy"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "voivodeship_code",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "resource_deployment"
+                    }
+                  }
+                }
+              },
+              "queryRef": "resource_deployment.voivodeship_code",
+              "nativeQueryRef": "Województwo",
+              "displayName": "Województwo"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Zaangażowane siły i środki'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

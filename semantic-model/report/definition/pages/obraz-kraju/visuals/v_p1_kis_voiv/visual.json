@@ -1,0 +1,112 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v_p1_kis_voiv",
+  "position": {
+    "width": 390,
+    "height": 220,
+    "y": 185,
+    "z": 1000,
+    "x": 20,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Property": "KIS",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.KIS",
+              "nativeQueryRef": "KIS",
+              "displayName": "KIS"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "voivodeship_name",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_voivodeship"
+                    }
+                  }
+                }
+              },
+              "queryRef": "dim_voivodeship.voivodeship_name",
+              "nativeQueryRef": "Województwo",
+              "displayName": "Województwo"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Property": "KIS",
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "kis_country"
+                  }
+                }
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'KIS wg województw'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
