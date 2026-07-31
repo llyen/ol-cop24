@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-31T14:49:40.0632811+02:00",
+  "generatedAt": "2026-07-31T15:11:22.0431617+02:00",
   "reportId": "a0449186-59df-49f4-a151-9ceceb06726e",
   "semanticModelId": "669a6a2b-0115-4eeb-8f63-a6e1027133b0",
   "pagesExpected": 5,
   "pagesDeployed": 5,
-  "visualsExpected": 53,
-  "visualsDeployed": 53,
-  "daxPassed": 53,
-  "daxTotal": 53,
+  "visualsExpected": 55,
+  "visualsDeployed": 55,
+  "daxPassed": 55,
+  "daxTotal": 55,
   "sanityPassed": 24,
   "sanityTotal": 24,
   "visualResults": [
@@ -15,7 +15,7 @@
       "page": "obraz-kraju",
       "visual": "hdr_obraz-kraju",
       "type": "shape",
-      "purpose": "Tło nagłówka strony",
+      "purpose": "Pasek nagłówka strony",
       "status": "OK",
       "rows": 1
     },
@@ -23,7 +23,23 @@
       "page": "obraz-kraju",
       "visual": "ttl_obraz-kraju",
       "type": "textbox",
-      "purpose": "Tytuł i zdanie decyzyjne",
+      "purpose": "Tytuł, krok narracji i zdanie decyzyjne",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "obraz-kraju",
+      "visual": "brd_obraz-kraju",
+      "type": "textbox",
+      "purpose": "Sygnatura instytucjonalna i numer kroku",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "obraz-kraju",
+      "visual": "ftr_obraz-kraju",
+      "type": "textbox",
+      "purpose": "Stopka ze źródłem danych",
       "status": "OK",
       "rows": 1
     },
@@ -31,7 +47,7 @@
       "page": "hydrologia-fala",
       "visual": "hdr_hydrologia-fala",
       "type": "shape",
-      "purpose": "Tło nagłówka strony",
+      "purpose": "Pasek nagłówka strony",
       "status": "OK",
       "rows": 1
     },
@@ -39,7 +55,23 @@
       "page": "hydrologia-fala",
       "visual": "ttl_hydrologia-fala",
       "type": "textbox",
-      "purpose": "Tytuł i zdanie decyzyjne",
+      "purpose": "Tytuł, krok narracji i zdanie decyzyjne",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "hydrologia-fala",
+      "visual": "brd_hydrologia-fala",
+      "type": "textbox",
+      "purpose": "Sygnatura instytucjonalna i numer kroku",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "hydrologia-fala",
+      "visual": "ftr_hydrologia-fala",
+      "type": "textbox",
+      "purpose": "Stopka ze źródłem danych",
       "status": "OK",
       "rows": 1
     },
@@ -47,7 +79,7 @@
       "page": "infrastruktura-krytyczna",
       "visual": "hdr_infrastruktura-krytyczna",
       "type": "shape",
-      "purpose": "Tło nagłówka strony",
+      "purpose": "Pasek nagłówka strony",
       "status": "OK",
       "rows": 1
     },
@@ -55,7 +87,23 @@
       "page": "infrastruktura-krytyczna",
       "visual": "ttl_infrastruktura-krytyczna",
       "type": "textbox",
-      "purpose": "Tytuł i zdanie decyzyjne",
+      "purpose": "Tytuł, krok narracji i zdanie decyzyjne",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "infrastruktura-krytyczna",
+      "visual": "brd_infrastruktura-krytyczna",
+      "type": "textbox",
+      "purpose": "Sygnatura instytucjonalna i numer kroku",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "infrastruktura-krytyczna",
+      "visual": "ftr_infrastruktura-krytyczna",
+      "type": "textbox",
+      "purpose": "Stopka ze źródłem danych",
       "status": "OK",
       "rows": 1
     },
@@ -63,7 +111,7 @@
       "page": "sily-ewakuacja",
       "visual": "hdr_sily-ewakuacja",
       "type": "shape",
-      "purpose": "Tło nagłówka strony",
+      "purpose": "Pasek nagłówka strony",
       "status": "OK",
       "rows": 1
     },
@@ -71,7 +119,23 @@
       "page": "sily-ewakuacja",
       "visual": "ttl_sily-ewakuacja",
       "type": "textbox",
-      "purpose": "Tytuł i zdanie decyzyjne",
+      "purpose": "Tytuł, krok narracji i zdanie decyzyjne",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "sily-ewakuacja",
+      "visual": "brd_sily-ewakuacja",
+      "type": "textbox",
+      "purpose": "Sygnatura instytucjonalna i numer kroku",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "sily-ewakuacja",
+      "visual": "ftr_sily-ewakuacja",
+      "type": "textbox",
+      "purpose": "Stopka ze źródłem danych",
       "status": "OK",
       "rows": 1
     },
@@ -79,7 +143,7 @@
       "page": "eskalacja-spo-dezinformacja",
       "visual": "hdr_eskalacja-spo-dezinformacja",
       "type": "shape",
-      "purpose": "Tło nagłówka strony",
+      "purpose": "Pasek nagłówka strony",
       "status": "OK",
       "rows": 1
     },
@@ -87,7 +151,23 @@
       "page": "eskalacja-spo-dezinformacja",
       "visual": "ttl_eskalacja-spo-dezinformacja",
       "type": "textbox",
-      "purpose": "Tytuł i zdanie decyzyjne",
+      "purpose": "Tytuł, krok narracji i zdanie decyzyjne",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "eskalacja-spo-dezinformacja",
+      "visual": "brd_eskalacja-spo-dezinformacja",
+      "type": "textbox",
+      "purpose": "Sygnatura instytucjonalna i numer kroku",
+      "status": "OK",
+      "rows": 1
+    },
+    {
+      "page": "eskalacja-spo-dezinformacja",
+      "visual": "ftr_eskalacja-spo-dezinformacja",
+      "type": "textbox",
+      "purpose": "Stopka ze źródłem danych",
       "status": "OK",
       "rows": 1
     },
@@ -109,9 +189,9 @@
     },
     {
       "page": "obraz-kraju",
-      "visual": "p1_alarm",
+      "visual": "p1_affected",
       "type": "cardVisual",
-      "purpose": "Liczba wodowskazów w alarmie",
+      "purpose": "Skutek społeczny zdarzeń",
       "status": "OK",
       "rows": 1
     },
@@ -146,14 +226,6 @@
       "purpose": "Trend incydentów",
       "status": "OK",
       "rows": 1000
-    },
-    {
-      "page": "obraz-kraju",
-      "visual": "p1_levels",
-      "type": "columnChart",
-      "purpose": "Rozkład poziomów eskalacji",
-      "status": "OK",
-      "rows": 3
     },
     {
       "page": "hydrologia-fala",
@@ -212,14 +284,6 @@
       "rows": 1000
     },
     {
-      "page": "hydrologia-fala",
-      "visual": "p2_matrix",
-      "type": "pivotTable",
-      "purpose": "Macierz progów hydrologicznych",
-      "status": "OK",
-      "rows": 120
-    },
-    {
       "page": "infrastruktura-krytyczna",
       "visual": "p3_power",
       "type": "cardVisual",
@@ -276,14 +340,6 @@
       "rows": 350
     },
     {
-      "page": "infrastruktura-krytyczna",
-      "visual": "p3_matrix",
-      "type": "pivotTable",
-      "purpose": "Macierz kaskady z paskami danych",
-      "status": "OK",
-      "rows": 100
-    },
-    {
       "page": "sily-ewakuacja",
       "visual": "p4_evac",
       "type": "cardVisual",
@@ -304,14 +360,6 @@
       "visual": "p4_wot",
       "type": "cardVisual",
       "purpose": "Zaangażowanie WOT",
-      "status": "OK",
-      "rows": 1
-    },
-    {
-      "page": "sily-ewakuacja",
-      "visual": "p4_pumps",
-      "type": "cardVisual",
-      "purpose": "Dostępne pompy",
       "status": "OK",
       "rows": 1
     },
@@ -348,14 +396,6 @@
       "rows": 27
     },
     {
-      "page": "sily-ewakuacja",
-      "visual": "p4_matrix",
-      "type": "pivotTable",
-      "purpose": "Macierz bilansu zasobów",
-      "status": "OK",
-      "rows": 16
-    },
-    {
       "page": "eskalacja-spo-dezinformacja",
       "visual": "p5_rzzk",
       "type": "cardVisual",
@@ -381,14 +421,6 @@
     },
     {
       "page": "eskalacja-spo-dezinformacja",
-      "visual": "p5_reach",
-      "type": "cardVisual",
-      "purpose": "Łączny zasięg dezinformacji",
-      "status": "OK",
-      "rows": 1
-    },
-    {
-      "page": "eskalacja-spo-dezinformacja",
       "visual": "p5_response",
       "type": "cardVisual",
       "purpose": "Czas od pierwszego zgłoszenia do eskalacji",
@@ -407,25 +439,9 @@
       "page": "eskalacja-spo-dezinformacja",
       "visual": "p5_donut",
       "type": "donutChart",
-      "purpose": "Jedyny wykres pierścieniowy — kanały Z20",
+      "purpose": "Rozkład kanałów Z20",
       "status": "OK",
       "rows": 5
-    },
-    {
-      "page": "eskalacja-spo-dezinformacja",
-      "visual": "p5_escalations",
-      "type": "columnChart",
-      "purpose": "Rozkład zdarzeń eskalacyjnych",
-      "status": "OK",
-      "rows": 4
-    },
-    {
-      "page": "eskalacja-spo-dezinformacja",
-      "visual": "p5_spo",
-      "type": "clusteredBarChart",
-      "purpose": "Ranking rekomendowanych SPO",
-      "status": "OK",
-      "rows": 2
     },
     {
       "page": "eskalacja-spo-dezinformacja",

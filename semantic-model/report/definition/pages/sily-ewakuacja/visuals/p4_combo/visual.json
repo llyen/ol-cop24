@@ -2,39 +2,39 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p4_combo",
   "position": {
-    "x": 655,
-    "width": 605,
-    "height": 270,
-    "y": 430,
     "tabOrder": 100,
-    "z": 100
+    "width": 1216,
+    "z": 100,
+    "x": 32,
+    "y": 540,
+    "height": 140
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
     "query": {
       "queryState": {
-        "Y2": {
+        "Y": {
           "projections": [
             {
               "field": {
                 "Aggregation": {
-                  "Function": 0,
                   "Expression": {
                     "Column": {
-                      "Property": "wot_soldiers",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      }
+                      },
+                      "Property": "psp_units"
                     }
-                  }
+                  },
+                  "Function": 0
                 }
               },
-              "queryRef": "Sum(resource_deployment.wot_soldiers)",
-              "nativeQueryRef": "Sum of wot_soldiers",
+              "queryRef": "Sum(resource_deployment.psp_units)",
+              "nativeQueryRef": "Sum of psp_units",
               "active": true,
-              "displayName": "Żołnierze WOT"
+              "displayName": "Zastępy PSP"
             }
           ]
         },
@@ -43,12 +43,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "resource_deployment"
                     }
-                  }
+                  },
+                  "Property": "timestamp"
                 }
               },
               "queryRef": "resource_deployment.timestamp",
@@ -58,28 +58,28 @@
             }
           ]
         },
-        "Y": {
+        "Y2": {
           "projections": [
             {
               "field": {
                 "Aggregation": {
-                  "Function": 0,
                   "Expression": {
                     "Column": {
-                      "Property": "psp_units",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      }
+                      },
+                      "Property": "wot_soldiers"
                     }
-                  }
+                  },
+                  "Function": 0
                 }
               },
-              "queryRef": "Sum(resource_deployment.psp_units)",
-              "nativeQueryRef": "Sum of psp_units",
+              "queryRef": "Sum(resource_deployment.wot_soldiers)",
+              "nativeQueryRef": "Sum of wot_soldiers",
               "active": true,
-              "displayName": "Zastępy PSP"
+              "displayName": "Żołnierze WOT"
             }
           ]
         }
@@ -89,12 +89,12 @@
           {
             "field": {
               "Column": {
-                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "resource_deployment"
                   }
-                }
+                },
+                "Property": "timestamp"
               }
             },
             "direction": "Ascending"
@@ -107,21 +107,21 @@
       "background": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
                 }
               }
             },
@@ -138,17 +138,6 @@
       "border": [
         {
           "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F59E0B'"
-                    }
-                  }
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
@@ -156,10 +145,21 @@
                 }
               }
             },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
+            },
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "4D"
                 }
               }
             },
@@ -176,10 +176,42 @@
       "dropShadow": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "88D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outer'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8A99AD'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -189,31 +221,31 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
+                  "Value": "14D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             }
@@ -239,21 +271,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
-            "bold": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Tempo mobilizacji: PSP i WOT'"
                 }
               }
             },
@@ -262,16 +287,16 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
               }
             },
-            "text": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "'Napływ zasobów — PSP (kolumny) i WOT (linia)'"
+                  "Value": "true"
                 }
               }
             },
@@ -287,9 +312,68 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F8FAFC'"
+                      "Value": "'#12325B'"
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'WOT wchodzi z opóźnieniem wobec PSP — decyzja o wezwaniu wojska musi wyprzedzać kulminację'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5C6B80'"
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

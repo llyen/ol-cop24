@@ -11,3 +11,5 @@ __pycache__/
 
 # Duze pliki danych - regenerowane deterministycznie (seed=42) przez generate_datasets.py
 datasets/hydro_readings.jsonl
+
+scenario/_ciagly.*

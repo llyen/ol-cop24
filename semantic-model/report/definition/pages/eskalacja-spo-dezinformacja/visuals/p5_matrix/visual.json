@@ -2,69 +2,33 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p5_matrix",
   "position": {
-    "x": 535,
-    "width": 725,
-    "height": 260,
-    "y": 440,
     "tabOrder": 100,
-    "z": 100
+    "width": 1216,
+    "z": 100,
+    "x": 32,
+    "y": 540,
+    "height": 140
   },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Property": "recommended_level",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "escalation_recommendations"
-                    }
-                  }
-                }
-              },
-              "queryRef": "escalation_recommendations.recommended_level",
-              "nativeQueryRef": "recommended_level",
-              "active": true,
-              "displayName": "Poziom"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Property": "gmina_code",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "escalation_recommendations"
-                    }
-                  }
-                }
-              },
-              "queryRef": "escalation_recommendations.gmina_code",
-              "nativeQueryRef": "gmina_code",
-              "active": true,
-              "displayName": "Gmina"
-            }
-          ]
-        },
         "Values": {
           "projections": [
             {
               "field": {
                 "Aggregation": {
-                  "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "kis",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "kis"
                     }
-                  }
+                  },
+                  "Function": 1
                 }
               },
               "queryRef": "Average(escalation_recommendations.kis)",
@@ -75,12 +39,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "recommended_spo",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  }
+                  },
+                  "Property": "recommended_spo"
                 }
               },
               "queryRef": "escalation_recommendations.recommended_spo",
@@ -91,18 +55,54 @@
             {
               "field": {
                 "Column": {
-                  "Property": "explanation",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  }
+                  },
+                  "Property": "explanation"
                 }
               },
               "queryRef": "escalation_recommendations.explanation",
               "nativeQueryRef": "explanation",
               "active": true,
               "displayName": "Uzasadnienie"
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  },
+                  "Property": "recommended_level"
+                }
+              },
+              "queryRef": "escalation_recommendations.recommended_level",
+              "nativeQueryRef": "recommended_level",
+              "active": true,
+              "displayName": "Poziom"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  },
+                  "Property": "gmina_code"
+                }
+              },
+              "queryRef": "escalation_recommendations.gmina_code",
+              "nativeQueryRef": "gmina_code",
+              "active": true,
+              "displayName": "Gmina"
             }
           ]
         }
@@ -112,21 +112,21 @@
       "background": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
                 }
               }
             },
@@ -143,17 +143,6 @@
       "border": [
         {
           "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#EF4444'"
-                    }
-                  }
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
@@ -161,10 +150,21 @@
                 }
               }
             },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
+            },
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "4D"
                 }
               }
             },
@@ -181,10 +181,42 @@
       "dropShadow": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "88D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outer'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8A99AD'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -194,31 +226,31 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
+                  "Value": "14D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             }
@@ -244,21 +276,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
-            "bold": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Rekomendacje z uzasadnieniem'"
                 }
               }
             },
@@ -267,16 +292,16 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
               }
             },
-            "text": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "'Rekomendacje — poziom, SPO i uzasadnienie'"
+                  "Value": "true"
                 }
               }
             },
@@ -292,9 +317,68 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F8FAFC'"
+                      "Value": "'#12325B'"
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Jedyne miejsce w raporcie, gdzie potrzebna jest wartość co do jednostki — to zapis decyzji do protokołu'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5C6B80'"
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -307,14 +391,45 @@
       "rowHeaders": [
         {
           "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1B2A41'"
+                    }
+                  }
+                }
+              }
+            },
             "backColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
                 }
               }
             },
@@ -323,7 +438,127 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E2E8F0'"
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#12325B'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "4D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1B2A41'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F5F8FC'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1B2A41'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -348,18 +583,7 @@
                   "color": {
                     "expr": {
                       "Literal": {
-                        "Value": "'#64748B'"
-                      }
-                    }
-                  }
-                }
-              },
-              "positiveColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#22D3EE'"
+                        "Value": "'#D8DFE8'"
                       }
                     }
                   }
@@ -377,7 +601,18 @@
                   "color": {
                     "expr": {
                       "Literal": {
-                        "Value": "'#EF4444'"
+                        "Value": "'#B3261E'"
+                      }
+                    }
+                  }
+                }
+              },
+              "positiveColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#1B4A8B'"
                       }
                     }
                   }
@@ -387,98 +622,6 @@
           },
           "selector": {
             "metadata": "Average(escalation_recommendations.kis)"
-          }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {
-            "backColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#17243A'"
-                    }
-                  }
-                }
-              }
-            },
-            "autoSizeColumnWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F8FAFC'"
-                    }
-                  }
-                }
-              }
-            },
-            "columnAdjustment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'growToFit'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "values": [
-        {
-          "properties": {
-            "fontColorSecondary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CBD5E1'"
-                    }
-                  }
-                }
-              }
-            },
-            "backColorSecondary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#111F33'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontColorPrimary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E2E8F0'"
-                    }
-                  }
-                }
-              }
-            },
-            "backColorPrimary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#0D1727'"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       ]

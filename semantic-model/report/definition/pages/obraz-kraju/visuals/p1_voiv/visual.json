@@ -2,70 +2,70 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p1_voiv",
   "position": {
-    "x": 755,
-    "width": 505,
-    "height": 240,
-    "y": 178,
     "tabOrder": 100,
-    "z": 100
+    "width": 444,
+    "z": 100,
+    "x": 804,
+    "y": 220,
+    "height": 296
   },
   "visual": {
     "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Property": "KIS",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "kis_country"
-                    }
-                  }
-                }
-              },
-              "queryRef": "kis_country.KIS",
-              "nativeQueryRef": "KIS",
-              "active": true,
-              "displayName": "KIS"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Property": "KIS Max Lokalny",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "kis_country"
-                    }
-                  }
-                }
-              },
-              "queryRef": "kis_country.KIS Max Lokalny",
-              "nativeQueryRef": "KIS Max Lokalny",
-              "active": true,
-              "displayName": "KIS max"
-            }
-          ]
-        },
         "Category": {
           "projections": [
             {
               "field": {
                 "Column": {
-                  "Property": "voivodeship_name",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "dim_voivodeship"
                     }
-                  }
+                  },
+                  "Property": "voivodeship_name"
                 }
               },
               "queryRef": "dim_voivodeship.voivodeship_name",
               "nativeQueryRef": "voivodeship_name",
               "active": true,
               "displayName": "Województwo"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  },
+                  "Property": "KIS"
+                }
+              },
+              "queryRef": "kis_country.KIS",
+              "nativeQueryRef": "KIS",
+              "active": true,
+              "displayName": "KIS średni"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  },
+                  "Property": "KIS Max Lokalny"
+                }
+              },
+              "queryRef": "kis_country.KIS Max Lokalny",
+              "nativeQueryRef": "KIS Max Lokalny",
+              "active": true,
+              "displayName": "KIS maksymalny"
             }
           ]
         }
@@ -75,12 +75,12 @@
           {
             "field": {
               "Measure": {
-                "Property": "KIS Max Lokalny",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "kis_country"
                   }
-                }
+                },
+                "Property": "KIS Max Lokalny"
               }
             },
             "direction": "Descending"
@@ -93,21 +93,21 @@
       "background": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
                 }
               }
             },
@@ -124,17 +124,6 @@
       "border": [
         {
           "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F59E0B'"
-                    }
-                  }
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
@@ -142,10 +131,21 @@
                 }
               }
             },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
+            },
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "4D"
                 }
               }
             },
@@ -162,10 +162,42 @@
       "dropShadow": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "88D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outer'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8A99AD'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -175,31 +207,31 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
+                  "Value": "14D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             }
@@ -225,21 +257,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
-            "bold": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Które województwa wymagają uwagi'"
                 }
               }
             },
@@ -248,16 +273,16 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
               }
             },
-            "text": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "'Województwa — średni i maksymalny KIS'"
+                  "Value": "true"
                 }
               }
             },
@@ -273,9 +298,68 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F8FAFC'"
+                      "Value": "'#12325B'"
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Rozjazd między średnią a maksimum wskazuje kryzys punktowy, nie rozlany'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5C6B80'"
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

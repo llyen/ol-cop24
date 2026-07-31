@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "hdr_eskalacja-spo-dezinformacja",
   "position": {
-    "x": 0,
-    "width": 1280,
-    "height": 62,
-    "y": 0,
     "tabOrder": 0,
-    "z": 0
+    "width": 1280,
+    "z": 0,
+    "x": 0,
+    "y": 0,
+    "height": 88
   },
   "visual": {
     "visualType": "shape",
@@ -20,7 +20,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#08111F'"
+                      "Value": "'#12325B'"
                     }
                   }
                 }
@@ -70,7 +70,33 @@
       ]
     },
     "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
         {
           "properties": {
             "show": {
@@ -86,6 +112,13 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
@@ -100,30 +133,10 @@
                 }
               }
             },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
                 }
               }
             }

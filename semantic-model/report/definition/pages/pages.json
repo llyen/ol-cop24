@@ -1,11 +1,11 @@
 {
   "activePageName": "obraz-kraju",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.0.0/schema.json",
   "pageOrder": [
     "obraz-kraju",
     "hydrologia-fala",
     "infrastruktura-krytyczna",
     "sily-ewakuacja",
     "eskalacja-spo-dezinformacja"
-  ],
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.0.0/schema.json"
+  ]
 }

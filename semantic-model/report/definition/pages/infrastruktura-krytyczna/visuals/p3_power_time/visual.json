@@ -2,59 +2,59 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p3_power_time",
   "position": {
-    "x": 755,
-    "width": 505,
-    "height": 245,
-    "y": 178,
     "tabOrder": 100,
-    "z": 100
+    "width": 444,
+    "z": 100,
+    "x": 804,
+    "y": 220,
+    "height": 296
   },
   "visual": {
     "visualType": "areaChart",
     "query": {
       "queryState": {
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Function": 0,
-                  "Expression": {
-                    "Column": {
-                      "Property": "customers_offline",
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "power_grid_events"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "queryRef": "Sum(power_grid_events.customers_offline)",
-              "nativeQueryRef": "Sum of customers_offline",
-              "active": true,
-              "displayName": "Odbiorcy bez prądu"
-            }
-          ]
-        },
         "Category": {
           "projections": [
             {
               "field": {
                 "Column": {
-                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "power_grid_events"
                     }
-                  }
+                  },
+                  "Property": "timestamp"
                 }
               },
               "queryRef": "power_grid_events.timestamp",
               "nativeQueryRef": "timestamp",
               "active": true,
               "displayName": "Czas"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "power_grid_events"
+                        }
+                      },
+                      "Property": "customers_offline"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(power_grid_events.customers_offline)",
+              "nativeQueryRef": "Sum of customers_offline",
+              "active": true,
+              "displayName": "Odbiorcy bez prądu"
             }
           ]
         }
@@ -64,12 +64,12 @@
           {
             "field": {
               "Column": {
-                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "power_grid_events"
                   }
-                }
+                },
+                "Property": "timestamp"
               }
             },
             "direction": "Ascending"
@@ -82,21 +82,21 @@
       "background": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
                 }
               }
             },
@@ -113,17 +113,6 @@
       "border": [
         {
           "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#EF4444'"
-                    }
-                  }
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
@@ -131,10 +120,21 @@
                 }
               }
             },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
+            },
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "4D"
                 }
               }
             },
@@ -151,10 +151,42 @@
       "dropShadow": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "88D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outer'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8A99AD'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -164,31 +196,31 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
+                  "Value": "14D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             }
@@ -214,21 +246,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
-            "bold": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Skala wyłączeń energetycznych'"
                 }
               }
             },
@@ -237,16 +262,16 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
               }
             },
-            "text": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "'Energia — odbiorcy bez zasilania w czasie'"
+                  "Value": "true"
                 }
               }
             },
@@ -262,9 +287,68 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F8FAFC'"
+                      "Value": "'#12325B'"
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Szczyt wyłączeń wypada kilka godzin po kulminacji fali — to okno na dowóz agregatów'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5C6B80'"
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

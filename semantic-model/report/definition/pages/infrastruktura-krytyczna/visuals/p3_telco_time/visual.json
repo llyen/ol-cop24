@@ -2,34 +2,39 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p3_telco_time",
   "position": {
-    "x": 755,
-    "width": 505,
-    "height": 265,
-    "y": 435,
     "tabOrder": 100,
-    "z": 100
+    "width": 1216,
+    "z": 100,
+    "x": 32,
+    "y": 540,
+    "height": 140
   },
   "visual": {
     "visualType": "lineChart",
     "query": {
       "queryState": {
-        "Rows": {
+        "Y": {
           "projections": [
             {
               "field": {
-                "Column": {
-                  "Property": "operator",
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "telecom_events"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "telecom_events"
+                        }
+                      },
+                      "Property": "coverage_pct"
                     }
-                  }
+                  },
+                  "Function": 1
                 }
               },
-              "queryRef": "telecom_events.operator",
-              "nativeQueryRef": "operator",
+              "queryRef": "Average(telecom_events.coverage_pct)",
+              "nativeQueryRef": "Average of coverage_pct",
               "active": true,
-              "displayName": "Operator"
+              "displayName": "Pokrycie [%]"
             }
           ]
         },
@@ -38,12 +43,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "telecom_events"
                     }
-                  }
+                  },
+                  "Property": "timestamp"
                 }
               },
               "queryRef": "telecom_events.timestamp",
@@ -53,28 +58,23 @@
             }
           ]
         },
-        "Y": {
+        "Rows": {
           "projections": [
             {
               "field": {
-                "Aggregation": {
-                  "Function": 1,
+                "Column": {
                   "Expression": {
-                    "Column": {
-                      "Property": "coverage_pct",
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "telecom_events"
-                        }
-                      }
+                    "SourceRef": {
+                      "Entity": "telecom_events"
                     }
-                  }
+                  },
+                  "Property": "operator"
                 }
               },
-              "queryRef": "Average(telecom_events.coverage_pct)",
-              "nativeQueryRef": "Average of coverage_pct",
+              "queryRef": "telecom_events.operator",
+              "nativeQueryRef": "operator",
               "active": true,
-              "displayName": "Pokrycie [%]"
+              "displayName": "Operator"
             }
           ]
         }
@@ -84,12 +84,12 @@
           {
             "field": {
               "Column": {
-                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "telecom_events"
                   }
-                }
+                },
+                "Property": "timestamp"
               }
             },
             "direction": "Ascending"
@@ -102,21 +102,21 @@
       "background": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
                 }
               }
             },
@@ -133,17 +133,6 @@
       "border": [
         {
           "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#22D3EE'"
-                    }
-                  }
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
@@ -151,10 +140,21 @@
                 }
               }
             },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
+            },
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "4D"
                 }
               }
             },
@@ -171,10 +171,42 @@
       "dropShadow": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "88D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outer'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8A99AD'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -184,31 +216,31 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
+                  "Value": "14D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             }
@@ -234,21 +266,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
-            "bold": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Łączność w rękach czterech operatorów'"
                 }
               }
             },
@@ -257,16 +282,16 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
               }
             },
-            "text": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "'Łączność — pokrycie wg operatora (małe multiplikatory)'"
+                  "Value": "true"
                 }
               }
             },
@@ -282,9 +307,68 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F8FAFC'"
+                      "Value": "'#12325B'"
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Spadki są skorelowane — awaria zasilania uderza we wszystkich operatorów naraz, redundancja komercyjna zawodzi'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5C6B80'"
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

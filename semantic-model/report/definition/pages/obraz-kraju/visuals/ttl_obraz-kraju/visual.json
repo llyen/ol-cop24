@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "ttl_obraz-kraju",
   "position": {
-    "x": 20,
-    "width": 1240,
-    "height": 52,
-    "y": 5,
-    "tabOrder": 1,
-    "z": 10
+    "tabOrder": 10,
+    "width": 900,
+    "z": 10,
+    "x": 32,
+    "y": 8,
+    "height": 76
   },
   "visual": {
     "visualType": "textbox",
@@ -20,12 +20,13 @@
                 "horizontalTextAlignment": "left",
                 "textRuns": [
                   {
+                    "value": "KROK 1 z 5  ·  CO SIĘ DZIEJE",
                     "textStyle": {
-                      "fontSize": "22px",
-                      "color": "#F8FAFC",
-                      "fontFamily": "Segoe UI Semibold"
-                    },
-                    "value": "Obraz kraju"
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9px",
+                      "color": "#8FB0DC",
+                      "letterSpacing": "1.6px"
+                    }
                   }
                 ]
               },
@@ -33,12 +34,25 @@
                 "horizontalTextAlignment": "left",
                 "textRuns": [
                   {
+                    "value": "Obraz kraju",
                     "textStyle": {
-                      "fontSize": "10px",
-                      "color": "#93A4B8",
-                      "fontFamily": "Segoe UI"
-                    },
-                    "value": "Jedno spojrzenie pokazuje skalę kryzysu, jego koncentrację przestrzenną i poziom wymaganej eskalacji."
+                      "fontFamily": "Segoe UI Light",
+                      "fontSize": "26px",
+                      "color": "#FFFFFF"
+                    }
+                  }
+                ]
+              },
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "value": "Jedno spojrzenie: skala kryzysu, jego koncentracja przestrzenna i tempo narastania.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11px",
+                      "color": "#C4D4EA"
+                    }
                   }
                 ]
               }
@@ -48,7 +62,33 @@
       ]
     },
     "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
         {
           "properties": {
             "show": {
@@ -64,6 +104,13 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
@@ -72,13 +119,6 @@
               }
             },
             "right": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "left": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -95,7 +135,7 @@
           }
         }
       ],
-      "border": [
+      "visualHeader": [
         {
           "properties": {
             "show": {

@@ -2,78 +2,33 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p2_map",
   "position": {
-    "x": 20,
-    "width": 560,
-    "height": 350,
-    "y": 178,
     "tabOrder": 100,
-    "z": 100
+    "width": 748,
+    "z": 100,
+    "x": 32,
+    "y": 220,
+    "height": 296
   },
   "visual": {
     "visualType": "azureMap",
     "query": {
       "queryState": {
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Function": 1,
-                  "Expression": {
-                    "Column": {
-                      "Property": "level_cm",
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "hydro_readings"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "queryRef": "Average(hydro_readings.level_cm)",
-              "nativeQueryRef": "Average of level_cm",
-              "active": true,
-              "displayName": "Średni poziom [cm]"
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Property": "river",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_river_gauge"
-                    }
-                  }
-                }
-              },
-              "queryRef": "dim_river_gauge.river",
-              "nativeQueryRef": "river",
-              "active": true,
-              "displayName": "Rzeka"
-            }
-          ]
-        },
         "Y": {
           "projections": [
             {
               "field": {
                 "Aggregation": {
-                  "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "lat",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "dim_river_gauge"
                         }
-                      }
+                      },
+                      "Property": "lat"
                     }
-                  }
+                  },
+                  "Function": 1
                 }
               },
               "queryRef": "Average(dim_river_gauge.lat)",
@@ -83,17 +38,62 @@
             }
           ]
         },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_river_gauge"
+                    }
+                  },
+                  "Property": "river"
+                }
+              },
+              "queryRef": "dim_river_gauge.river",
+              "nativeQueryRef": "river",
+              "active": true,
+              "displayName": "Rzeka"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "hydro_readings"
+                        }
+                      },
+                      "Property": "level_cm"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Average(hydro_readings.level_cm)",
+              "nativeQueryRef": "Average of level_cm",
+              "active": true,
+              "displayName": "Średni poziom [cm]"
+            }
+          ]
+        },
         "Category": {
           "projections": [
             {
               "field": {
                 "Column": {
-                  "Property": "gauge_name",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "dim_river_gauge"
                     }
-                  }
+                  },
+                  "Property": "gauge_name"
                 }
               },
               "queryRef": "dim_river_gauge.gauge_name",
@@ -108,17 +108,17 @@
             {
               "field": {
                 "Aggregation": {
-                  "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "lon",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "dim_river_gauge"
                         }
-                      }
+                      },
+                      "Property": "lon"
                     }
-                  }
+                  },
+                  "Function": 1
                 }
               },
               "queryRef": "Average(dim_river_gauge.lon)",
@@ -134,21 +134,21 @@
       "background": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
                 }
               }
             },
@@ -165,17 +165,6 @@
       "border": [
         {
           "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#22D3EE'"
-                    }
-                  }
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
@@ -183,10 +172,21 @@
                 }
               }
             },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
+            },
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "4D"
                 }
               }
             },
@@ -203,10 +203,42 @@
       "dropShadow": [
         {
           "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "88D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outer'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8A99AD'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -216,31 +248,31 @@
       "padding": [
         {
           "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
+                  "Value": "14D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "12D"
                 }
               }
             }
@@ -266,21 +298,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
-            "bold": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Sieć wodowskazów i obciążenie rzek'"
                 }
               }
             },
@@ -289,16 +314,16 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
               }
             },
-            "text": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "'Wodowskazy — położenie i skala poziomu wody'"
+                  "Value": "true"
                 }
               }
             },
@@ -314,9 +339,68 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F8FAFC'"
+                      "Value": "'#12325B'"
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Kolor oznacza rzekę, wielkość — średni poziom wody; ciąg bąbli pokazuje kierunek fali'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5C6B80'"
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

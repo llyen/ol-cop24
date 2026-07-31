@@ -1,41 +1,41 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json",
   "themeCollection": {
     "baseTheme": {
       "reportVersionAtImport": {
-        "visual": "2.5.0",
         "report": "3.1.0",
+        "visual": "2.5.0",
         "page": "2.3.0"
       },
-      "type": "SharedResources",
-      "name": "CY25SU12"
+      "name": "CY25SU12",
+      "type": "SharedResources"
     },
     "customTheme": {
       "reportVersionAtImport": {
-        "visual": "2.6.0",
         "report": "3.1.0",
+        "visual": "2.6.0",
         "page": "2.3.0"
       },
-      "type": "RegisteredResources",
-      "name": "COP24-CommandCenter-c0242026.json"
+      "name": "COP24-Rzadowy-c0242026.json",
+      "type": "RegisteredResources"
     }
-  },
-  "settings": {
-    "useStylableVisualContainerHeader": true,
-    "defaultFilterActionIsDataFilter": true,
-    "useEnhancedTooltips": true
   },
   "resourcePackages": [
     {
-      "type": "RegisteredResources",
       "name": "RegisteredResources",
+      "type": "RegisteredResources",
       "items": [
         {
-          "type": "CustomTheme",
-          "path": "COP24-CommandCenter-c0242026.json",
-          "name": "COP24-CommandCenter-c0242026.json"
+          "path": "COP24-Rzadowy-c0242026.json",
+          "name": "COP24-Rzadowy-c0242026.json",
+          "type": "CustomTheme"
         }
       ]
     }
   ],
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json"
+  "settings": {
+    "useEnhancedTooltips": true,
+    "useStylableVisualContainerHeader": true,
+    "defaultFilterActionIsDataFilter": true
+  }
 }
