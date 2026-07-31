@@ -56,3 +56,21 @@ Dashboard jest gotowy do demo, jeśli na ekranie głównym widać co najmniej: K
 ## Uwagi dla prowadzącego
 
 Nie pokazuj wszystkich stron od razu. Strona `Hydrologia` buduje wiarygodność techniczną, `Infrastruktura krytyczna` uzasadnia udział wielu ministrów, `RZZK i SPO` uzasadnia decyzję, a `Z20` pokazuje, że komunikacja społeczna jest częścią reagowania. Jeśli czas jest krótki, pomiń szczegóły Power BI i przejdź bezpośrednio do aplikacji.
+
+## Wdrożenie
+
+Dashboard tworzy skrypt:
+
+```powershell
+.\deploy\create_dashboard.ps1 -WorkspaceName OL-ZK-Demo-COP24
+```
+
+Skrypt czyta 14 zapytań z `kql\03_dashboard_queries.kql`, waliduje każde zapytanie przez Eventhouse REST API, zapisuje definicję `dashboard\RealTimeDashboard.json`, a następnie tworzy albo aktualizuje element Fabric `OL_COP24_Dashboard` typu `KQLDashboard` przez REST API. Definicja używa `schema_version` 60, źródła danych `kusto-trident` dla Eventhouse `OL_COP24_Eventhouse`, pięciu stron oraz 14 kafelków:
+
+- `Obraz kraju`: Gminy w alarmie, Zgłoszenia 112/PSP 15 min, Top gmin według incydentów, Status ewakuacji, Zaangażowane siły i środki.
+- `Hydrologia`: Mapa wodowskazów, Fala Kłodzko → Nysa → Opole → Wrocław.
+- `Infrastruktura krytyczna`: Odbiorcy bez prądu, Awarie energetyczne — najcięższe gminy, Gminy z pokryciem telco <50%, Korelacja hydro → energia → telco.
+- `RZZK i SPO`: Ostatnie eskalacje i SPO.
+- `Z20 Dezinformacja`: Sygnały dezinformacyjne Z20, Kanały i tematy Z20.
+
+Jeżeli środowisko Fabric odrzuci aktualizację definicji przez API, ten sam plik `dashboard\RealTimeDashboard.json` można zaimportować ręcznie w UI: Real-Time Dashboard → File → Replace with file.

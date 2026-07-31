@@ -1,0 +1,689 @@
+{
+  "$schema": "https://pbiadx.powerbi.com/static/d/schema/60/dashboard.json",
+  "id": "9be385bd-fa31-db2a-f4b6-b23e44bce664",
+  "eTag": "",
+  "schema_version": "60",
+  "title": "OL_COP24_Dashboard",
+  "autoRefresh": {
+    "enabled": true,
+    "interval": "00:00:30"
+  },
+  "tiles": [
+    {
+      "id": "20e9d6eb-9ac8-4c78-d9f6-1355f5a4bf8e",
+      "title": "Mapa wodowskazów",
+      "visualType": "map",
+      "pageId": "4585119f-4477-8f8a-8d72-8cd26c9e6dc9",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c5f6996f-7f13-b5ac-e9ce-a8469472c338"
+      },
+      "visualOptions": {
+        "map__type": "bubble",
+        "map__sizeColumn": "level_cm",
+        "map__labelColumn": "gauge_id",
+        "map__latitudeColumn": null,
+        "map__longitudeColumn": null,
+        "map__sizeDisabled": false,
+        "map__geoType": "geocoding",
+        "map__geoPointColumn": null
+      }
+    },
+    {
+      "id": "5b9e4da4-ef7b-3ab3-ca7b-cbd4e2b1629f",
+      "title": "Fala Kłodzko → Nysa → Opole → Wrocław",
+      "visualType": "line",
+      "pageId": "4585119f-4477-8f8a-8d72-8cd26c9e6dc9",
+      "layout": {
+        "x": 12,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "8019ec6b-2308-296c-c51d-a51946201cb8"
+      },
+      "visualOptions": {
+        "crossFilterDisabled": false,
+        "yColumns": [
+          "avg_level",
+          "max_level"
+        ],
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "seriesColumns": [
+          "gauge_id"
+        ],
+        "hideLegend": false,
+        "drillthroughDisabled": false,
+        "multipleYAxes": {
+          "base": {
+            "horizontalLines": [],
+            "id": "-1",
+            "label": "",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "columns": []
+          },
+          "showMultiplePanels": false,
+          "additional": []
+        },
+        "xColumnTitle": "Czas",
+        "xColumn": "timestamp",
+        "crossFilter": []
+      }
+    },
+    {
+      "id": "57d5a102-a34c-eeeb-2047-21b14d3a608c",
+      "title": "Gminy w alarmie",
+      "visualType": "multistat",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b38f0b51-ca66-6e80-132e-54ece2c59d4e"
+      },
+      "visualOptions": {
+        "colorStyle": "light",
+        "colorRulesDisabled": true,
+        "multiStat__textSize": "auto",
+        "colorRules": [],
+        "multiStat__slot": {
+          "height": 1,
+          "width": 4
+        },
+        "multiStat__labelColumn": null,
+        "multiStat__displayOrientation": "horizontal",
+        "multiStat__valueColumn": null
+      }
+    },
+    {
+      "id": "c5859336-22cc-2e9f-470b-f477a7acc1a0",
+      "title": "Zgłoszenia 112/PSP 15 min",
+      "visualType": "line",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 12,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "424aca17-b492-824d-984b-979842ba808d"
+      },
+      "visualOptions": {
+        "crossFilterDisabled": false,
+        "yColumns": [
+          "incidents",
+          "affected"
+        ],
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "seriesColumns": null,
+        "hideLegend": false,
+        "drillthroughDisabled": false,
+        "multipleYAxes": {
+          "base": {
+            "horizontalLines": [],
+            "id": "-1",
+            "label": "",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "columns": []
+          },
+          "showMultiplePanels": false,
+          "additional": []
+        },
+        "xColumnTitle": "Czas",
+        "xColumn": "timestamp",
+        "crossFilter": []
+      }
+    },
+    {
+      "id": "9d168c01-fea3-ef1c-41c3-8b0e004f10d9",
+      "title": "Top gmin według incydentów",
+      "visualType": "table",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 0,
+        "y": 8,
+        "width": 12,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "daadb2f3-2236-339a-ad76-690e03765cab"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRules": [],
+        "table__renderLinks": [],
+        "drillthroughDisabled": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "crossFilter": [],
+        "colorRulesDisabled": true,
+        "colorStyle": "light"
+      }
+    },
+    {
+      "id": "8e4fadf8-5f94-86dc-5a88-abbcd0c220eb",
+      "title": "Odbiorcy bez prądu",
+      "visualType": "line",
+      "pageId": "c6db2691-4a32-eb06-a091-12acfd281f28",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a"
+      },
+      "visualOptions": {
+        "crossFilterDisabled": false,
+        "yColumns": [
+          "customers_offline"
+        ],
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "seriesColumns": null,
+        "hideLegend": false,
+        "drillthroughDisabled": false,
+        "multipleYAxes": {
+          "base": {
+            "horizontalLines": [],
+            "id": "-1",
+            "label": "",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "columns": []
+          },
+          "showMultiplePanels": false,
+          "additional": []
+        },
+        "xColumnTitle": "Czas",
+        "xColumn": "timestamp",
+        "crossFilter": []
+      }
+    },
+    {
+      "id": "497e0ab9-be90-cdb5-2e71-5763baaf57a6",
+      "title": "Awarie energetyczne — najcięższe gminy",
+      "visualType": "column",
+      "pageId": "c6db2691-4a32-eb06-a091-12acfd281f28",
+      "layout": {
+        "x": 12,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "3475e7da-d41d-bb3a-db61-00ad4c9b333f"
+      },
+      "visualOptions": {
+        "crossFilterDisabled": false,
+        "yColumns": [
+          "customers_offline"
+        ],
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "seriesColumns": null,
+        "hideLegend": false,
+        "drillthroughDisabled": false,
+        "multipleYAxes": {
+          "base": {
+            "horizontalLines": [],
+            "id": "-1",
+            "label": "",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "columns": []
+          },
+          "showMultiplePanels": false,
+          "additional": []
+        },
+        "xColumnTitle": "Gmina",
+        "xColumn": "gmina_code",
+        "crossFilter": []
+      }
+    },
+    {
+      "id": "56a36cd6-ab52-9127-1732-9d3d66465b0e",
+      "title": "Gminy z pokryciem telco <50%",
+      "visualType": "table",
+      "pageId": "c6db2691-4a32-eb06-a091-12acfd281f28",
+      "layout": {
+        "x": 0,
+        "y": 8,
+        "width": 12,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "9917d286-54e8-2a72-6264-1569804cc108"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRules": [],
+        "table__renderLinks": [],
+        "drillthroughDisabled": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "crossFilter": [],
+        "colorRulesDisabled": true,
+        "colorStyle": "light"
+      }
+    },
+    {
+      "id": "311b42d7-5414-01bb-a578-388eb5dc3a89",
+      "title": "Status ewakuacji",
+      "visualType": "multistat",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 12,
+        "y": 8,
+        "width": 6,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "df1690d1-2cf7-1098-8737-98e73453ea75"
+      },
+      "visualOptions": {
+        "colorStyle": "light",
+        "colorRulesDisabled": true,
+        "multiStat__textSize": "auto",
+        "colorRules": [],
+        "multiStat__slot": {
+          "height": 1,
+          "width": 4
+        },
+        "multiStat__labelColumn": null,
+        "multiStat__displayOrientation": "horizontal",
+        "multiStat__valueColumn": null
+      }
+    },
+    {
+      "id": "acb7dccc-92dd-fb0f-7060-8f13e63b9468",
+      "title": "Zaangażowane siły i środki",
+      "visualType": "table",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 0,
+        "y": 16,
+        "width": 12,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "286746ee-7e9a-cb49-51e8-31fc6d717dc7"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRules": [],
+        "table__renderLinks": [],
+        "drillthroughDisabled": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "crossFilter": [],
+        "colorRulesDisabled": true,
+        "colorStyle": "light"
+      }
+    },
+    {
+      "id": "fa4394b0-010d-7aae-6a71-98083218b3da",
+      "title": "Ostatnie eskalacje i SPO",
+      "visualType": "table",
+      "pageId": "dcf69cb5-31b7-9f27-c2ac-14c4391d1027",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "057690da-f91a-d3a0-1eb1-daf8d55e79b8"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRules": [],
+        "table__renderLinks": [],
+        "drillthroughDisabled": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "crossFilter": [],
+        "colorRulesDisabled": true,
+        "colorStyle": "light"
+      }
+    },
+    {
+      "id": "eec91d53-d22f-ef6f-13c2-43a1b38c2e92",
+      "title": "Sygnały dezinformacyjne Z20",
+      "visualType": "line",
+      "pageId": "cf29945f-3398-69bc-ed0c-5279e4b881c9",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "29192ae9-2d70-7fc6-076f-06771a87ad63"
+      },
+      "visualOptions": {
+        "crossFilterDisabled": false,
+        "yColumns": [
+          "disinfo_signals",
+          "disinfo_reach"
+        ],
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "seriesColumns": null,
+        "hideLegend": false,
+        "drillthroughDisabled": false,
+        "multipleYAxes": {
+          "base": {
+            "horizontalLines": [],
+            "id": "-1",
+            "label": "",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "columns": []
+          },
+          "showMultiplePanels": false,
+          "additional": []
+        },
+        "xColumnTitle": "Czas",
+        "xColumn": "timestamp",
+        "crossFilter": []
+      }
+    },
+    {
+      "id": "05a07a87-5295-5c02-019c-3a2771de7f3a",
+      "title": "Kanały i tematy Z20",
+      "visualType": "column",
+      "pageId": "cf29945f-3398-69bc-ed0c-5279e4b881c9",
+      "layout": {
+        "x": 12,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "599e29ef-6c06-3a19-86d0-b79bf91c9aaf"
+      },
+      "visualOptions": {
+        "crossFilterDisabled": false,
+        "yColumns": [
+          "reach"
+        ],
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "seriesColumns": [
+          "channel"
+        ],
+        "hideLegend": false,
+        "drillthroughDisabled": false,
+        "multipleYAxes": {
+          "base": {
+            "horizontalLines": [],
+            "id": "-1",
+            "label": "",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "columns": []
+          },
+          "showMultiplePanels": false,
+          "additional": []
+        },
+        "xColumnTitle": "Temat",
+        "xColumn": "topic",
+        "crossFilter": []
+      }
+    },
+    {
+      "id": "8f75d7ea-1f01-e511-806a-885188a2914c",
+      "title": "Korelacja hydro → energia → telco",
+      "visualType": "table",
+      "pageId": "c6db2691-4a32-eb06-a091-12acfd281f28",
+      "layout": {
+        "x": 12,
+        "y": 8,
+        "width": 12,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "67cede41-377e-ca16-6e0f-4431e2d6e78d"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRules": [],
+        "table__renderLinks": [],
+        "drillthroughDisabled": false,
+        "drillthrough": [],
+        "crossFilterDisabled": false,
+        "crossFilter": [],
+        "colorRulesDisabled": true,
+        "colorStyle": "light"
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "6fa493dc-46b8-3835-46e7-8be62191fb5a",
+      "displayName": "Zakres czasu",
+      "description": "Domyślnie ostatnia godzina; zapytania demo używają pełnego zakresu 2026-09-12...2026-09-25.",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "static",
+        "startTime": "2026-09-12T00:00:00.000Z",
+        "endTime": "2026-09-26T00:00:00.000Z"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "https://trd-tmsdqpz0s6cg6aewj9.z3.kusto.fabric.microsoft.com",
+      "database": "c3c2fbc2-7fa9-4b70-b82d-c76f79640b37",
+      "name": "OL_COP24_Eventhouse",
+      "id": "700b6b99-befb-30ef-0c3a-1043f13daa16",
+      "workspace": "8ea0556f-7368-4b36-ad84-adf995e19a80"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Obraz kraju",
+      "id": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523"
+    },
+    {
+      "name": "Hydrologia",
+      "id": "4585119f-4477-8f8a-8d72-8cd26c9e6dc9"
+    },
+    {
+      "name": "Infrastruktura krytyczna",
+      "id": "c6db2691-4a32-eb06-a091-12acfd281f28"
+    },
+    {
+      "name": "RZZK i SPO",
+      "id": "dcf69cb5-31b7-9f27-c2ac-14c4391d1027"
+    },
+    {
+      "name": "Z20 Dezinformacja",
+      "id": "cf29945f-3398-69bc-ed0c-5279e4b881c9"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "hydro_latest\n| extend status = case(level_cm >= alarm_level_cm, \"alarm\", level_cm >= warning_level_cm, \"warning\", \"normal\")\n| project timestamp, gauge_id, gmina_code, river, level_cm, warning_level_cm, alarm_level_cm, trend, status\n| order by status asc, level_cm desc",
+      "id": "c5f6996f-7f13-b5ac-e9ce-a8469472c338",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "hydro_readings\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where gauge_id in (\"WG-001\", \"WG-003\", \"WG-004\", \"WG-007\")\n| summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river\n| order by timestamp asc",
+      "id": "8019ec6b-2308-296c-c51d-a51946201cb8",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "hydro_readings\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where level_cm >= alarm_level_cm\n| summarize alarm_gminas=dcount(gmina_code), alarm_gauges=dcount(gauge_id), first_alarm=min(timestamp), last_alarm=max(timestamp)",
+      "id": "b38f0b51-ca66-6e80-132e-54ece2c59d4e",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "incident_reports\n| where hazard_code == \"Z02\"\n| summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 15m)\n| order by timestamp asc",
+      "id": "424aca17-b492-824d-984b-979842ba808d",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "incident_reports\n| where timestamp between (datetime(2026-09-12T12:00:00+02:00) .. datetime(2026-09-25T12:00:00+02:00))\n| where hazard_code == \"Z02\"\n| summarize incidents=count(), affected=sum(affected_people), high_priority=countif(priority >= 4) by gmina_code\n| top 20 by incidents desc",
+      "id": "daadb2f3-2236-339a-ad76-690e03765cab",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "power_grid_events\n| summarize customers_offline=sum(customers_offline), events=count(), max_eta=max(eta_restore_min) by bin(timestamp, 1h)\n| order by timestamp asc",
+      "id": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "power_grid_events\n| summarize customers_offline=sum(customers_offline), events=count(), max_eta_restore_min=max(eta_restore_min), causes=make_set(cause, 5) by gmina_code\n| top 15 by customers_offline desc",
+      "id": "3475e7da-d41d-bb3a-db61-00ad4c9b333f",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "telecom_events\n| where coverage_pct < 50\n| summarize arg_max(timestamp, *) by gmina_code, operator\n| project timestamp, gmina_code, operator, coverage_pct, base_stations_down, cause\n| order by coverage_pct asc",
+      "id": "9917d286-54e8-2a72-6264-1569804cc108",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "evacuation_status\n| summarize arg_max(timestamp, *) by gmina_code\n| summarize people=sum(people_count), gminas=dcount(gmina_code), capacity=sum(reception_capacity) by status\n| order by status asc",
+      "id": "df1690d1-2cf7-1098-8737-98e73453ea75",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "resource_deployment\n| summarize arg_max(timestamp, *) by voivodeship_code\n| project timestamp, voivodeship_code, psp_units, wot_soldiers, pumps, generators, helicopters,\n          total_resources=psp_units + wot_soldiers + pumps + generators + helicopters\n| order by total_resources desc",
+      "id": "286746ee-7e9a-cb49-51e8-31fc6d717dc7",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "escalation_events\n| where hazard_code == \"Z02\"\n| order by timestamp asc\n| project timestamp, from_level, to_level, area, recommended_spo, reason",
+      "id": "057690da-f91a-d3a0-1eb1-daf8d55e79b8",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "media_signals\n| where disinformation_flag == true or hazard_code == \"Z20\"\n| summarize disinfo_signals=count(), disinfo_reach=sum(reach), topics=make_set(topic, 5) by bin(timestamp, 1h)\n| order by timestamp asc",
+      "id": "29192ae9-2d70-7fc6-076f-06771a87ad63",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "media_signals\n| where disinformation_flag == true\n| summarize signals=count(), reach=sum(reach) by channel, topic\n| top 20 by reach desc",
+      "id": "599e29ef-6c06-3a19-86d0-b79bf91c9aaf",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "let hydro_alarm = hydro_readings\n| where level_cm >= alarm_level_cm\n| summarize first_alarm=min(timestamp) by gmina_code;\nlet power_first = power_grid_events\n| summarize first_power=min(timestamp), customers=sum(customers_offline) by gmina_code;\nlet telco_first = telecom_events\n| summarize first_telco=min(timestamp), min_coverage=min(coverage_pct) by gmina_code;\nhydro_alarm\n| join kind=leftouter power_first on gmina_code\n| join kind=leftouter telco_first on gmina_code\n| extend power_delay_h=datetime_diff('hour', first_power, first_alarm), telco_delay_h=datetime_diff('hour', first_telco, first_alarm)\n| project gmina_code, first_alarm, first_power, power_delay_h, customers, first_telco, telco_delay_h, min_coverage\n| order by first_alarm asc",
+      "id": "67cede41-377e-ca16-6e0f-4431e2d6e78d",
+      "usedVariables": []
+    }
+  ]
+}
