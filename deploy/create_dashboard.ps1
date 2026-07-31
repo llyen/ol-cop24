@@ -123,15 +123,21 @@ function Get-PrimaryPage([string]$headerPage) {
     return 'Obraz kraju'
 }
 
+function Get-UsedVariables([string]$queryText) {
+    # Dashboard wiaze parametry z zapytaniem tylko wtedy, gdy zmienne sa tu wymienione.
+    @('_startTime', '_endTime') | Where-Object { $queryText -match [regex]::Escape($_) }
+}
+
 function Get-VisualType([string]$number) {
     switch ($number) {
         { $_ -in @('01', '17') } { 'map'; break }
-        { $_ -in @('02', '04', '06', '12', '16') } { 'line'; break }
         { $_ -in @('03', '09') } { 'multistat'; break }
+        '18' { 'stat'; break }
         { $_ -in @('05', '08') } { 'bar'; break }
         { $_ -in @('07', '10') } { 'column'; break }
         '13' { 'pie'; break }
         '15' { 'heatmap'; break }
+        { $_ -in @('02', '04', '06', '12', '16', '19') } { 'line'; break }
         default { 'table' }
     }
 }
@@ -260,8 +266,8 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
         $visualType = Get-VisualType $q.Number
         $queryId = New-StableGuid "query-$($q.Number)"
 
-        $width = if ($visualType -in @('multistat', 'bar', 'pie')) { 6 } else { 12 }
-        $height = if ($visualType -eq 'multistat') { 3 } elseif ($visualType -eq 'table') { 7 } else { 8 }
+        $width = if ($visualType -in @('multistat', 'bar', 'pie')) { 6 } elseif ($visualType -eq 'stat') { 4 } else { 12 }
+        $height = if ($visualType -in @('multistat', 'stat')) { 3 } elseif ($visualType -eq 'table') { 7 } else { 8 }
         $tile = [ordered]@{
             id = New-StableGuid "tile-$($q.Number)"
             title = $q.Title
@@ -281,7 +287,7 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
             dataSource = [ordered]@{ kind = 'inline'; dataSourceId = $dataSourceId }
             text = $q.Query
             id = $queryId
-            usedVariables = @()
+            usedVariables = @(Get-UsedVariables $q.Query)
         }
     }
 
@@ -291,7 +297,7 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
         eTag = ''
         schema_version = $schemaVersion
         title = $DashboardName
-        autoRefresh = [ordered]@{ enabled = $true; defaultInterval = '30s'; minInterval = '10s' }
+        autoRefresh = [ordered]@{ enabled = $true; defaultInterval = '10s'; minInterval = '10s' }
         tiles = $tiles
         baseQueries = @()
         parameters = @(
@@ -299,11 +305,12 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
                 kind = 'duration'
                 id = New-StableGuid 'parameter-time-range'
                 displayName = 'Zakres czasu'
-                description = 'Domyślnie pełny zakres scenariusza powodziowego: 2026-09-12 ... 2026-09-26 UTC.'
+                description = 'Ruchome okno ostatnich 2 godzin. Scenariusz odtwarza sie na skompresowanej osi czasu przypietej do biezacego zegara, wiec dashboard caly czas pokazuje aktualna sytuacje.'
                 beginVariableName = '_startTime'
                 endVariableName = '_endTime'
-                # Schemat wymaga liczb: epoch w milisekundach (2026-09-12 ... 2026-09-26 UTC).
-                defaultValue = [ordered]@{ kind = 'fixed'; start = 1789171200000; end = 1790380800000 }
+                # Okno dynamiczne, nie sztywne daty: dzieki temu kolejne odswiezenia
+                # przesuwaja sie razem z zegarem i widac naplyw nowych zdarzen.
+                defaultValue = [ordered]@{ kind = 'dynamic'; count = 2; unit = 'hours' }
                 showOnPages = [ordered]@{ kind = 'all' }
             }
         )
@@ -349,13 +356,18 @@ Resolve-Workspace
 
 Write-Step "Czytanie zapytań"
 $dashboardQueries = @(Split-DashboardQueries $QueriesPath)
-if ($dashboardQueries.Count -ne 17) { throw "Oczekiwano 17 zapytań, znaleziono $($dashboardQueries.Count)." }
+if ($dashboardQueries.Count -ne 19) { throw "Oczekiwano 19 zapytań, znaleziono $($dashboardQueries.Count)." }
 Write-Ok "znaleziono 14 zapytań"
 
 if (-not $SkipQueryValidation) {
     Write-Step "Walidacja KQL przez Eventhouse REST"
     foreach ($q in $dashboardQueries) {
-        $res = Invoke-KustoQuery $q.Query
+        # Zapytania kafelkow filtruja po zmiennych dashboardu, ktorych Eventhouse nie zna.
+        # Na czas walidacji podstawiamy je tak samo, jak robi to dashboard: ostatnie 2 godziny.
+        $toRun = if (Get-UsedVariables $q.Query) {
+            "let _startTime = ago(2h);`nlet _endTime = now();`n$($q.Query)"
+        } else { $q.Query }
+        $res = Invoke-KustoQuery $toRun
         $rows = if ($res.Tables -and $res.Tables.Count -gt 0) { $res.Tables[0].Rows.Count } else { 0 }
         Write-Ok "$($q.Number). $($q.Title) ($rows wierszy)"
     }

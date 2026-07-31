@@ -6,7 +6,7 @@
   "title": "OL_COP24_Dashboard",
   "autoRefresh": {
     "enabled": true,
-    "defaultInterval": "30s",
+    "defaultInterval": "10s",
     "minInterval": "10s"
   },
   "tiles": [
@@ -26,12 +26,12 @@
         "queryId": "c5f6996f-7f13-b5ac-e9ce-a8469472c338"
       },
       "visualOptions": {
-        "hideLegend": false,
-        "legendLocation": "bottom",
         "map__longitudeColumn": "lon",
-        "map__minBubbleSizeColumn": "level_cm",
+        "hideLegend": false,
         "map__latitudeColumn": "lat",
-        "map__bubbleFormat": "bubble"
+        "map__minBubbleSizeColumn": "level_cm",
+        "map__bubbleFormat": "bubble",
+        "legendLocation": "bottom"
       }
     },
     {
@@ -50,36 +50,36 @@
         "queryId": "8019ec6b-2308-296c-c51d-a51946201cb8"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Czas",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": [
+          "gauge_id"
+        ],
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "timestamp",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "avg_level",
           "max_level"
         ],
-        "seriesColumns": [
-          "gauge_id"
-        ]
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -98,17 +98,17 @@
         "queryId": "b38f0b51-ca66-6e80-132e-54ece2c59d4e"
       },
       "visualOptions": {
-        "multiStat__displayOrientation": "horizontal",
-        "colorRules": [],
         "multiStat__valueColumn": "Wartosc",
-        "multiStat__labelColumn": "Wskaznik",
-        "colorStyle": "light",
-        "colorRulesDisabled": true,
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "multiStat__textSize": "auto"
+        "colorRulesDisabled": true,
+        "multiStat__displayOrientation": "horizontal",
+        "colorStyle": "light",
+        "colorRules": [],
+        "multiStat__textSize": "auto",
+        "multiStat__labelColumn": "Wskaznik"
       }
     },
     {
@@ -127,34 +127,34 @@
         "queryId": "424aca17-b492-824d-984b-979842ba808d"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Czas",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "timestamp",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "incidents",
           "affected"
         ],
-        "seriesColumns": null
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -173,33 +173,33 @@
         "queryId": "daadb2f3-2236-339a-ad76-690e03765cab"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Gmina",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "Gmina",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "Zgloszenia"
         ],
-        "seriesColumns": null
+        "xColumn": "Gmina",
+        "xColumnTitle": "Gmina"
       }
     },
     {
@@ -218,33 +218,33 @@
         "queryId": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Czas",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "timestamp",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "customers_offline"
         ],
-        "seriesColumns": null
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -263,33 +263,33 @@
         "queryId": "3475e7da-d41d-bb3a-db61-00ad4c9b333f"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Gmina",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "Gmina",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "Odbiorcy"
         ],
-        "seriesColumns": null
+        "xColumn": "Gmina",
+        "xColumnTitle": "Gmina"
       }
     },
     {
@@ -308,33 +308,33 @@
         "queryId": "9917d286-54e8-2a72-6264-1569804cc108"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Gmina",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "Gmina",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "Pokrycie"
         ],
-        "seriesColumns": null
+        "xColumn": "Gmina",
+        "xColumnTitle": "Gmina"
       }
     },
     {
@@ -353,17 +353,17 @@
         "queryId": "df1690d1-2cf7-1098-8737-98e73453ea75"
       },
       "visualOptions": {
-        "multiStat__displayOrientation": "horizontal",
-        "colorRules": [],
         "multiStat__valueColumn": "Wartosc",
-        "multiStat__labelColumn": "Wskaznik",
-        "colorStyle": "light",
-        "colorRulesDisabled": true,
         "multiStat__slot": {
           "width": 4,
           "height": 1
         },
-        "multiStat__textSize": "auto"
+        "colorRulesDisabled": true,
+        "multiStat__displayOrientation": "horizontal",
+        "colorStyle": "light",
+        "colorRules": [],
+        "multiStat__textSize": "auto",
+        "multiStat__labelColumn": "Wskaznik"
       }
     },
     {
@@ -382,29 +382,28 @@
         "queryId": "286746ee-7e9a-cb49-51e8-31fc6d717dc7"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Wojewodztwo",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "Wojewodztwo",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "PSP",
           "WOT",
@@ -412,7 +411,8 @@
           "Agregaty",
           "Smiglowce"
         ],
-        "seriesColumns": null
+        "xColumn": "Wojewodztwo",
+        "xColumnTitle": "Wojewodztwo"
       }
     },
     {
@@ -431,15 +431,15 @@
         "queryId": "057690da-f91a-d3a0-1eb1-daf8d55e79b8"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "drillthroughDisabled": false,
+        "colorStyle": "light",
         "table__renderLinks": [],
-        "drillthrough": [],
-        "crossFilterDisabled": false,
+        "colorRules": [],
         "colorRulesDisabled": true,
         "crossFilter": [],
-        "colorStyle": "light",
-        "colorRules": []
+        "crossFilterDisabled": false,
+        "drillthrough": [],
+        "drillthroughDisabled": false,
+        "table__enableRenderLinks": true
       }
     },
     {
@@ -458,34 +458,34 @@
         "queryId": "29192ae9-2d70-7fc6-076f-06771a87ad63"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Czas",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "timestamp",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "disinfo_signals",
           "disinfo_reach"
         ],
-        "seriesColumns": null
+        "xColumn": "timestamp",
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -505,13 +505,13 @@
       },
       "visualOptions": {
         "legendLocation": "right",
+        "hideLegend": false,
+        "pie__kind": "donut",
+        "pie__orderBy": "size",
         "yColumns": [
           "Zasieg"
         ],
-        "hideLegend": false,
-        "pie__orderBy": "size",
         "xColumn": "Kanal",
-        "pie__kind": "donut",
         "pie__label": [
           "name",
           "percentage"
@@ -534,15 +534,15 @@
         "queryId": "67cede41-377e-ca16-6e0f-4431e2d6e78d"
       },
       "visualOptions": {
-        "table__enableRenderLinks": true,
-        "drillthroughDisabled": false,
+        "colorStyle": "light",
         "table__renderLinks": [],
-        "drillthrough": [],
-        "crossFilterDisabled": false,
+        "colorRules": [],
         "colorRulesDisabled": true,
         "crossFilter": [],
-        "colorStyle": "light",
-        "colorRules": []
+        "crossFilterDisabled": false,
+        "drillthrough": [],
+        "drillthroughDisabled": false,
+        "table__enableRenderLinks": true
       }
     },
     {
@@ -561,12 +561,12 @@
         "queryId": "64927ecc-2324-888d-c648-bc28c19172f5"
       },
       "visualOptions": {
-        "colorRulesDisabled": true,
         "heatMap__dataColumn": "Zgloszenia",
-        "colorRules": [],
+        "colorRulesDisabled": true,
         "yColumn": "Wojewodztwo",
-        "xColumn": "Doba",
-        "heatMap__colorPaletteKey": "orange"
+        "colorRules": [],
+        "heatMap__colorPaletteKey": "orange",
+        "xColumn": "Doba"
       }
     },
     {
@@ -585,33 +585,33 @@
         "queryId": "86a0e303-e60a-e04c-9b29-13b317bd3148"
       },
       "visualOptions": {
-        "crossFilter": [],
-        "crossFilterDisabled": false,
-        "xColumnTitle": "Czas",
-        "drillthroughDisabled": false,
-        "hideLegend": false,
-        "xAxisScale": "linear",
+        "verticalLine": "",
         "legendLocation": "bottom",
         "drillthrough": [],
+        "seriesColumns": null,
         "multipleYAxes": {
-          "additional": [],
           "showMultiplePanels": false,
+          "additional": [],
           "base": {
-            "yAxisMaximumValue": null,
-            "yAxisMinimumValue": null,
             "columns": [],
-            "id": "-1",
+            "yAxisScale": "linear",
             "horizontalLines": [],
-            "label": "",
-            "yAxisScale": "linear"
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
           }
         },
-        "xColumn": "Czas",
-        "verticalLine": "",
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
         "yColumns": [
           "Skumulowane"
         ],
-        "seriesColumns": null
+        "xColumn": "Czas",
+        "xColumnTitle": "Czas"
       }
     },
     {
@@ -630,12 +630,98 @@
         "queryId": "9dcf4a32-4b32-d331-344b-c68e22465a33"
       },
       "visualOptions": {
-        "hideLegend": false,
-        "legendLocation": "bottom",
         "map__longitudeColumn": "lon",
-        "map__minBubbleSizeColumn": "Zgloszenia",
+        "hideLegend": false,
         "map__latitudeColumn": "lat",
-        "map__bubbleFormat": "bubble"
+        "map__minBubbleSizeColumn": "Zgloszenia",
+        "map__bubbleFormat": "bubble",
+        "legendLocation": "bottom"
+      }
+    },
+    {
+      "id": "bd13a04e-d78d-6981-8f73-c7429a2c136f",
+      "title": "Swiezosc danych — opoznienie strumienia",
+      "visualType": "stat",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 0,
+        "y": 32,
+        "width": 4,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "97d4d0b5-a1a8-db74-4568-4a857d07518d"
+      },
+      "visualOptions": {
+        "verticalLine": "",
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "seriesColumns": null,
+        "multipleYAxes": {
+          "showMultiplePanels": false,
+          "additional": [],
+          "base": {
+            "columns": [],
+            "yAxisScale": "linear",
+            "horizontalLines": [],
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
+          }
+        },
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "yColumns": [],
+        "xColumn": null,
+        "xColumnTitle": ""
+      }
+    },
+    {
+      "id": "5026f009-3f41-5977-8e4a-b45ee29241e2",
+      "title": "Naplyw zdarzen na minute",
+      "visualType": "line",
+      "pageId": "8c9cd44a-657e-5399-47a6-6eb3cb8b3523",
+      "layout": {
+        "x": 12,
+        "y": 32,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c11360b4-b487-73c3-ed38-3e9d682470c0"
+      },
+      "visualOptions": {
+        "verticalLine": "",
+        "legendLocation": "bottom",
+        "drillthrough": [],
+        "seriesColumns": null,
+        "multipleYAxes": {
+          "showMultiplePanels": false,
+          "additional": [],
+          "base": {
+            "columns": [],
+            "yAxisScale": "linear",
+            "horizontalLines": [],
+            "id": "-1",
+            "yAxisMinimumValue": null,
+            "yAxisMaximumValue": null,
+            "label": ""
+          }
+        },
+        "hideLegend": false,
+        "crossFilter": [],
+        "drillthroughDisabled": false,
+        "crossFilterDisabled": false,
+        "xAxisScale": "linear",
+        "yColumns": [],
+        "xColumn": null,
+        "xColumnTitle": ""
       }
     }
   ],
@@ -645,13 +731,13 @@
       "kind": "duration",
       "id": "6fa493dc-46b8-3835-46e7-8be62191fb5a",
       "displayName": "Zakres czasu",
-      "description": "Domyślnie pełny zakres scenariusza powodziowego: 2026-09-12 ... 2026-09-26 UTC.",
+      "description": "Ruchome okno ostatnich 2 godzin. Scenariusz odtwarza sie na skompresowanej osi czasu przypietej do biezacego zegara, wiec dashboard caly czas pokazuje aktualna sytuacje.",
       "beginVariableName": "_startTime",
       "endVariableName": "_endTime",
       "defaultValue": {
-        "kind": "fixed",
-        "start": 1789171200000,
-        "end": 1790380800000
+        "kind": "dynamic",
+        "count": 2,
+        "unit": "hours"
       },
       "showOnPages": {
         "kind": "all"
@@ -706,134 +792,200 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "hydro_readings\n| where gauge_id in (\"WG-001\", \"WG-003\", \"WG-004\", \"WG-007\")\n| summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river\n| order by timestamp asc",
+      "text": "hydro_readings\n| where timestamp between (_startTime .. _endTime)\n| where gauge_id in (\"WG-001\", \"WG-003\", \"WG-004\", \"WG-007\")\n| summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river\n| order by timestamp asc",
       "id": "8019ec6b-2308-296c-c51d-a51946201cb8",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "hydro_readings\n| where level_cm >= alarm_level_cm\n| summarize [\"Gminy w alarmie\"]=dcount(gmina_code), [\"Wodowskazy w alarmie\"]=dcount(gauge_id), [\"Rzeki w alarmie\"]=dcount(river)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
+      "text": "hydro_readings\n| where timestamp between (_startTime .. _endTime)\n| where level_cm >= alarm_level_cm\n| summarize [\"Gminy w alarmie\"]=dcount(gmina_code), [\"Wodowskazy w alarmie\"]=dcount(gauge_id), [\"Rzeki w alarmie\"]=dcount(river)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
       "id": "b38f0b51-ca66-6e80-132e-54ece2c59d4e",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "incident_reports\n| where hazard_code == \"Z02\"\n| summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 15m)\n| order by timestamp asc",
+      "text": "incident_reports\n| where timestamp between (_startTime .. _endTime)\n| where hazard_code == \"Z02\"\n| summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 15m)\n| order by timestamp asc",
       "id": "424aca17-b492-824d-984b-979842ba808d",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "incident_reports\n| where hazard_code == \"Z02\"\n| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by Zgloszenia desc\n| project Gmina = coalesce(gmina_name, gmina_code), Zgloszenia, Osoby\n| order by Zgloszenia asc",
+      "text": "incident_reports\n| where timestamp between (_startTime .. _endTime)\n| where hazard_code == \"Z02\"\n| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by Zgloszenia desc\n| project Gmina = coalesce(gmina_name, gmina_code), Zgloszenia, Osoby\n| order by Zgloszenia asc",
       "id": "daadb2f3-2236-339a-ad76-690e03765cab",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "power_grid_events\n| summarize customers_offline=sum(customers_offline), events=count(), max_eta=max(eta_restore_min) by bin(timestamp, 1h)\n| order by timestamp asc",
+      "text": "power_grid_events\n| where timestamp between (_startTime .. _endTime)\n| summarize customers_offline=sum(customers_offline), events=count(), max_eta=max(eta_restore_min) by bin(timestamp, 1h)\n| order by timestamp asc",
       "id": "cddf8eea-3176-b8f9-e655-8d3b73e39e0a",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "power_grid_events\n| summarize Odbiorcy = sum(customers_offline), MaxETA = max(eta_restore_min) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by Odbiorcy desc\n| project Gmina = coalesce(gmina_name, gmina_code), Odbiorcy, MaxETA\n| order by Odbiorcy desc",
+      "text": "power_grid_events\n| where timestamp between (_startTime .. _endTime)\n| summarize Odbiorcy = sum(customers_offline), MaxETA = max(eta_restore_min) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by Odbiorcy desc\n| project Gmina = coalesce(gmina_name, gmina_code), Odbiorcy, MaxETA\n| order by Odbiorcy desc",
       "id": "3475e7da-d41d-bb3a-db61-00ad4c9b333f",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "telecom_events\n| where coverage_pct < 50\n| summarize arg_max(timestamp, coverage_pct, base_stations_down) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by coverage_pct asc\n| project Gmina = coalesce(gmina_name, gmina_code), Pokrycie = coverage_pct, Stacje = base_stations_down\n| order by Pokrycie desc",
+      "text": "telecom_events\n| where timestamp between (_startTime .. _endTime)\n| where coverage_pct < 50\n| summarize arg_max(timestamp, coverage_pct, base_stations_down) by gmina_code\n| join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code\n| top 15 by coverage_pct asc\n| project Gmina = coalesce(gmina_name, gmina_code), Pokrycie = coverage_pct, Stacje = base_stations_down\n| order by Pokrycie desc",
       "id": "9917d286-54e8-2a72-6264-1569804cc108",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "evacuation_status\n| summarize arg_max(timestamp, *) by gmina_code\n| summarize [\"Osoby w ewakuacji\"]=sum(people_count), [\"Gminy z ewakuacja\"]=dcount(gmina_code), [\"Miejsca w punktach przyjecia\"]=sum(reception_capacity)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
+      "text": "evacuation_status\n| where timestamp between (_startTime .. _endTime)\n| summarize arg_max(timestamp, *) by gmina_code\n| summarize [\"Osoby w ewakuacji\"]=sum(people_count), [\"Gminy z ewakuacja\"]=dcount(gmina_code), [\"Miejsca w punktach przyjecia\"]=sum(reception_capacity)\n| evaluate narrow()\n| project Wskaznik=Column, Wartosc=toint(Value)",
       "id": "df1690d1-2cf7-1098-8737-98e73453ea75",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "resource_deployment\n| summarize arg_max(timestamp, psp_units, wot_soldiers, pumps, generators, helicopters) by voivodeship_code\n| join kind=leftouter (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code\n| extend Razem = psp_units + wot_soldiers + pumps + generators + helicopters\n| top 10 by Razem desc\n| project Wojewodztwo = coalesce(voivodeship_name, voivodeship_code), PSP = psp_units, WOT = wot_soldiers,\n          Pompy = pumps, Agregaty = generators, Smiglowce = helicopters",
+      "text": "resource_deployment\n| where timestamp between (_startTime .. _endTime)\n| summarize arg_max(timestamp, psp_units, wot_soldiers, pumps, generators, helicopters) by voivodeship_code\n| join kind=leftouter (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code\n| extend Razem = psp_units + wot_soldiers + pumps + generators + helicopters\n| top 10 by Razem desc\n| project Wojewodztwo = coalesce(voivodeship_name, voivodeship_code), PSP = psp_units, WOT = wot_soldiers,\n          Pompy = pumps, Agregaty = generators, Smiglowce = helicopters",
       "id": "286746ee-7e9a-cb49-51e8-31fc6d717dc7",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "escalation_events\n| where hazard_code == \"Z02\"\n| order by timestamp asc\n| project timestamp, from_level, to_level, area, recommended_spo, reason",
+      "text": "escalation_events\n| where timestamp between (_startTime .. _endTime)\n| where hazard_code == \"Z02\"\n| order by timestamp asc\n| project timestamp, from_level, to_level, area, recommended_spo, reason",
       "id": "057690da-f91a-d3a0-1eb1-daf8d55e79b8",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "media_signals\n| where disinformation_flag == true or hazard_code == \"Z20\"\n| summarize disinfo_signals=count(), disinfo_reach=sum(reach), topics=make_set(topic, 5) by bin(timestamp, 1h)\n| order by timestamp asc",
+      "text": "media_signals\n| where timestamp between (_startTime .. _endTime)\n| where disinformation_flag == true or hazard_code == \"Z20\"\n| summarize disinfo_signals=count(), disinfo_reach=sum(reach), topics=make_set(topic, 5) by bin(timestamp, 1h)\n| order by timestamp asc",
       "id": "29192ae9-2d70-7fc6-076f-06771a87ad63",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "media_signals\n| where disinformation_flag == true\n| summarize Zasieg = sum(reach), Sygnaly = count() by channel\n| project Kanal = channel, Zasieg, Sygnaly\n| order by Zasieg desc",
+      "text": "media_signals\n| where timestamp between (_startTime .. _endTime)\n| where disinformation_flag == true\n| summarize Zasieg = sum(reach), Sygnaly = count() by channel\n| project Kanal = channel, Zasieg, Sygnaly\n| order by Zasieg desc",
       "id": "599e29ef-6c06-3a19-86d0-b79bf91c9aaf",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "let hydro_alarm = hydro_readings\n| where level_cm >= alarm_level_cm\n| summarize first_alarm=min(timestamp) by gmina_code;\nlet power_first = power_grid_events\n| summarize first_power=min(timestamp), customers=sum(customers_offline) by gmina_code;\nlet telco_first = telecom_events\n| summarize first_telco=min(timestamp), min_coverage=min(coverage_pct) by gmina_code;\nhydro_alarm\n| join kind=leftouter power_first on gmina_code\n| join kind=leftouter telco_first on gmina_code\n| extend power_delay_h=datetime_diff('hour', first_power, first_alarm), telco_delay_h=datetime_diff('hour', first_telco, first_alarm)\n| project gmina_code, first_alarm, first_power, power_delay_h, customers, first_telco, telco_delay_h, min_coverage\n| order by first_alarm asc",
+      "text": "let hydro_alarm = hydro_readings\n| where timestamp between (_startTime .. _endTime)\n| where level_cm >= alarm_level_cm\n| summarize first_alarm=min(timestamp) by gmina_code;\nlet power_first = power_grid_events\n| where timestamp between (_startTime .. _endTime)\n| summarize first_power=min(timestamp), customers=sum(customers_offline) by gmina_code;\nlet telco_first = telecom_events\n| where timestamp between (_startTime .. _endTime)\n| summarize first_telco=min(timestamp), min_coverage=min(coverage_pct) by gmina_code;\nhydro_alarm\n| join kind=leftouter power_first on gmina_code\n| join kind=leftouter telco_first on gmina_code\n| extend power_delay_h=datetime_diff('hour', first_power, first_alarm), telco_delay_h=datetime_diff('hour', first_telco, first_alarm)\n| project gmina_code, first_alarm, first_power, power_delay_h, customers, first_telco, telco_delay_h, min_coverage\n| order by first_alarm asc",
       "id": "67cede41-377e-ca16-6e0f-4431e2d6e78d",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "incident_reports\n| join kind=inner (dim_gmina | project gmina_code, powiat_code) on gmina_code\n| join kind=inner (dim_powiat | project powiat_code, voivodeship_code) on powiat_code\n| join kind=inner (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code\n| summarize Zgloszenia = count() by Wojewodztwo = voivodeship_name, Doba = format_datetime(bin(timestamp, 1d), 'MM-dd')\n| order by Doba asc",
+      "text": "incident_reports\n| where timestamp between (_startTime .. _endTime)\n| join kind=inner (dim_gmina | project gmina_code, powiat_code) on gmina_code\n| join kind=inner (dim_powiat | project powiat_code, voivodeship_code) on powiat_code\n| join kind=inner (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code\n| summarize Zgloszenia = count() by Wojewodztwo = voivodeship_name, Doba = format_datetime(bin(timestamp, 1d), 'MM-dd')\n| order by Doba asc",
       "id": "64927ecc-2324-888d-c648-bc28c19172f5",
-      "usedVariables": []
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     },
     {
       "dataSource": {
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "incident_reports\n| summarize Osoby = sum(affected_people) by Czas = bin(timestamp, 1h)\n| order by Czas asc\n| extend Skumulowane = row_cumsum(Osoby)",
+      "text": "incident_reports\n| where timestamp between (_startTime .. _endTime)\n| summarize Osoby = sum(affected_people) by Czas = bin(timestamp, 1h)\n| order by Czas asc\n| extend Skumulowane = row_cumsum(Osoby)",
       "id": "86a0e303-e60a-e04c-9b29-13b317bd3148",
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "incident_reports\n| where timestamp between (_startTime .. _endTime)\n| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code\n| join kind=inner (dim_gmina | project gmina_code, gmina_name, lat, lon) on gmina_code\n| project Gmina = gmina_name, Zgloszenia, Osoby, lat, lon\n| order by Zgloszenia desc",
+      "id": "9dcf4a32-4b32-d331-344b-c68e22465a33",
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
+      },
+      "text": "let ostatnie = toscalar(\n    union isfuzzy=true\n        (hydro_readings | summarize m = max(timestamp)),\n        (incident_reports | summarize m = max(timestamp)),\n        (power_grid_events | summarize m = max(timestamp)),\n        (telecom_events | summarize m = max(timestamp))\n    | summarize max(m));\nprint Wskaznik = 'Opoznienie strumienia [s]', Wartosc = toint((now() - ostatnie) / 1s)",
+      "id": "97d4d0b5-a1a8-db74-4568-4a857d07518d",
       "usedVariables": []
     },
     {
@@ -841,9 +993,12 @@
         "kind": "inline",
         "dataSourceId": "700b6b99-befb-30ef-0c3a-1043f13daa16"
       },
-      "text": "incident_reports\n| summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code\n| join kind=inner (dim_gmina | project gmina_code, gmina_name, lat, lon) on gmina_code\n| project Gmina = gmina_name, Zgloszenia, Osoby, lat, lon\n| order by Zgloszenia desc",
-      "id": "9dcf4a32-4b32-d331-344b-c68e22465a33",
-      "usedVariables": []
+      "text": "union isfuzzy=true\n    (hydro_readings | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Hydrologia'),\n    (incident_reports | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Zgloszenia'),\n    (power_grid_events | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Energetyka'),\n    (telecom_events | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Telekomunikacja')\n| summarize Zdarzenia = count() by Czas = bin(timestamp, 1m), Strumien\n| order by Czas asc",
+      "id": "c11360b4-b487-73c3-ed38-3e9d682470c0",
+      "usedVariables": [
+        "_startTime",
+        "_endTime"
+      ]
     }
   ]
 }

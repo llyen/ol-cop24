@@ -2,16 +2,29 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "ttl_sily-ewakuacja",
   "position": {
-    "y": 5,
-    "tabOrder": 1,
-    "width": 1240,
     "x": 20,
     "z": 10,
-    "height": 52
+    "width": 1240,
+    "height": 52,
+    "tabOrder": 1,
+    "y": 5
   },
   "visual": {
     "visualType": "textbox",
     "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "background": [
         {
           "properties": {
@@ -28,7 +41,7 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -42,30 +55,17 @@
                 }
               }
             },
-            "right": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "left": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
                 }
               }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
+            },
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "0D"
                 }
               }
             }
@@ -84,9 +84,9 @@
                   {
                     "value": "Siły, środki i ewakuacja",
                     "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
                       "color": "#F8FAFC",
-                      "fontSize": "22px",
-                      "fontFamily": "Segoe UI Semibold"
+                      "fontSize": "22px"
                     }
                   }
                 ]
@@ -97,9 +97,9 @@
                   {
                     "value": "Oceń, czy rozmieszczenie zasobów nadąża za skalą ewakuacji i potrzebami województw.",
                     "textStyle": {
+                      "fontFamily": "Segoe UI",
                       "color": "#93A4B8",
-                      "fontSize": "10px",
-                      "fontFamily": "Segoe UI"
+                      "fontSize": "10px"
                     }
                   }
                 ]

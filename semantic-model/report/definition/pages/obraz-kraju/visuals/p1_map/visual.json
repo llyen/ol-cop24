@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p1_map",
   "position": {
-    "y": 178,
-    "tabOrder": 100,
-    "width": 720,
     "x": 20,
     "z": 100,
-    "height": 370
+    "width": 720,
+    "height": 370,
+    "tabOrder": 100,
+    "y": 178
   },
   "visual": {
     "visualType": "azureMap",
@@ -17,19 +17,44 @@
           "projections": [
             {
               "field": {
-                "Column": {
-                  "Property": "lon",
+                "Aggregation": {
+                  "Function": 1,
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_gmina"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_gmina"
+                        }
+                      },
+                      "Property": "lon"
                     }
                   }
                 }
               },
-              "queryRef": "dim_gmina.lon",
-              "nativeQueryRef": "lon",
+              "queryRef": "Average(dim_gmina.lon)",
+              "nativeQueryRef": "Average of lon",
               "active": true,
               "displayName": "Długość geograficzna"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  },
+                  "Property": "KIS"
+                }
+              },
+              "queryRef": "kis_country.KIS",
+              "nativeQueryRef": "KIS",
+              "active": true,
+              "displayName": "KIS"
             }
           ]
         },
@@ -38,12 +63,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "gmina_name",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "dim_gmina"
                     }
-                  }
+                  },
+                  "Property": "gmina_name"
                 }
               },
               "queryRef": "dim_gmina.gmina_name",
@@ -53,63 +78,48 @@
             }
           ]
         },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_gmina"
+                        }
+                      },
+                      "Property": "lat"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(dim_gmina.lat)",
+              "nativeQueryRef": "Average of lat",
+              "active": true,
+              "displayName": "Szerokość geograficzna"
+            }
+          ]
+        },
         "Tooltips": {
           "projections": [
             {
               "field": {
                 "Measure": {
-                  "Property": "KIS Max Lokalny",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  }
+                  },
+                  "Property": "KIS Max Lokalny"
                 }
               },
               "queryRef": "kis_country.KIS Max Lokalny",
               "nativeQueryRef": "KIS Max Lokalny",
               "active": true,
               "displayName": "KIS max lokalny"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Property": "lat",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_gmina"
-                    }
-                  }
-                }
-              },
-              "queryRef": "dim_gmina.lat",
-              "nativeQueryRef": "lat",
-              "active": true,
-              "displayName": "Szerokość geograficzna"
-            }
-          ]
-        },
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Property": "KIS",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "kis_country"
-                    }
-                  }
-                }
-              },
-              "queryRef": "kis_country.KIS",
-              "nativeQueryRef": "KIS",
-              "active": true,
-              "displayName": "KIS"
             }
           ]
         }
@@ -126,13 +136,6 @@
                 }
               }
             },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -141,6 +144,13 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
@@ -168,17 +178,17 @@
                 }
               }
             },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }
@@ -201,10 +211,10 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "8D"
                 }
               }
             },
@@ -215,17 +225,17 @@
                 }
               }
             },
-            "right": {
+            "left": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
                 }
               }
             },
-            "left": {
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -248,10 +258,31 @@
       "title": [
         {
           "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Mapa ryzyka gmin — wielkość bąbla = KIS'"
                 }
               }
             },
@@ -273,13 +304,6 @@
                 }
               }
             },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -288,20 +312,6 @@
                       "Value": "'#F8FAFC'"
                     }
                   }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Mapa ryzyka gmin — wielkość bąbla = KIS'"
                 }
               }
             }

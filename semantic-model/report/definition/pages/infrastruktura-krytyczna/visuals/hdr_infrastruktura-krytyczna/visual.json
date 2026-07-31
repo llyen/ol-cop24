@@ -2,16 +2,29 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "hdr_infrastruktura-krytyczna",
   "position": {
-    "y": 0,
-    "tabOrder": 0,
-    "width": 1280,
     "x": 0,
     "z": 0,
-    "height": 62
+    "width": 1280,
+    "height": 62,
+    "tabOrder": 0,
+    "y": 0
   },
   "visual": {
     "visualType": "shape",
     "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "background": [
         {
           "properties": {
@@ -28,7 +41,7 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -42,30 +55,17 @@
                 }
               }
             },
-            "right": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "left": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
                 }
               }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
+            },
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "0D"
                 }
               }
             }
@@ -74,29 +74,9 @@
       ]
     },
     "objects": {
-      "shape": [
-        {
-          "properties": {
-            "tileShape": {
-              "expr": {
-                "Literal": {
-                  "Value": "'rectangle'"
-                }
-              }
-            }
-          }
-        }
-      ],
       "fill": [
         {
           "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "fillColor": {
               "solid": {
                 "color": {
@@ -107,10 +87,30 @@
                   }
                 }
               }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
             }
           },
           "selector": {
             "id": "default"
+          }
+        }
+      ],
+      "shape": [
+        {
+          "properties": {
+            "tileShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rectangle'"
+                }
+              }
+            }
           }
         }
       ],

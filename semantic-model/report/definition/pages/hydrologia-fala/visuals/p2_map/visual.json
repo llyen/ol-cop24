@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p2_map",
   "position": {
-    "y": 178,
-    "tabOrder": 100,
-    "width": 560,
     "x": 20,
     "z": 100,
-    "height": 350
+    "width": 560,
+    "height": 350,
+    "tabOrder": 100,
+    "y": 178
   },
   "visual": {
     "visualType": "azureMap",
@@ -17,59 +17,24 @@
           "projections": [
             {
               "field": {
-                "Column": {
-                  "Property": "lon",
+                "Aggregation": {
+                  "Function": 1,
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_river_gauge"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_river_gauge"
+                        }
+                      },
+                      "Property": "lon"
                     }
                   }
                 }
               },
-              "queryRef": "dim_river_gauge.lon",
-              "nativeQueryRef": "lon",
+              "queryRef": "Average(dim_river_gauge.lon)",
+              "nativeQueryRef": "Average of lon",
               "active": true,
               "displayName": "Długość geograficzna"
-            }
-          ]
-        },
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Property": "gauge_name",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_river_gauge"
-                    }
-                  }
-                }
-              },
-              "queryRef": "dim_river_gauge.gauge_name",
-              "nativeQueryRef": "gauge_name",
-              "active": true,
-              "displayName": "Wodowskaz"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Property": "lat",
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_river_gauge"
-                    }
-                  }
-                }
-              },
-              "queryRef": "dim_river_gauge.lat",
-              "nativeQueryRef": "lat",
-              "active": true,
-              "displayName": "Szerokość geograficzna"
             }
           ]
         },
@@ -78,12 +43,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "river",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "dim_river_gauge"
                     }
-                  }
+                  },
+                  "Property": "river"
                 }
               },
               "queryRef": "dim_river_gauge.river",
@@ -101,12 +66,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "level_cm",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "hydro_readings"
                         }
-                      }
+                      },
+                      "Property": "level_cm"
                     }
                   }
                 }
@@ -115,6 +80,51 @@
               "nativeQueryRef": "Average of level_cm",
               "active": true,
               "displayName": "Średni poziom [cm]"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_river_gauge"
+                    }
+                  },
+                  "Property": "gauge_name"
+                }
+              },
+              "queryRef": "dim_river_gauge.gauge_name",
+              "nativeQueryRef": "gauge_name",
+              "active": true,
+              "displayName": "Wodowskaz"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_river_gauge"
+                        }
+                      },
+                      "Property": "lat"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(dim_river_gauge.lat)",
+              "nativeQueryRef": "Average of lat",
+              "active": true,
+              "displayName": "Szerokość geograficzna"
             }
           ]
         }
@@ -131,13 +141,6 @@
                 }
               }
             },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -146,6 +149,13 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
@@ -173,17 +183,17 @@
                 }
               }
             },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }
@@ -206,10 +216,10 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "8D"
                 }
               }
             },
@@ -220,17 +230,17 @@
                 }
               }
             },
-            "right": {
+            "left": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
                 }
               }
             },
-            "left": {
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -253,10 +263,31 @@
       "title": [
         {
           "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Wodowskazy — położenie i skala poziomu wody'"
                 }
               }
             },
@@ -278,13 +309,6 @@
                 }
               }
             },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -293,20 +317,6 @@
                       "Value": "'#F8FAFC'"
                     }
                   }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Wodowskazy — położenie i skala poziomu wody'"
                 }
               }
             }

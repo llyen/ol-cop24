@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p5_donut",
   "position": {
-    "y": 178,
-    "tabOrder": 100,
-    "width": 250,
     "x": 755,
     "z": 100,
-    "height": 250
+    "width": 250,
+    "height": 250,
+    "tabOrder": 100,
+    "y": 178
   },
   "visual": {
     "visualType": "donutChart",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Measure": {
-                  "Property": "Sygnały Dezinformacji",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  }
+                  },
+                  "Property": "Sygnały Dezinformacji"
                 }
               },
               "queryRef": "kis_country.Sygnały Dezinformacji",
@@ -38,12 +38,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "channel",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "media_signals"
                     }
-                  }
+                  },
+                  "Property": "channel"
                 }
               },
               "queryRef": "media_signals.channel",
@@ -66,13 +66,6 @@
                 }
               }
             },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -81,6 +74,13 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
@@ -108,17 +108,17 @@
                 }
               }
             },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }
@@ -141,10 +141,10 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "8D"
                 }
               }
             },
@@ -155,17 +155,17 @@
                 }
               }
             },
-            "right": {
+            "left": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
                 }
               }
             },
-            "left": {
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -188,10 +188,31 @@
       "title": [
         {
           "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Kanały dezinformacji'"
                 }
               }
             },
@@ -213,13 +234,6 @@
                 }
               }
             },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -228,20 +242,6 @@
                       "Value": "'#F8FAFC'"
                     }
                   }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Kanały dezinformacji'"
                 }
               }
             }

@@ -13,6 +13,8 @@
     szybki  - 13 dob w ok. 2 min
     kulminacja - tylko doba przelomowa D0, w ok. 4 min, tempo dogodne do narracji
     wolny   - 13 dob w ok. 22 min, do prezentacji w tle
+    ciagly  - tryb ciagly: scenariusz zapetla sie bez konca, wiec dashboard jest
+              na zywo niezaleznie od tego, o ktorej godzinie ktos go otworzy
 
 .PARAMETER Reset
     Czysci tabele strumieniowe przed startem. Domyslnie wlaczone.
@@ -21,8 +23,12 @@
     Tylko czysci tabele i konczy prace.
 
 .PARAMETER TimeMode
-    source - zachowuje oryginalne znaczniki czasu scenariusza (zgodne z zakresem dashboardu)
-    now    - przesuwa scenariusz tak, by zaczynal sie w chwili uruchomienia
+    wall   - domyslny: cala scena jest skompresowana mnoznikiem tempa i przypieta do
+             biezacego zegara, wiec tlo konczy sie "teraz", a kolejne zdarzenia dostaja
+             znacznik rowny chwili wyslania. Tylko ten tryb daje na dashboardzie
+             prawdziwy efekt czasu rzeczywistego z ruchomym oknem "ostatnie 2 godziny".
+    source - zachowuje oryginalne znaczniki czasu scenariusza (wrzesien 2026)
+    now    - przesuwa scenariusz stalym offsetem tak, by zaczynal sie w chwili uruchomienia
 
 .EXAMPLE
     .\scenario\run_scenario.ps1
@@ -33,12 +39,12 @@
 #>
 [CmdletBinding()]
 param(
-    [ValidateSet('demo', 'szybki', 'kulminacja', 'wolny')]
+    [ValidateSet('demo', 'szybki', 'kulminacja', 'wolny', 'ciagly')]
     [string]$Preset = 'demo',
     [switch]$NoReset,
     [switch]$ResetOnly,
-    [ValidateSet('source', 'now')]
-    [string]$TimeMode = 'source',
+    [ValidateSet('wall', 'source', 'now')]
+    [string]$TimeMode = 'wall',
     [double]$Speed,
     [string]$Streams
 )
@@ -51,6 +57,7 @@ $presets = @{
     szybki     = @{ Speed = 900;  LiveHours = 24; From = $null }
     kulminacja = @{ Speed = 120;  LiveHours = 12; From = '2026-09-15T06:00:00+02:00' }
     wolny      = @{ Speed = 60;   LiveHours = 12; From = $null }
+    ciagly     = @{ Speed = 300;  LiveHours = 24; From = $null; Loop = $true }
 }
 $selected = $presets[$Preset]
 if ($PSBoundParameters.ContainsKey('Speed')) { $selected.Speed = $Speed }
@@ -69,11 +76,12 @@ $argv = @((Join-Path $PSScriptRoot 'replay.py'), '--speed', $selected.Speed,
 if (-not $NoReset) { $argv += @('--reset', '--bulk') }
 if ($ResetOnly) { $argv += @('--reset', '--reset-only') }
 if ($selected.From) { $argv += @('--from', $selected.From) }
+if ($selected.Loop) { $argv += '--loop' }
 if ($Streams) { $argv += @('--streams', $Streams) }
 
 Push-Location $repo
 try {
-    & $python.Source @args
+    & $python.Source @argv
     if ($LASTEXITCODE -ne 0) { throw "replay.py zakonczyl sie kodem $LASTEXITCODE" }
 }
 finally {

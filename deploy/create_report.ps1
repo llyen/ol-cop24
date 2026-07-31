@@ -437,8 +437,8 @@ Add-Visual $parts $checks 'obraz-kraju' (New-CardVisual 'p1_incidents' 'Incydent
 
 $p1MapRoles = @{
     Category = @((New-Proj (New-Col 'dim_gmina' 'gmina_name') 'dim_gmina.gmina_name' 'gmina_name' 'Gmina'))
-    X = @((New-Proj (New-Col 'dim_gmina' 'lon') 'dim_gmina.lon' 'lon' 'Długość geograficzna'))
-    Y = @((New-Proj (New-Col 'dim_gmina' 'lat') 'dim_gmina.lat' 'lat' 'Szerokość geograficzna'))
+    X = @((New-Proj (New-Agg 'dim_gmina' 'lon' 1) 'Average(dim_gmina.lon)' 'Average of lon' 'Długość geograficzna'))
+    Y = @((New-Proj (New-Agg 'dim_gmina' 'lat' 1) 'Average(dim_gmina.lat)' 'Average of lat' 'Szerokość geograficzna'))
     Size = @((New-Proj $m.KIS 'kis_country.KIS' 'KIS' 'KIS'))
     Tooltips = @((New-Proj $m.KISMax 'kis_country.KIS Max Lokalny' 'KIS Max Lokalny' 'KIS max lokalny'))
 }
@@ -470,8 +470,8 @@ Add-Visual $parts $checks 'hydrologia-fala' (New-CardVisual 'p2_affected' 'Osoby
 $p2MapRoles = @{
     Category = @((New-Proj (New-Col 'dim_river_gauge' 'gauge_name') 'dim_river_gauge.gauge_name' 'gauge_name' 'Wodowskaz'))
     Series = @((New-Proj (New-Col 'dim_river_gauge' 'river') 'dim_river_gauge.river' 'river' 'Rzeka'))
-    X = @((New-Proj (New-Col 'dim_river_gauge' 'lon') 'dim_river_gauge.lon' 'lon' 'Długość geograficzna'))
-    Y = @((New-Proj (New-Col 'dim_river_gauge' 'lat') 'dim_river_gauge.lat' 'lat' 'Szerokość geograficzna'))
+    X = @((New-Proj (New-Agg 'dim_river_gauge' 'lon' 1) 'Average(dim_river_gauge.lon)' 'Average of lon' 'Długość geograficzna'))
+    Y = @((New-Proj (New-Agg 'dim_river_gauge' 'lat' 1) 'Average(dim_river_gauge.lat)' 'Average of lat' 'Szerokość geograficzna'))
     Size = @((New-Proj (New-Agg 'hydro_readings' 'level_cm' 1) 'Average(hydro_readings.level_cm)' 'Average of level_cm' 'Średni poziom [cm]'))
 }
 Add-Visual $parts $checks 'hydrologia-fala' (New-DataVisual 'p2_map' 'azureMap' 'Wodowskazy — położenie i skala poziomu wody' 20 178 560 350 $p2MapRoles '#22D3EE') 'EVALUATE FILTER(SUMMARIZECOLUMNS(dim_river_gauge[gauge_name],dim_river_gauge[river],dim_river_gauge[lat],dim_river_gauge[lon],"Poziom",AVERAGE(hydro_readings[level_cm])),NOT ISBLANK([Poziom]))' 'Mapa wodowskazów'

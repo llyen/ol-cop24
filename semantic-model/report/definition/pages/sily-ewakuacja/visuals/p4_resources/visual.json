@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p4_resources",
   "position": {
-    "y": 178,
-    "tabOrder": 100,
-    "width": 620,
     "x": 20,
     "z": 100,
-    "height": 330
+    "width": 620,
+    "height": 330,
+    "tabOrder": 100,
+    "y": 178
   },
   "visual": {
     "visualType": "barChart",
@@ -21,12 +21,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
-                      "Property": "psp_units",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      }
+                      },
+                      "Property": "psp_units"
                     }
                   }
                 }
@@ -42,12 +42,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
-                      "Property": "wot_soldiers",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      }
+                      },
+                      "Property": "wot_soldiers"
                     }
                   }
                 }
@@ -63,12 +63,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
-                      "Property": "pumps",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      }
+                      },
+                      "Property": "pumps"
                     }
                   }
                 }
@@ -84,12 +84,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
-                      "Property": "generators",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      }
+                      },
+                      "Property": "generators"
                     }
                   }
                 }
@@ -106,12 +106,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "voivodeship_code",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "resource_deployment"
                     }
-                  }
+                  },
+                  "Property": "voivodeship_code"
                 }
               },
               "queryRef": "resource_deployment.voivodeship_code",
@@ -134,13 +134,6 @@
                 }
               }
             },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -149,6 +142,13 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
@@ -176,17 +176,17 @@
                 }
               }
             },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }
@@ -209,10 +209,10 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "8D"
                 }
               }
             },
@@ -223,17 +223,17 @@
                 }
               }
             },
-            "right": {
+            "left": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
                 }
               }
             },
-            "left": {
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -256,10 +256,31 @@
       "title": [
         {
           "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Siły i środki wg województw — słupki skumulowane'"
                 }
               }
             },
@@ -281,13 +302,6 @@
                 }
               }
             },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -296,20 +310,6 @@
                       "Value": "'#F8FAFC'"
                     }
                   }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Siły i środki wg województw — słupki skumulowane'"
                 }
               }
             }

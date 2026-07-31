@@ -137,6 +137,19 @@ class KustoClient:
         csl = f".delete table {table} records <| {table} | where timestamp >= datetime({cutoff_iso})"
         self.mgmt(csl)
 
+    def rewrite_timeline(self, table: str, live_start_iso: str, anchor_iso: str, speed: float) -> str:
+        """Obcina tlo do startu fazy live i przenosi je na skompresowana os czasu zegarowego.
+
+        Jedno polecenie robi obie rzeczy naraz i po stronie serwera, wiec dane od razu
+        laduja w nowych ekstentach. Dzieki temu tlo konczy sie dokladnie w chwili 'anchor',
+        a faza live plynnie kontynuuje os czasu az do biezacego 'teraz'.
+        """
+        csl = (f".set-or-replace async {table} <| {table} "
+               f"| where timestamp < datetime({live_start_iso}) "
+               f"| extend timestamp = datetime({anchor_iso}) "
+               f"+ (timestamp - datetime({live_start_iso})) / {speed}")
+        return self.mgmt(csl)["Tables"][0]["Rows"][0][0]
+
 
 # --- rownolegla wysylka -----------------------------------------------------
 
@@ -260,14 +273,13 @@ def reset_tables(client: KustoClient, streams):
 
 
 def bulk_load(client: KustoClient, streams, base_url: str, cutoff: datetime):
-    """Wczytuje tlo scenariusza ingestia wsadowa i obcina je do momentu startu fazy live.
+    """Wczytuje tlo scenariusza ingestia wsadowa.
 
     Ingestia wsadowa buduje ekstenty, dzieki czemu zapytania kafelkow sa szybkie.
     Streaming ingestion trzyma dane w buforze i przy setkach tysiecy wierszy
     zapytania zauwazalnie zwalniaja - dlatego strumieniowo idzie wylacznie okno live.
     """
-    cutoff_iso = cutoff.isoformat()
-    print(f"=== Tlo scenariusza: ingestia wsadowa do {cutoff_iso}")
+    print("=== Tlo scenariusza: ingestia wsadowa")
     # Ingestie ida sekwencyjnie: dziewiec rownoleglych zadan przekracza limit
     # wspolbieznosci pojemnosci F8 i konczy sie stanem Throttled.
     for stream in streams:
@@ -286,11 +298,42 @@ def bulk_load(client: KustoClient, streams, base_url: str, cutoff: datetime):
         if state != "Completed" or not loaded:
             raise SystemExit(f"Ingestia wsadowa {stream} nie powiodla sie: stan={state}, wierszy={loaded}")
         print(f"  [OK] {stream}: {loaded} wierszy")
-    print("=== Obcinanie tla do okna live")
+
+
+def trim_background(client: KustoClient, streams, cutoff: datetime):
+    """Obcina tlo do momentu startu fazy live, zachowujac oryginalne znaczniki czasu."""
+    cutoff_iso = cutoff.isoformat()
+    print(f"=== Obcinanie tla do {cutoff_iso}")
     for stream in streams:
         client.delete_from(stream, cutoff_iso)
         rows = client.scalar(f"{stream} | count")
         print(f"  [OK] {stream}: {rows} wierszy tla")
+
+
+def shift_background(client: KustoClient, streams, live_start: datetime, anchor: datetime, speed: float):
+    """Obcina tlo i przenosi je na skompresowana os czasu konczaca sie w chwili 'anchor'."""
+    live_iso, anchor_iso = live_start.isoformat(), anchor.isoformat()
+    print(f"=== Przenoszenie tla na os czasu zegarowego (kotwica {anchor_iso}, tempo {speed}x)")
+    for stream in streams:
+        operation = client.rewrite_timeline(stream, live_iso, anchor_iso, speed)
+        state = client.wait_for_operation(operation)
+        if state != "Completed":
+            raise SystemExit(f"Przesuniecie osi czasu {stream} nie powiodlo sie: stan={state}")
+        rows = client.scalar(f"{stream} | count")
+        oldest = client.scalar(f"{stream} | summarize min(timestamp)")
+        print(f"  [OK] {stream}: {rows} wierszy tla, najstarszy {oldest}")
+    print("  Tlo konczy sie dokladnie w chwili startu fazy live.")
+
+
+def prune(client: KustoClient, streams, keep_hours: float):
+    """Usuwa dane starsze niz okno prezentacji, zeby tryb ciagly nie rozdymal tabel."""
+    print(f"  [porzadki] usuwam dane starsze niz {keep_hours} h")
+    for stream in streams:
+        try:
+            client.mgmt(f".delete table {stream} records <| {stream} "
+                        f"| where timestamp < ago({keep_hours}h)")
+        except BaseException as exc:  # noqa: BLE001 - porzadki nie moga przerwac demo
+            print(f"    [uwaga] {stream}: {exc}")
 
 
 def run(args):
@@ -325,19 +368,43 @@ def run(args):
 
     t0, t1 = events[0][0], events[-1][0]
     span = (t1 - t0).total_seconds()
+
+    # Os czasu demo. W trybie 'wall' cala scena jest skompresowana mnoznikiem --speed
+    # i przypieta do biezacego zegara: tlo konczy sie teraz, a kolejne zdarzenia
+    # dostaja znacznik rowny chwili wyslania. Dopiero to daje wrazenie czasu
+    # rzeczywistego na dashboardzie z dynamicznym oknem typu "ostatnia godzina".
+    anchor = datetime.now(timezone.utc) + timedelta(seconds=5)
+    if args.time_mode == "wall":
+        if args.bulk:
+            shift_background(client, streams, live_start, anchor, args.speed)
+    else:
+        if args.bulk:
+            trim_background(client, streams, live_start)
+        anchor = None
+
     offset = datetime.now(timezone.utc) - t0 if args.time_mode == "now" else None
+
+    def stamp(ts: datetime, cycle_anchor: datetime) -> str:
+        """Znacznik czasu zdarzenia na osi demo."""
+        if args.time_mode == "wall":
+            mapped = cycle_anchor + (ts - live_start) / args.speed
+        else:
+            mapped = ts + offset
+        return mapped.isoformat().replace("+00:00", "Z")
+
+    rewrite = args.time_mode in ("wall", "now")
+    tryb = {"wall": "zegar sceny przypiety do teraz", "now": "przesuniete na teraz"}.get(args.time_mode, "oryginalne")
 
     print(f"  zdarzen: {len(events)}")
     print(f"  okno live: {t0.isoformat()} .. {t1.isoformat()} ({span / 3600:.1f} h)")
     print(f"  mnoznik czasu: {args.speed}x  ->  odtwarzanie potrwa ok. {span / args.speed / 60:.1f} min")
-    print(f"  znaczniki czasu: {'przesuniete na teraz' if offset else 'oryginalne'}")
+    print(f"  znaczniki czasu: {tryb}")
     if args.dry_run:
         print("DRY-RUN: nic nie wysylam.")
         return
 
     print("=== Odtwarzanie (Ctrl+C przerywa)")
     pool = IngestPool(client, workers=args.workers)
-    wall_start = time.monotonic()
     buffers = defaultdict(list)
     buffered = 0
 
@@ -349,8 +416,11 @@ def run(args):
         buffers = defaultdict(list)
         buffered = 0
 
-    last_log = wall_start
-    try:
+    def play(cycle_anchor: datetime, cycle_no: int) -> bool:
+        """Odtwarza jeden przebieg okna live. Zwraca False, gdy przerwano z klawiatury."""
+        nonlocal buffered
+        wall_start = time.monotonic()
+        last_log = wall_start
         for ts, stream, ev in events:
             # tempo: czas sceny podzielony przez mnoznik to czas zegarowy
             due = (ts - t0).total_seconds() / args.speed
@@ -358,9 +428,9 @@ def run(args):
             if behind > 0:
                 flush()
                 time.sleep(min(behind, args.tick))
-            if offset:
+            if rewrite:
                 ev = dict(ev)
-                ev["timestamp"] = (ts + offset).isoformat().replace("+00:00", "Z")
+                ev["timestamp"] = stamp(ts, cycle_anchor)
             payload = {k: v for k, v in ev.items() if k in columns[stream]}
             buffers[stream].append(json.dumps(payload, ensure_ascii=False))
             buffered += 1
@@ -370,19 +440,35 @@ def run(args):
             if now - last_log >= args.log_every:
                 elapsed = now - wall_start
                 scene = t0 + timedelta(seconds=elapsed * args.speed)
-                pct = 100.0 * pool.sent / len(events)
-                print(f"  [{elapsed / 60:6.1f} min] czas sceny {scene:%Y-%m-%d %H:%M} | "
-                      f"wyslano {pool.sent}/{len(events)} ({pct:.1f}%)", flush=True)
+                etykieta = f"cykl {cycle_no} " if args.loop else ""
+                print(f"  [{etykieta}{elapsed / 60:6.1f} min] czas sceny {scene:%Y-%m-%d %H:%M} | "
+                      f"wyslano {pool.sent} zdarzen", flush=True)
                 last_log = now
         flush()
         pool.drain()
+        return True
+
+    started = time.monotonic()
+    cycle = 1
+    try:
+        while True:
+            play(anchor, cycle)
+            if not args.loop:
+                break
+            # Tryb ciagly: kolejny przebieg startuje od biezacej chwili, wiec dashboard
+            # pokazuje aktualne dane niezaleznie od tego, o ktorej ktos go otworzy.
+            print(f"  [cykl {cycle} zakonczony] start kolejnego przebiegu", flush=True)
+            if args.prune_hours:
+                prune(client, streams, args.prune_hours)
+            cycle += 1
+            anchor = datetime.now(timezone.utc)
     except KeyboardInterrupt:
         print(f"\nPrzerwano. Wyslano {pool.sent} zdarzen.")
         return
     finally:
         pool.close()
 
-    elapsed = time.monotonic() - wall_start
+    elapsed = time.monotonic() - started
     print(f"=== Zakonczono: {pool.sent} zdarzen w {elapsed / 60:.1f} min")
     for stream in streams:
         print(f"  {stream}: {client.scalar(f'{stream} | count')} wierszy w Eventhouse")
@@ -401,8 +487,14 @@ def main():
     p.add_argument("--streams", help="lista strumieni po przecinku; domyslnie wszystkie z scenario.json")
     p.add_argument("--from", dest="from_ts", help="poczatek okna live; domyslnie liveStart z scenario.json")
     p.add_argument("--to", dest="to_ts", help="koniec okna live; domyslnie poczatek + live-hours")
-    p.add_argument("--time-mode", choices=("source", "now"), default="source",
-                   help="source = oryginalne znaczniki, now = przesuniete tak, by scenariusz zaczynal sie teraz")
+    p.add_argument("--time-mode", choices=("source", "now", "wall"), default="wall",
+                   help="wall = cala scena skompresowana i przypieta do biezacego zegara (demo real-time), "
+                        "source = oryginalne znaczniki scenariusza, now = staly offset od pierwszego zdarzenia")
+    p.add_argument("--loop", action="store_true",
+                   help="tryb ciagly: po zakonczeniu okna live scenariusz startuje od nowa, "
+                        "wiec dashboard jest na zywo niezaleznie od pory otwarcia")
+    p.add_argument("--prune-hours", type=float, default=3.0,
+                   help="w trybie ciaglym usuwa dane starsze niz podana liczba godzin (0 = nie usuwaj)")
     p.add_argument("--batch", type=int, default=4000, help="maks. liczba zdarzen w jednej partii")
     p.add_argument("--workers", type=int, default=8, help="liczba rownoleglych watkow wysylajacych")
     p.add_argument("--tick", type=float, default=0.5, help="maks. dlugosc pojedynczego uspienia w sekundach")

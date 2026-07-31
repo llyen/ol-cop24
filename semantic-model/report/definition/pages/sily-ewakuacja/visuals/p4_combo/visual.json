@@ -2,28 +2,53 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p4_combo",
   "position": {
-    "y": 430,
-    "tabOrder": 100,
-    "width": 605,
     "x": 655,
     "z": 100,
-    "height": 270
+    "width": 605,
+    "height": 270,
+    "tabOrder": 100,
+    "y": 430
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
     "query": {
       "queryState": {
+        "Y2": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 0,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "resource_deployment"
+                        }
+                      },
+                      "Property": "wot_soldiers"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Sum(resource_deployment.wot_soldiers)",
+              "nativeQueryRef": "Sum of wot_soldiers",
+              "active": true,
+              "displayName": "Żołnierze WOT"
+            }
+          ]
+        },
         "Category": {
           "projections": [
             {
               "field": {
                 "Column": {
-                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "resource_deployment"
                     }
-                  }
+                  },
+                  "Property": "timestamp"
                 }
               },
               "queryRef": "resource_deployment.timestamp",
@@ -41,12 +66,12 @@
                   "Function": 0,
                   "Expression": {
                     "Column": {
-                      "Property": "psp_units",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      }
+                      },
+                      "Property": "psp_units"
                     }
                   }
                 }
@@ -57,50 +82,25 @@
               "displayName": "Zastępy PSP"
             }
           ]
-        },
-        "Y2": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Function": 0,
-                  "Expression": {
-                    "Column": {
-                      "Property": "wot_soldiers",
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "resource_deployment"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "queryRef": "Sum(resource_deployment.wot_soldiers)",
-              "nativeQueryRef": "Sum of wot_soldiers",
-              "active": true,
-              "displayName": "Żołnierze WOT"
-            }
-          ]
         }
       },
       "sortDefinition": {
+        "isDefaultSort": false,
         "sort": [
           {
             "field": {
               "Column": {
-                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "resource_deployment"
                   }
-                }
+                },
+                "Property": "timestamp"
               }
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "visualContainerObjects": {
@@ -114,13 +114,6 @@
                 }
               }
             },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -129,6 +122,13 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
@@ -156,17 +156,17 @@
                 }
               }
             },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }
@@ -189,10 +189,10 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "8D"
                 }
               }
             },
@@ -203,17 +203,17 @@
                 }
               }
             },
-            "right": {
+            "left": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
                 }
               }
             },
-            "left": {
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -236,10 +236,31 @@
       "title": [
         {
           "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Napływ zasobów — PSP (kolumny) i WOT (linia)'"
                 }
               }
             },
@@ -261,13 +282,6 @@
                 }
               }
             },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -276,20 +290,6 @@
                       "Value": "'#F8FAFC'"
                     }
                   }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Napływ zasobów — PSP (kolumny) i WOT (linia)'"
                 }
               }
             }

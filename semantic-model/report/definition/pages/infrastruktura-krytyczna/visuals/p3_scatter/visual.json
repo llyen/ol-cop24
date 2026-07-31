@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p3_scatter",
   "position": {
-    "y": 178,
-    "tabOrder": 100,
-    "width": 720,
     "x": 20,
     "z": 100,
-    "height": 350
+    "width": 720,
+    "height": 350,
+    "tabOrder": 100,
+    "y": 178
   },
   "visual": {
     "visualType": "scatterChart",
@@ -21,12 +21,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "hydro_score",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "hydro_score"
                     }
                   }
                 }
@@ -38,31 +38,6 @@
             }
           ]
         },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Function": 1,
-                  "Expression": {
-                    "Column": {
-                      "Property": "power_score",
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "escalation_recommendations"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "queryRef": "Average(escalation_recommendations.power_score)",
-              "nativeQueryRef": "Average of power_score",
-              "active": true,
-              "displayName": "Skutek energetyczny"
-            }
-          ]
-        },
         "Tooltips": {
           "projections": [
             {
@@ -71,12 +46,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "kis",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "kis"
                     }
                   }
                 }
@@ -88,23 +63,28 @@
             }
           ]
         },
-        "Details": {
+        "Y": {
           "projections": [
             {
               "field": {
-                "Column": {
-                  "Property": "gmina_code",
+                "Aggregation": {
+                  "Function": 1,
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "escalation_recommendations"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "escalation_recommendations"
+                        }
+                      },
+                      "Property": "power_score"
                     }
                   }
                 }
               },
-              "queryRef": "escalation_recommendations.gmina_code",
-              "nativeQueryRef": "gmina_code",
+              "queryRef": "Average(escalation_recommendations.power_score)",
+              "nativeQueryRef": "Average of power_score",
               "active": true,
-              "displayName": "Gmina"
+              "displayName": "Skutek energetyczny"
             }
           ]
         },
@@ -116,12 +96,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "telecom_score",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "telecom_score"
                     }
                   }
                 }
@@ -130,6 +110,26 @@
               "nativeQueryRef": "Average of telecom_score",
               "active": true,
               "displayName": "Skutek telco"
+            }
+          ]
+        },
+        "Details": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  },
+                  "Property": "gmina_code"
+                }
+              },
+              "queryRef": "escalation_recommendations.gmina_code",
+              "nativeQueryRef": "gmina_code",
+              "active": true,
+              "displayName": "Gmina"
             }
           ]
         }
@@ -146,13 +146,6 @@
                 }
               }
             },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -161,6 +154,13 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
@@ -188,17 +188,17 @@
                 }
               }
             },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }
@@ -221,10 +221,10 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "8D"
                 }
               }
             },
@@ -235,17 +235,17 @@
                 }
               }
             },
-            "right": {
+            "left": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
                 }
               }
             },
-            "left": {
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -268,10 +268,31 @@
       "title": [
         {
           "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Kaskada hydro → energia → telco (bąbel = skutek telco)'"
                 }
               }
             },
@@ -293,13 +314,6 @@
                 }
               }
             },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -308,20 +322,6 @@
                       "Value": "'#F8FAFC'"
                     }
                   }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Kaskada hydro → energia → telco (bąbel = skutek telco)'"
                 }
               }
             }

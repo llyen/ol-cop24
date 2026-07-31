@@ -23,6 +23,7 @@ hydro_latest
 // Parametry: _startTime, _endTime; domyślnie 2026-09-12T12:00:00+02:00 ... 2026-09-25T12:00:00+02:00.
 // Oczekiwany wynik: piki przesunięte w czasie: Kłodzko 493 cm, Nysa 512 cm, Opole 520 cm, Wrocław 536 cm.
 hydro_readings
+| where timestamp between (_startTime .. _endTime)
 | where gauge_id in ("WG-001", "WG-003", "WG-004", "WG-007")
 | summarize avg_level=avg(level_cm), max_level=max(level_cm) by bin(timestamp, 1h), gauge_id, river
 | order by timestamp asc
@@ -33,6 +34,7 @@ hydro_readings
 // Oczekiwany wynik dla pełnego zakresu demo: 10 gmin w alarmie.
 // Kafelek typu multistat wymaga par etykieta-wartość, stąd `evaluate narrow()`.
 hydro_readings
+| where timestamp between (_startTime .. _endTime)
 | where level_cm >= alarm_level_cm
 | summarize ["Gminy w alarmie"]=dcount(gmina_code), ["Wodowskazy w alarmie"]=dcount(gauge_id), ["Rzeki w alarmie"]=dcount(river)
 | evaluate narrow()
@@ -43,6 +45,7 @@ hydro_readings
 // Parametry: _hazardCode=Z02, _startTime/_endTime, opcjonalnie województwo po gminie.
 // Oczekiwany wynik: 4943 incydenty w pełnym zbiorze, peak 15-min = 12.
 incident_reports
+| where timestamp between (_startTime .. _endTime)
 | where hazard_code == "Z02"
 | summarize incidents=count(), affected=sum(affected_people), max_priority=max(priority) by bin(timestamp, 15m)
 | order by timestamp asc
@@ -51,6 +54,7 @@ incident_reports
 // Co liczy: ranking gmin z najwieksza liczba zgloszen i osob objetych zgloszeniami.
 // Parametry: _startTime/_endTime, _hazardCode. Wynik: wykres slupkowy poziomy dla oficera dyzurnego.
 incident_reports
+| where timestamp between (_startTime .. _endTime)
 | where hazard_code == "Z02"
 | summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code
 | join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code
@@ -63,6 +67,7 @@ incident_reports
 // Co liczy: godzinową sumę odbiorców bez prądu i liczbę zdarzeń energetycznych.
 // Parametry: _startTime/_endTime, opcjonalnie województwo. Oczekiwany peak demo: 24057 w 2026-09-17T08:00.
 power_grid_events
+| where timestamp between (_startTime .. _endTime)
 | summarize customers_offline=sum(customers_offline), events=count(), max_eta=max(eta_restore_min) by bin(timestamp, 1h)
 | order by timestamp asc
 
@@ -70,6 +75,7 @@ power_grid_events
 // Co liczy: gminy z najwieksza liczba odbiorcow bez pradu wraz z najdluzszym czasem przywrocenia.
 // Parametry: _startTime/_endTime. Wynik: wykres kolumnowy dla dyzurnego infrastruktury.
 power_grid_events
+| where timestamp between (_startTime .. _endTime)
 | summarize Odbiorcy = sum(customers_offline), MaxETA = max(eta_restore_min) by gmina_code
 | join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code
 | top 15 by Odbiorcy desc
@@ -81,6 +87,7 @@ power_grid_events
 // Co liczy: najnizsze aktualne pokrycie telekomunikacyjne w gminach.
 // Parametry: _startTime/_endTime. Wynik: wykres slupkowy poziomy, 15 najgorszych gmin.
 telecom_events
+| where timestamp between (_startTime .. _endTime)
 | where coverage_pct < 50
 | summarize arg_max(timestamp, coverage_pct, base_stations_down) by gmina_code
 | join kind=leftouter (dim_gmina | project gmina_code, gmina_name) on gmina_code
@@ -94,6 +101,7 @@ telecom_events
 // Parametry: przedział czasu; opcjonalnie województwo. Oczekiwany wynik: suma najnowszych statusów 56212 osób.
 // Kafelek typu multistat wymaga par etykieta-wartość, stąd `evaluate narrow()`.
 evacuation_status
+| where timestamp between (_startTime .. _endTime)
 | summarize arg_max(timestamp, *) by gmina_code
 | summarize ["Osoby w ewakuacji"]=sum(people_count), ["Gminy z ewakuacja"]=dcount(gmina_code), ["Miejsca w punktach przyjecia"]=sum(reception_capacity)
 | evaluate narrow()
@@ -103,6 +111,7 @@ evacuation_status
 // Co liczy: ostatni raport zasobow per wojewodztwo: PSP, WOT, pompy, agregaty, smiglowce.
 // Parametry: _voivodeshipCode. Wynik: wykres kolumnowy wieloseryjny, widoczny wzrost w woj. 02 i 16.
 resource_deployment
+| where timestamp between (_startTime .. _endTime)
 | summarize arg_max(timestamp, psp_units, wot_soldiers, pumps, generators, helicopters) by voivodeship_code
 | join kind=leftouter (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code
 | extend Razem = psp_units + wot_soldiers + pumps + generators + helicopters
@@ -115,6 +124,7 @@ resource_deployment
 // Co liczy: sekwencję eskalacji gmina→powiat→wojewoda→minister→RZZK oraz rekomendowaną SPO.
 // Parametry: _hazardCode=Z02, _startTime/_endTime. Oczekiwany wynik: 5 zdarzeń, w tym minister wiodący→RZZK w D0.
 escalation_events
+| where timestamp between (_startTime .. _endTime)
 | where hazard_code == "Z02"
 | order by timestamp asc
 | project timestamp, from_level, to_level, area, recommended_spo, reason
@@ -124,6 +134,7 @@ escalation_events
 // Parametry: _hazardCode=Z20 albo disinformation_flag=true, _startTime/_endTime.
 // Oczekiwany wynik: 363 sygnały dezinformacyjne, łączny zasięg 39854793.
 media_signals
+| where timestamp between (_startTime .. _endTime)
 | where disinformation_flag == true or hazard_code == "Z20"
 | summarize disinfo_signals=count(), disinfo_reach=sum(reach), topics=make_set(topic, 5) by bin(timestamp, 1h)
 | order by timestamp asc
@@ -132,6 +143,7 @@ media_signals
 // Co liczy: udzial kanalow w zasiegu przekazu dezinformacyjnego.
 // Parametry: _startTime/_endTime. Wynik: wykres pierscieniowy z udzialem procentowym.
 media_signals
+| where timestamp between (_startTime .. _endTime)
 | where disinformation_flag == true
 | summarize Zasieg = sum(reach), Sygnaly = count() by channel
 | project Kanal = channel, Zasieg, Sygnaly
@@ -142,11 +154,14 @@ media_signals
 // Co liczy: dla gmin z alarmem hydro pokazuje pierwszą awarię energii i telco oraz opóźnienia godzinowe.
 // Parametry: _startTime/_endTime, opcjonalnie województwo. Wynik: tabela do rozmowy o kaskadzie IK.
 let hydro_alarm = hydro_readings
+| where timestamp between (_startTime .. _endTime)
 | where level_cm >= alarm_level_cm
 | summarize first_alarm=min(timestamp) by gmina_code;
 let power_first = power_grid_events
+| where timestamp between (_startTime .. _endTime)
 | summarize first_power=min(timestamp), customers=sum(customers_offline) by gmina_code;
 let telco_first = telecom_events
+| where timestamp between (_startTime .. _endTime)
 | summarize first_telco=min(timestamp), min_coverage=min(coverage_pct) by gmina_code;
 hydro_alarm
 | join kind=leftouter power_first on gmina_code
@@ -160,6 +175,7 @@ hydro_alarm
 // Co liczy: natezenie zgloszen w ukladzie wojewodztwo x doba, aby jednym rzutem oka wskazac ognisko.
 // Parametry: _startTime/_endTime. Wynik: mapa ciepla, wyrazne skupisko w woj. dolnoslaskim i opolskim.
 incident_reports
+| where timestamp between (_startTime .. _endTime)
 | join kind=inner (dim_gmina | project gmina_code, powiat_code) on gmina_code
 | join kind=inner (dim_powiat | project powiat_code, voivodeship_code) on powiat_code
 | join kind=inner (dim_voivodeship | project voivodeship_code, voivodeship_name) on voivodeship_code
@@ -171,6 +187,7 @@ incident_reports
 // Co liczy: skala zdarzenia w czasie, narastajaco, jako krzywa dla kierownictwa.
 // Parametry: _startTime/_endTime. Wynik: krzywa z wyraznym zalamaniem w D0.
 incident_reports
+| where timestamp between (_startTime .. _endTime)
 | summarize Osoby = sum(affected_people) by Czas = bin(timestamp, 1h)
 | order by Czas asc
 | extend Skumulowane = row_cumsum(Osoby)
@@ -180,8 +197,35 @@ incident_reports
 // Co liczy: liczbe zgloszen i osoby objete zdarzeniem w kazdej gminie, naniesione na mape kraju.
 // Parametry: _startTime/_endTime. Wynik: skupisko bombelkow na Nysie Klodzkiej i w woj. opolskim.
 incident_reports
+| where timestamp between (_startTime .. _endTime)
 | summarize Zgloszenia = count(), Osoby = sum(affected_people) by gmina_code
 | join kind=inner (dim_gmina | project gmina_code, gmina_name, lat, lon) on gmina_code
 | project Gmina = gmina_name, Zgloszenia, Osoby, lat, lon
 | order by Zgloszenia desc
 
+
+
+// 18. Kafelek: „Swiezosc danych — opoznienie strumienia” | Strona: Obraz kraju
+// Co liczy: ile sekund uplynelo od ostatniego zdarzenia, ktore dotarlo do Eventhouse.
+// Parametry: brak — kafelek celowo patrzy poza okno czasu, bo ma dowodzic ciaglosci naplywu.
+// Wynik: przy dzialajacym scenariuszu wartosc utrzymuje sie w okolicach kilku-kilkunastu sekund.
+let ostatnie = toscalar(
+    union isfuzzy=true
+        (hydro_readings | summarize m = max(timestamp)),
+        (incident_reports | summarize m = max(timestamp)),
+        (power_grid_events | summarize m = max(timestamp)),
+        (telecom_events | summarize m = max(timestamp))
+    | summarize max(m));
+print Wskaznik = 'Opoznienie strumienia [s]', Wartosc = toint((now() - ostatnie) / 1s)
+
+
+// 19. Kafelek: „Naplyw zdarzen na minute” | Strona: Obraz kraju
+// Co liczy: tempo naplywu zdarzen ze wszystkich strumieni w ujeciu minutowym.
+// Parametry: _startTime/_endTime. Wynik: krzywa, ktora rosnie w kulminacji i na zywo sie wydluza.
+union isfuzzy=true
+    (hydro_readings | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Hydrologia'),
+    (incident_reports | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Zgloszenia'),
+    (power_grid_events | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Energetyka'),
+    (telecom_events | where timestamp between (_startTime .. _endTime) | project timestamp, Strumien = 'Telekomunikacja')
+| summarize Zdarzenia = count() by Czas = bin(timestamp, 1m), Strumien
+| order by Czas asc

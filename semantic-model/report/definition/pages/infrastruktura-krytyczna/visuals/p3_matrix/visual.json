@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p3_matrix",
   "position": {
-    "y": 540,
-    "tabOrder": 100,
-    "width": 720,
     "x": 20,
     "z": 100,
-    "height": 160
+    "width": 720,
+    "height": 160,
+    "tabOrder": 100,
+    "y": 540
   },
   "visual": {
     "visualType": "pivotTable",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Column": {
-                  "Property": "gmina_code",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  }
+                  },
+                  "Property": "gmina_code"
                 }
               },
               "queryRef": "escalation_recommendations.gmina_code",
@@ -41,12 +41,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "hydro_score",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "hydro_score"
                     }
                   }
                 }
@@ -62,12 +62,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "power_score",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "power_score"
                     }
                   }
                 }
@@ -83,12 +83,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "telecom_score",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "telecom_score"
                     }
                   }
                 }
@@ -104,12 +104,12 @@
                   "Function": 1,
                   "Expression": {
                     "Column": {
-                      "Property": "kis",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "escalation_recommendations"
                         }
-                      }
+                      },
+                      "Property": "kis"
                     }
                   }
                 }
@@ -134,13 +134,6 @@
                 }
               }
             },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
             "color": {
               "solid": {
                 "color": {
@@ -149,6 +142,13 @@
                       "Value": "'#101B2D'"
                     }
                   }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }
@@ -176,17 +176,17 @@
                 }
               }
             },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
             "width": {
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             }
@@ -209,10 +209,10 @@
       "padding": [
         {
           "properties": {
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "8D"
                 }
               }
             },
@@ -223,17 +223,17 @@
                 }
               }
             },
-            "right": {
+            "left": {
               "expr": {
                 "Literal": {
                   "Value": "8D"
                 }
               }
             },
-            "left": {
+            "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -256,10 +256,31 @@
       "title": [
         {
           "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Gminy — porównanie składowych kaskady'"
                 }
               }
             },
@@ -281,13 +302,6 @@
                 }
               }
             },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -296,20 +310,6 @@
                       "Value": "'#F8FAFC'"
                     }
                   }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Gminy — porównanie składowych kaskady'"
                 }
               }
             }
@@ -322,23 +322,23 @@
       "values": [
         {
           "properties": {
-            "fontColorSecondary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CBD5E1'"
-                    }
-                  }
-                }
-              }
-            },
             "fontColorPrimary": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
                       "Value": "'#E2E8F0'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#CBD5E1'"
                     }
                   }
                 }
@@ -369,63 +369,18 @@
           }
         }
       ],
-      "columnHeaders": [
-        {
-          "properties": {
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F8FAFC'"
-                    }
-                  }
-                }
-              }
-            },
-            "autoSizeColumnWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "backColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#17243A'"
-                    }
-                  }
-                }
-              }
-            },
-            "columnAdjustment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'growToFit'"
-                }
-              }
-            }
-          }
-        }
-      ],
       "columnFormatting": [
         {
           "properties": {
             "dataBars": {
-              "hideText": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
-                  }
-                }
-              },
-              "reverseDirection": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#64748B'"
+                      }
+                    }
                   }
                 }
               },
@@ -440,6 +395,13 @@
                   }
                 }
               },
+              "reverseDirection": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
               "positiveColor": {
                 "solid": {
                   "color": {
@@ -451,14 +413,10 @@
                   }
                 }
               },
-              "axisColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#64748B'"
-                      }
-                    }
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
                   }
                 }
               }
@@ -471,17 +429,14 @@
         {
           "properties": {
             "dataBars": {
-              "hideText": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
-                  }
-                }
-              },
-              "reverseDirection": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#64748B'"
+                      }
+                    }
                   }
                 }
               },
@@ -496,6 +451,13 @@
                   }
                 }
               },
+              "reverseDirection": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
               "positiveColor": {
                 "solid": {
                   "color": {
@@ -507,14 +469,10 @@
                   }
                 }
               },
-              "axisColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#64748B'"
-                      }
-                    }
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
                   }
                 }
               }
@@ -527,17 +485,14 @@
         {
           "properties": {
             "dataBars": {
-              "hideText": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
-                  }
-                }
-              },
-              "reverseDirection": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#64748B'"
+                      }
+                    }
                   }
                 }
               },
@@ -552,6 +507,13 @@
                   }
                 }
               },
+              "reverseDirection": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
               "positiveColor": {
                 "solid": {
                   "color": {
@@ -563,14 +525,10 @@
                   }
                 }
               },
-              "axisColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#64748B'"
-                      }
-                    }
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
                   }
                 }
               }
@@ -583,17 +541,14 @@
         {
           "properties": {
             "dataBars": {
-              "hideText": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
-                  }
-                }
-              },
-              "reverseDirection": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#64748B'"
+                      }
+                    }
                   }
                 }
               },
@@ -608,6 +563,13 @@
                   }
                 }
               },
+              "reverseDirection": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
               "positiveColor": {
                 "solid": {
                   "color": {
@@ -619,14 +581,10 @@
                   }
                 }
               },
-              "axisColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#64748B'"
-                      }
-                    }
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
                   }
                 }
               }
@@ -640,6 +598,17 @@
       "rowHeaders": [
         {
           "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#101B2D'"
+                    }
+                  }
+                }
+              }
+            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -650,13 +619,44 @@
                   }
                 }
               }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F8FAFC'"
+                    }
+                  }
+                }
+              }
             },
             "backColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#101B2D'"
+                      "Value": "'#17243A'"
                     }
                   }
                 }
