@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p4_resources",
   "position": {
-    "tabOrder": 100,
     "width": 748,
+    "height": 296,
+    "tabOrder": 100,
     "z": 100,
     "x": 32,
-    "y": 220,
-    "height": 296
+    "y": 220
   },
   "visual": {
     "visualType": "barChart",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "voivodeship_code",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "resource_deployment"
                     }
-                  },
-                  "Property": "voivodeship_code"
+                  }
                 }
               },
               "queryRef": "resource_deployment.voivodeship_code",
@@ -38,17 +38,17 @@
             {
               "field": {
                 "Aggregation": {
+                  "Function": 0,
                   "Expression": {
                     "Column": {
+                      "Property": "psp_units",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      },
-                      "Property": "psp_units"
+                      }
                     }
-                  },
-                  "Function": 0
+                  }
                 }
               },
               "queryRef": "Sum(resource_deployment.psp_units)",
@@ -59,17 +59,17 @@
             {
               "field": {
                 "Aggregation": {
+                  "Function": 0,
                   "Expression": {
                     "Column": {
+                      "Property": "wot_soldiers",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      },
-                      "Property": "wot_soldiers"
+                      }
                     }
-                  },
-                  "Function": 0
+                  }
                 }
               },
               "queryRef": "Sum(resource_deployment.wot_soldiers)",
@@ -80,17 +80,17 @@
             {
               "field": {
                 "Aggregation": {
+                  "Function": 0,
                   "Expression": {
                     "Column": {
+                      "Property": "pumps",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      },
-                      "Property": "pumps"
+                      }
                     }
-                  },
-                  "Function": 0
+                  }
                 }
               },
               "queryRef": "Sum(resource_deployment.pumps)",
@@ -101,17 +101,17 @@
             {
               "field": {
                 "Aggregation": {
+                  "Function": 0,
                   "Expression": {
                     "Column": {
+                      "Property": "generators",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "resource_deployment"
                         }
-                      },
-                      "Property": "generators"
+                      }
                     }
-                  },
-                  "Function": 0
+                  }
                 }
               },
               "queryRef": "Sum(resource_deployment.generators)",
@@ -127,6 +127,13 @@
       "background": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
@@ -144,13 +151,6 @@
                   }
                 }
               }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -162,17 +162,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D8DFE8'"
-                    }
-                  }
                 }
               }
             },
@@ -189,6 +178,17 @@
                   "Value": "true"
                 }
               }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -200,6 +200,20 @@
               "expr": {
                 "Literal": {
                   "Value": "88D"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -220,20 +234,6 @@
                   }
                 }
               }
-            },
-            "preset": {
-              "expr": {
-                "Literal": {
-                  "Value": "'BottomRight'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -248,17 +248,17 @@
                 }
               }
             },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "14D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
                 }
               }
             },
@@ -288,10 +288,10 @@
       "title": [
         {
           "properties": {
-            "fontSize": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -299,31 +299,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Rozmieszczenie sił i środków'"
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -338,10 +313,35 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
@@ -351,17 +351,10 @@
       "subTitle": [
         {
           "properties": {
-            "italic": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -369,13 +362,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Zestawienie z mapą z kroku 1 pokazuje, czy zasoby stoją tam, gdzie rośnie KIS'"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -390,10 +376,24 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

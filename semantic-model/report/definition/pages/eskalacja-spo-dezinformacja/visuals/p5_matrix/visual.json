@@ -2,85 +2,28 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p5_matrix",
   "position": {
-    "tabOrder": 100,
     "width": 1216,
+    "height": 140,
+    "tabOrder": 100,
     "z": 100,
     "x": 32,
-    "y": 540,
-    "height": 140
+    "y": 540
   },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Values": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "escalation_recommendations"
-                        }
-                      },
-                      "Property": "kis"
-                    }
-                  },
-                  "Function": 1
-                }
-              },
-              "queryRef": "Average(escalation_recommendations.kis)",
-              "nativeQueryRef": "Average of kis",
-              "active": true,
-              "displayName": "KIS"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "escalation_recommendations"
-                    }
-                  },
-                  "Property": "recommended_spo"
-                }
-              },
-              "queryRef": "escalation_recommendations.recommended_spo",
-              "nativeQueryRef": "recommended_spo",
-              "active": true,
-              "displayName": "SPO"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "escalation_recommendations"
-                    }
-                  },
-                  "Property": "explanation"
-                }
-              },
-              "queryRef": "escalation_recommendations.explanation",
-              "nativeQueryRef": "explanation",
-              "active": true,
-              "displayName": "Uzasadnienie"
-            }
-          ]
-        },
         "Rows": {
           "projections": [
             {
               "field": {
                 "Column": {
+                  "Property": "recommended_level",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  },
-                  "Property": "recommended_level"
+                  }
                 }
               },
               "queryRef": "escalation_recommendations.recommended_level",
@@ -91,18 +34,75 @@
             {
               "field": {
                 "Column": {
+                  "Property": "gmina_code",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "escalation_recommendations"
                     }
-                  },
-                  "Property": "gmina_code"
+                  }
                 }
               },
               "queryRef": "escalation_recommendations.gmina_code",
               "nativeQueryRef": "gmina_code",
               "active": true,
               "displayName": "Gmina"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Property": "kis",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "escalation_recommendations"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(escalation_recommendations.kis)",
+              "nativeQueryRef": "Average of kis",
+              "active": true,
+              "displayName": "KIS"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Property": "recommended_spo",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_recommendations.recommended_spo",
+              "nativeQueryRef": "recommended_spo",
+              "active": true,
+              "displayName": "SPO"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Property": "explanation",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "escalation_recommendations"
+                    }
+                  }
+                }
+              },
+              "queryRef": "escalation_recommendations.explanation",
+              "nativeQueryRef": "explanation",
+              "active": true,
+              "displayName": "Uzasadnienie"
             }
           ]
         }
@@ -112,6 +112,13 @@
       "background": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
@@ -129,13 +136,6 @@
                   }
                 }
               }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -147,17 +147,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D8DFE8'"
-                    }
-                  }
                 }
               }
             },
@@ -174,6 +163,17 @@
                   "Value": "true"
                 }
               }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -185,6 +185,20 @@
               "expr": {
                 "Literal": {
                   "Value": "88D"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -205,20 +219,6 @@
                   }
                 }
               }
-            },
-            "preset": {
-              "expr": {
-                "Literal": {
-                  "Value": "'BottomRight'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -233,17 +233,17 @@
                 }
               }
             },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "14D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
                 }
               }
             },
@@ -273,42 +273,17 @@
       "title": [
         {
           "properties": {
-            "fontSize": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "'left'"
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Rekomendacje z uzasadnieniem'"
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
+                  "Value": "'Rekomendacje wymagające decyzji ponad gminą'"
                 }
               }
             },
@@ -323,10 +298,35 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
@@ -336,31 +336,17 @@
       "subTitle": [
         {
           "properties": {
-            "italic": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "'left'"
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Jedyne miejsce w raporcie, gdzie potrzebna jest wartość co do jednostki — to zapis decyzji do protokołu'"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
+                  "Value": "'Pominięto rekomendacje zamykane na poziomie gminy — tu zostaje to, co wymaga decyzji wojewody, RZZK lub ministra'"
                 }
               }
             },
@@ -375,10 +361,24 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -388,62 +388,9 @@
     },
     "drillFilterOtherVisuals": true,
     "objects": {
-      "rowHeaders": [
-        {
-          "properties": {
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1B2A41'"
-                    }
-                  }
-                }
-              }
-            },
-            "backColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "columnHeaders": [
         {
           "properties": {
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
             "backColor": {
               "solid": {
                 "color": {
@@ -452,6 +399,31 @@
                       "Value": "'#12325B'"
                     }
                   }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -468,11 +440,39 @@
                   "Value": "'growToFit'"
                 }
               }
+            }
+          }
+        }
+      ],
+      "rowHeaders": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
             },
-            "autoSizeColumnWidth": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1B2A41'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "10D"
                 }
               }
             }
@@ -482,13 +482,6 @@
       "grid": [
         {
           "properties": {
-            "gridVertical": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
             "gridHorizontalColor": {
               "solid": {
                 "color": {
@@ -506,6 +499,13 @@
                   "Value": "4D"
                 }
               }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -519,17 +519,6 @@
                   "expr": {
                     "Literal": {
                       "Value": "'#1B2A41'"
-                    }
-                  }
-                }
-              }
-            },
-            "backColorSecondary": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F5F8FC'"
                     }
                   }
                 }
@@ -553,6 +542,17 @@
                 }
               }
             },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F5F8FC'"
+                    }
+                  }
+                }
+              }
+            },
             "backColorPrimary": {
               "solid": {
                 "color": {
@@ -571,24 +571,6 @@
         {
           "properties": {
             "dataBars": {
-              "hideText": {
-                "expr": {
-                  "Literal": {
-                    "Value": "false"
-                  }
-                }
-              },
-              "axisColor": {
-                "solid": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'#D8DFE8'"
-                      }
-                    }
-                  }
-                }
-              },
               "reverseDirection": {
                 "expr": {
                   "Literal": {
@@ -607,6 +589,17 @@
                   }
                 }
               },
+              "axisColor": {
+                "solid": {
+                  "color": {
+                    "expr": {
+                      "Literal": {
+                        "Value": "'#D8DFE8'"
+                      }
+                    }
+                  }
+                }
+              },
               "positiveColor": {
                 "solid": {
                   "color": {
@@ -615,6 +608,13 @@
                         "Value": "'#1B4A8B'"
                       }
                     }
+                  }
+                }
+              },
+              "hideText": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
                   }
                 }
               }
@@ -626,5 +626,84 @@
         }
       ]
     }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f_matrix_level",
+        "field": {
+          "Column": {
+            "Property": "recommended_level",
+            "Expression": {
+              "SourceRef": {
+                "Entity": "escalation_recommendations"
+              }
+            }
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Entity": "escalation_recommendations",
+              "Name": "e",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Property": "recommended_level",
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "e"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'minister wiodący'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'wojewoda'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'RZZK'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'powiat'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Auto"
+      }
+    ]
   }
 }

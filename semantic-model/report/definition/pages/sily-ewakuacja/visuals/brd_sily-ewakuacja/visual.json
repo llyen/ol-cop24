@@ -2,22 +2,20 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "brd_sily-ewakuacja",
   "position": {
-    "tabOrder": 11,
     "width": 300,
+    "height": 62,
+    "tabOrder": 11,
     "z": 11,
     "x": 948,
-    "y": 16,
-    "height": 62
+    "y": 16
   },
   "visual": {
-    "visualType": "textbox",
     "objects": {
       "general": [
         {
           "properties": {
             "paragraphs": [
               {
-                "horizontalTextAlignment": "right",
                 "textRuns": [
                   {
                     "value": "COP-24  ·  KRAJOWY OBRAZ SYTUACJI",
@@ -28,10 +26,10 @@
                       "letterSpacing": "1.6px"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "right"
               },
               {
-                "horizontalTextAlignment": "right",
                 "textRuns": [
                   {
                     "value": "Rządowe Centrum Bezpieczeństwa  ·  ćwiczenie sztabowe",
@@ -41,10 +39,10 @@
                       "color": "#9FBBDE"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "right"
               },
               {
-                "horizontalTextAlignment": "right",
                 "textRuns": [
                   {
                     "value": "KROK 4 z 5  ·  CZY NADĄŻAMY",
@@ -55,15 +53,30 @@
                       "letterSpacing": "1.6px"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "right"
               }
             ]
           }
         }
       ]
     },
+    "visualType": "textbox",
     "visualContainerObjects": {
-      "dropShadow": [
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
         {
           "properties": {
             "show": {
@@ -89,19 +102,6 @@
           }
         }
       ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "padding": [
         {
           "properties": {
@@ -112,14 +112,14 @@
                 }
               }
             },
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
                 }
               }
             },
-            "right": {
+            "top": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -136,7 +136,7 @@
           }
         }
       ],
-      "visualHeader": [
+      "dropShadow": [
         {
           "properties": {
             "show": {

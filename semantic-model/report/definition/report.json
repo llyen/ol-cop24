@@ -1,10 +1,9 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json",
   "themeCollection": {
     "baseTheme": {
       "reportVersionAtImport": {
-        "report": "3.1.0",
         "visual": "2.5.0",
+        "report": "3.1.0",
         "page": "2.3.0"
       },
       "name": "CY25SU12",
@@ -12,8 +11,8 @@
     },
     "customTheme": {
       "reportVersionAtImport": {
-        "report": "3.1.0",
         "visual": "2.6.0",
+        "report": "3.1.0",
         "page": "2.3.0"
       },
       "name": "COP24-Rzadowy-c0242026.json",
@@ -33,6 +32,7 @@
       ]
     }
   ],
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json",
   "settings": {
     "useEnhancedTooltips": true,
     "useStylableVisualContainerHeader": true,

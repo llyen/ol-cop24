@@ -106,6 +106,46 @@ function New-Proj($Field, [string]$QueryRef, [string]$NativeRef, [string]$Displa
     return $projection
 }
 
+# Filtry wizualizacji. Bez nich wykresy dostaja caly zbior: scatter mial 2477 gmin,
+# z czego 2253 z indeksem bliskim zeru zlepialo sie w jednym rogu, a wykres fali
+# rysowal 10 rzek z calego kraju zamiast piec z dorzecza objetego scenariuszem.
+function New-InFilter([string]$Name, [string]$Table, [string]$Column, [string[]]$Values) {
+    $alias = $Table.Substring(0, 1)
+    return [ordered]@{
+        name = $Name
+        field = (New-Col $Table $Column)
+        type = 'Categorical'
+        filter = [ordered]@{
+            Version = 2
+            From = @(@{ Name = $alias; Entity = $Table; Type = 0 })
+            Where = @(@{ Condition = @{ In = [ordered]@{
+                Expressions = @(@{ Column = @{ Expression = @{ SourceRef = @{ Source = $alias } }; Property = $Column } })
+                Values = @($Values | ForEach-Object { , @(@{ Literal = @{ Value = "'$_'" } }) })
+            } } })
+        }
+        howCreated = 'Auto'
+    }
+}
+
+function New-ThresholdFilter([string]$Name, [string]$Table, [string]$Column, [double]$Min) {
+    $alias = $Table.Substring(0, 1)
+    return [ordered]@{
+        name = $Name
+        field = (New-Col $Table $Column)
+        type = 'Advanced'
+        filter = [ordered]@{
+            Version = 2
+            From = @(@{ Name = $alias; Entity = $Table; Type = 0 })
+            Where = @(@{ Condition = @{ Comparison = [ordered]@{
+                ComparisonKind = 3
+                Left = @{ Column = @{ Expression = @{ SourceRef = @{ Source = $alias } }; Property = $Column } }
+                Right = @{ Literal = @{ Value = "$($Min)D" } }
+            } } })
+        }
+        howCreated = 'Auto'
+    }
+}
+
 function New-PanelVco([string]$Title, [string]$Accent = $BLUE, [bool]$ShowTitle = $true, [string]$Subtitle = '') {
     $vco = [ordered]@{
         background = @(@{ properties = @{ show = (New-BoolLit $true); color = (New-Color $PANEL); transparency = (New-NumLit 0) } })
@@ -150,7 +190,8 @@ function New-DataVisual {
         $SortField = $null,
         [ValidateSet('Ascending','Descending')] [string]$SortDirection = 'Ascending',
         $Objects = $null,
-        [string]$Subtitle = ''
+        [string]$Subtitle = '',
+        $Filters = $null
     )
     $queryState = [ordered]@{}
     foreach ($role in $Roles.Keys) { $queryState[$role] = @{ projections = @($Roles[$role]) } }
@@ -168,6 +209,8 @@ function New-DataVisual {
         }
     }
     if ($Objects) { $visual.visual.objects = $Objects }
+    # filterConfig jest wlasnoscia korzenia visual.json, nie wezla 'visual'.
+    if ($Filters) { $visual.filterConfig = @{ filters = @($Filters) } }
     return $visual
 }
 
@@ -590,9 +633,12 @@ Add-Visual $parts $checks 'hydrologia-fala' (New-DataVisual 'p2_map' 'azureMap' 
 $p2SmallRoles = @{
     Category = @((New-Proj (New-Col 'hydro_readings' 'timestamp') 'hydro_readings.timestamp' 'timestamp' 'Czas'))
     Y = @((New-Proj (New-Agg 'hydro_readings' 'level_cm' 1) 'Average(hydro_readings.level_cm)' 'Average of level_cm' 'Poziom [cm]'))
-    Rows = @((New-Proj (New-Col 'hydro_readings' 'river') 'hydro_readings.river' 'river' 'Rzeka'))
+    Series = @((New-Proj (New-Col 'hydro_readings' 'river') 'hydro_readings.river' 'river' 'Rzeka'))
 }
-Add-Visual $parts $checks 'hydrologia-fala' (New-DataVisual 'p2_wave' 'lineChart' 'Propagacja fali w czasie' $rightX $mainY $rightW $mainH $p2SmallRoles $RED (New-Col 'hydro_readings' 'timestamp') 'Ascending' $null 'Przesunięcie szczytów między rzekami to realne wyprzedzenie decyzyjne — kilkanaście godzin') 'EVALUATE TOPN(1500,SUMMARIZECOLUMNS(hydro_readings[river],hydro_readings[timestamp],"Poziom",AVERAGE(hydro_readings[level_cm])),hydro_readings[timestamp],ASC)' 'Propagacja fali w małych multiplikatorach'
+# Rzeki dorzecza objetego scenariuszem. Wisla, Bug, San, Warta i Notec sa w danych
+# jako tlo krajowe - na wykresie propagacji fali tylko zaciemnialy obraz.
+$p2WaveFilter = New-InFilter 'f_wave_rivers' 'hydro_readings' 'river' @('Nysa Kłodzka', 'Odra', 'Bystrzyca')
+Add-Visual $parts $checks 'hydrologia-fala' (New-DataVisual 'p2_wave' 'lineChart' 'Propagacja fali w czasie' $rightX $mainY $rightW $mainH $p2SmallRoles $RED (New-Col 'hydro_readings' 'timestamp') 'Ascending' $null 'Trzy rzeki dorzecza na jednej osi: przesunięcie szczytów to realne wyprzedzenie decyzyjne' $p2WaveFilter) 'EVALUATE TOPN(1500,SUMMARIZECOLUMNS(hydro_readings[river],hydro_readings[timestamp],FILTER(ALL(hydro_readings[river]),hydro_readings[river] IN {"Nysa Kłodzka","Odra","Bystrzyca"}),"Poziom",AVERAGE(hydro_readings[level_cm])),hydro_readings[timestamp],ASC)' 'Propagacja fali na trasie'
 
 $p2ComboRoles = @{
     Category = @((New-Proj (New-Col 'hydro_readings' 'timestamp') 'hydro_readings.timestamp' 'timestamp' 'Czas'))
@@ -614,7 +660,10 @@ $p3ScatterRoles = @{
     Size = @((New-Proj (New-Agg 'escalation_recommendations' 'telecom_score' 1) 'Average(escalation_recommendations.telecom_score)' 'Average of telecom_score' 'Skutek telekomunikacyjny'))
     Tooltips = @((New-Proj (New-Agg 'escalation_recommendations' 'kis' 1) 'Average(escalation_recommendations.kis)' 'Average of kis' 'KIS'))
 }
-Add-Visual $parts $checks 'infrastruktura-krytyczna' (New-DataVisual 'p3_scatter' 'scatterChart' 'Kaskada skutków: woda → prąd → łączność' $leftX $mainY $leftW $mainH $p3ScatterRoles $RED $null 'Ascending' $null 'Gminy w prawym górnym rogu tracą jednocześnie zasilanie i łączność — tam ratownik działa bez wsparcia systemów') 'EVALUATE TOPN(2477,SUMMARIZECOLUMNS(escalation_recommendations[gmina_code],"Hydro",AVERAGE(escalation_recommendations[hydro_score]),"Energia",AVERAGE(escalation_recommendations[power_score]),"Telco",AVERAGE(escalation_recommendations[telecom_score]),"KIS",AVERAGE(escalation_recommendations[kis])),[KIS],DESC)' 'Korelacja skutków infrastrukturalnych'
+# Prog KIS 5 odcina 2253 gminy o zerowym indeksie, ktore zlepialy sie w rogu wykresu.
+# Zostaje 224 gminy faktycznie dotkniete zdarzeniem - tam gdzie zapada decyzja.
+$p3ScatterFilter = New-ThresholdFilter 'f_scatter_kis' 'escalation_recommendations' 'kis' 5
+Add-Visual $parts $checks 'infrastruktura-krytyczna' (New-DataVisual 'p3_scatter' 'scatterChart' 'Kaskada skutków: woda → prąd → łączność' $leftX $mainY $leftW $mainH $p3ScatterRoles $RED $null 'Ascending' $null 'Tylko gminy z realnym indeksem sytuacyjnym; w prawym górnym rogu tracą jednocześnie zasilanie i łączność' $p3ScatterFilter) 'EVALUATE SUMMARIZECOLUMNS(escalation_recommendations[gmina_code],FILTER(ALL(escalation_recommendations),escalation_recommendations[kis]>=5),"Hydro",AVERAGE(escalation_recommendations[hydro_score]),"Energia",AVERAGE(escalation_recommendations[power_score]),"Telco",AVERAGE(escalation_recommendations[telecom_score]),"KIS",AVERAGE(escalation_recommendations[kis]))' 'Korelacja skutków infrastrukturalnych'
 
 $p3PowerRoles = @{
     Category = @((New-Proj (New-Col 'power_grid_events' 'timestamp') 'power_grid_events.timestamp' 'timestamp' 'Czas'))
@@ -690,7 +739,10 @@ $p5MatrixRoles = @{
     )
 }
 $p5MatrixObjects = New-MatrixObjects @('Average(escalation_recommendations.kis)')
-Add-Visual $parts $checks 'eskalacja-spo-dezinformacja' (New-DataVisual 'p5_matrix' 'pivotTable' 'Rekomendacje z uzasadnieniem' $leftX $bandY $bandW $bandH $p5MatrixRoles $NAVY $null 'Ascending' $p5MatrixObjects 'Jedyne miejsce w raporcie, gdzie potrzebna jest wartość co do jednostki — to zapis decyzji do protokołu') 'EVALUATE TOPN(100,SUMMARIZECOLUMNS(escalation_recommendations[recommended_level],escalation_recommendations[gmina_code],escalation_recommendations[recommended_spo],escalation_recommendations[explanation],"KIS",AVERAGE(escalation_recommendations[kis])),[KIS],DESC)' 'Macierz decyzji i uzasadnień'
+# Z 2477 rekomendacji az 2422 konczy sie na poziomie gminy i nie trafia na biurko
+# szczebla krajowego. Zostawiamy 55 pozycji wymagajacych decyzji ponad gmina.
+$p5MatrixFilter = New-InFilter 'f_matrix_level' 'escalation_recommendations' 'recommended_level' @('minister wiodący', 'wojewoda', 'RZZK', 'powiat')
+Add-Visual $parts $checks 'eskalacja-spo-dezinformacja' (New-DataVisual 'p5_matrix' 'pivotTable' 'Rekomendacje wymagające decyzji ponad gminą' $leftX $bandY $bandW $bandH $p5MatrixRoles $NAVY $null 'Ascending' $p5MatrixObjects 'Pominięto rekomendacje zamykane na poziomie gminy — tu zostaje to, co wymaga decyzji wojewody, RZZK lub ministra' $p5MatrixFilter) 'EVALUATE SUMMARIZECOLUMNS(escalation_recommendations[recommended_level],escalation_recommendations[gmina_code],escalation_recommendations[recommended_spo],escalation_recommendations[explanation],FILTER(ALL(escalation_recommendations[recommended_level]),escalation_recommendations[recommended_level] IN {"minister wiodący","wojewoda","RZZK","powiat"}),"KIS",AVERAGE(escalation_recommendations[kis]))' 'Macierz decyzji i uzasadnień'
 
 $definition = @{ format = 'PBIR'; parts = @($parts) }
 $manifestPath = Join-Path $ReportRoot 'validation\visual-dax.json'
@@ -764,30 +816,30 @@ EVALUATE ROW(
 )
 '@
 $expected = [ordered]@{
-    'KIS' = 5.27
+    'KIS' = 4.34
     'KIS Max Lokalny' = 100
-    'Liczba Ewakuowanych' = 160871
+    'Liczba Ewakuowanych' = 15445
     '% Gmin w Alarmie' = 0.0040
-    'Odbiorcy Bez Prądu' = 1375406
+    'Odbiorcy Bez Prądu' = 14168
     'Minimalne Pokrycie Telco' = 0.226
-    'Gminy Telco Ponizej 50' = 80
-    'Incydenty' = 4943
-    'Incydenty Priorytet 4 Plus' = 818
-    'Osoby Dotkniete' = 263001
-    'Sygnały Dezinformacji' = 363
-    'Zasieg Dezinformacji' = 39854793
-    'PSP Zastepy' = 11366
-    'WOT Zolnierze' = 62024
-    'Pompy' = 7041
-    'Agregaty' = 4426
-    'Smiglowce' = 103
-    'Czas Reakcji Min' = 3839
-    'Rekomendacje RZZK' = 47
-    'Gminy KIS Powiat Plus' = 54
+    'Gminy Telco Ponizej 50' = 74
+    'Incydenty' = 1714
+    'Incydenty Priorytet 4 Plus' = 281
+    'Osoby Dotkniete' = 91612
+    'Sygnały Dezinformacji' = 335
+    'Zasieg Dezinformacji' = 37798399
+    'PSP Zastepy' = 651
+    'WOT Zolnierze' = 4013
+    'Pompy' = 387
+    'Agregaty' = 218
+    'Smiglowce' = 8
+    'Czas Reakcji Min' = 3818
+    'Rekomendacje RZZK' = 21
+    'Gminy KIS Powiat Plus' = 55
     'Gminy KIS Wojewoda Plus' = 47
-    'Gminy KIS RZZK' = 47
+    'Gminy KIS RZZK' = 21
     'Alarm Hydro' = 10
-    'Stan Ostrzegawczy Hydro' = 43
+    'Stan Ostrzegawczy Hydro' = 24
 }
 $sanity = Invoke-Dax $sanityQuery
 $sanityRow = $sanity.results[0].tables[0].rows[0]

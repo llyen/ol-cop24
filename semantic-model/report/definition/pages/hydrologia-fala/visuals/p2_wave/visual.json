@@ -2,39 +2,34 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p2_wave",
   "position": {
-    "tabOrder": 100,
     "width": 444,
+    "height": 296,
+    "tabOrder": 100,
     "z": 100,
     "x": 804,
-    "y": 220,
-    "height": 296
+    "y": 220
   },
   "visual": {
     "visualType": "lineChart",
     "query": {
       "queryState": {
-        "Y": {
+        "Series": {
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Column": {
+                  "Property": "river",
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "hydro_readings"
-                        }
-                      },
-                      "Property": "level_cm"
+                    "SourceRef": {
+                      "Entity": "hydro_readings"
                     }
-                  },
-                  "Function": 1
+                  }
                 }
               },
-              "queryRef": "Average(hydro_readings.level_cm)",
-              "nativeQueryRef": "Average of level_cm",
+              "queryRef": "hydro_readings.river",
+              "nativeQueryRef": "river",
               "active": true,
-              "displayName": "Poziom [cm]"
+              "displayName": "Rzeka"
             }
           ]
         },
@@ -43,12 +38,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "hydro_readings"
                     }
-                  },
-                  "Property": "timestamp"
+                  }
                 }
               },
               "queryRef": "hydro_readings.timestamp",
@@ -58,50 +53,62 @@
             }
           ]
         },
-        "Rows": {
+        "Y": {
           "projections": [
             {
               "field": {
-                "Column": {
+                "Aggregation": {
+                  "Function": 1,
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "hydro_readings"
+                    "Column": {
+                      "Property": "level_cm",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "hydro_readings"
+                        }
+                      }
                     }
-                  },
-                  "Property": "river"
+                  }
                 }
               },
-              "queryRef": "hydro_readings.river",
-              "nativeQueryRef": "river",
+              "queryRef": "Average(hydro_readings.level_cm)",
+              "nativeQueryRef": "Average of level_cm",
               "active": true,
-              "displayName": "Rzeka"
+              "displayName": "Poziom [cm]"
             }
           ]
         }
       },
       "sortDefinition": {
+        "isDefaultSort": false,
         "sort": [
           {
+            "direction": "Ascending",
             "field": {
               "Column": {
+                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "hydro_readings"
                   }
-                },
-                "Property": "timestamp"
+                }
               }
-            },
-            "direction": "Ascending"
+            }
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "visualContainerObjects": {
       "background": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
@@ -119,13 +126,6 @@
                   }
                 }
               }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -137,17 +137,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D8DFE8'"
-                    }
-                  }
                 }
               }
             },
@@ -164,6 +153,17 @@
                   "Value": "true"
                 }
               }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -175,6 +175,20 @@
               "expr": {
                 "Literal": {
                   "Value": "88D"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -195,20 +209,6 @@
                   }
                 }
               }
-            },
-            "preset": {
-              "expr": {
-                "Literal": {
-                  "Value": "'BottomRight'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -223,17 +223,17 @@
                 }
               }
             },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "14D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
                 }
               }
             },
@@ -263,10 +263,10 @@
       "title": [
         {
           "properties": {
-            "fontSize": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -274,31 +274,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Propagacja fali w czasie'"
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -313,10 +288,35 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
@@ -326,31 +326,17 @@
       "subTitle": [
         {
           "properties": {
-            "italic": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "'left'"
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Przesunięcie szczytów między rzekami to realne wyprzedzenie decyzyjne — kilkanaście godzin'"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
+                  "Value": "'Trzy rzeki dorzecza na jednej osi: przesunięcie szczytów to realne wyprzedzenie decyzyjne'"
                 }
               }
             },
@@ -365,10 +351,24 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -377,5 +377,77 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f_wave_rivers",
+        "field": {
+          "Column": {
+            "Property": "river",
+            "Expression": {
+              "SourceRef": {
+                "Entity": "hydro_readings"
+              }
+            }
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Entity": "hydro_readings",
+              "Name": "h",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Property": "river",
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "h"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Nysa Kłodzka'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Odra'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Bystrzyca'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Auto"
+      }
+    ]
   }
 }

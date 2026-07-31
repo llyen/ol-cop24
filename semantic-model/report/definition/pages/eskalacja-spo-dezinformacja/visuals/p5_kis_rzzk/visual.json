@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p5_kis_rzzk",
   "position": {
-    "tabOrder": 100,
     "width": 286,
+    "height": 92,
+    "tabOrder": 100,
     "z": 100,
     "x": 342,
-    "y": 104,
-    "height": 92
+    "y": 104
   },
   "visual": {
     "visualType": "cardVisual",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Measure": {
+                  "Property": "Gminy KIS RZZK",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  },
-                  "Property": "Gminy KIS RZZK"
+                  }
                 }
               },
               "queryRef": "kis_country.Gminy KIS RZZK",
@@ -36,93 +36,41 @@
       }
     },
     "objects": {
-      "value": [
+      "layout": [
         {
           "properties": {
-            "bold": {
+            "paddingUniform": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "0L"
                 }
               }
             },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#B26B00'"
-                    }
-                  }
+            "leftOuterMargin": {
+              "expr": {
+                "Literal": {
+                  "Value": "2L"
                 }
               }
             },
-            "fontFamily": {
+            "rightOuterMargin": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI Semibold'"
+                  "Value": "2L"
                 }
               }
             },
-            "fontSize": {
+            "bottomOuterMargin": {
               "expr": {
                 "Literal": {
-                  "Value": "30D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
-          }
-        }
-      ],
-      "label": [
-        {
-          "properties": {
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "4L"
                 }
               }
             },
-            "text": {
+            "topOuterMargin": {
               "expr": {
                 "Literal": {
-                  "Value": "'GMINY Z KIS ≥ 85'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI'"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#5C6B80'"
-                    }
-                  }
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "4L"
                 }
               }
             }
@@ -148,41 +96,93 @@
           }
         }
       ],
-      "layout": [
+      "value": [
         {
           "properties": {
-            "leftOuterMargin": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "2L"
+                  "Value": "true"
                 }
               }
             },
-            "topOuterMargin": {
+            "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "4L"
+                  "Value": "'Segoe UI Semibold'"
                 }
               }
             },
-            "rightOuterMargin": {
-              "expr": {
-                "Literal": {
-                  "Value": "2L"
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B26B00'"
+                    }
+                  }
                 }
               }
             },
-            "paddingUniform": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "30D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'GMINY Z KIS ≥ 85'"
                 }
               }
             },
-            "bottomOuterMargin": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5C6B80'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "4L"
+                  "Value": "9D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
                 }
               }
             }
@@ -197,6 +197,13 @@
       "background": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
@@ -214,13 +221,6 @@
                   }
                 }
               }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -235,17 +235,6 @@
                 }
               }
             },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#B26B00'"
-                    }
-                  }
-                }
-              }
-            },
             "radius": {
               "expr": {
                 "Literal": {
@@ -257,6 +246,17 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B26B00'"
+                    }
+                  }
                 }
               }
             }
@@ -286,17 +286,17 @@
                 }
               }
             },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "16D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
                 }
               }
             },

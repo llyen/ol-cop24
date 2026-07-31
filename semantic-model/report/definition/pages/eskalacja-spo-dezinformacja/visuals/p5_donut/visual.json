@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p5_donut",
   "position": {
-    "tabOrder": 100,
     "width": 444,
+    "height": 296,
+    "tabOrder": 100,
     "z": 100,
     "x": 804,
-    "y": 220,
-    "height": 296
+    "y": 220
   },
   "visual": {
     "visualType": "donutChart",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "channel",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "media_signals"
                     }
-                  },
-                  "Property": "channel"
+                  }
                 }
               },
               "queryRef": "media_signals.channel",
@@ -38,12 +38,12 @@
             {
               "field": {
                 "Measure": {
+                  "Property": "Sygnały Dezinformacji",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  },
-                  "Property": "Sygnały Dezinformacji"
+                  }
                 }
               },
               "queryRef": "kis_country.Sygnały Dezinformacji",
@@ -59,6 +59,13 @@
       "background": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
@@ -76,13 +83,6 @@
                   }
                 }
               }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -94,17 +94,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D8DFE8'"
-                    }
-                  }
                 }
               }
             },
@@ -121,6 +110,17 @@
                   "Value": "true"
                 }
               }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -132,6 +132,20 @@
               "expr": {
                 "Literal": {
                   "Value": "88D"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -152,20 +166,6 @@
                   }
                 }
               }
-            },
-            "preset": {
-              "expr": {
-                "Literal": {
-                  "Value": "'BottomRight'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -180,17 +180,17 @@
                 }
               }
             },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "14D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
                 }
               }
             },
@@ -220,10 +220,10 @@
       "title": [
         {
           "properties": {
-            "fontSize": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -231,31 +231,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Kanały dezinformacji'"
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -270,10 +245,35 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
@@ -283,17 +283,10 @@
       "subTitle": [
         {
           "properties": {
-            "italic": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -301,13 +294,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Dominujący kanał wyznacza formę reakcji: sprostowanie, RCB Alert czy wniosek do platformy'"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -322,10 +308,24 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

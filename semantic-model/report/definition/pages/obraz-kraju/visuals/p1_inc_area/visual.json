@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p1_inc_area",
   "position": {
-    "tabOrder": 100,
     "width": 1216,
+    "height": 140,
+    "tabOrder": 100,
     "z": 100,
     "x": 32,
-    "y": 540,
-    "height": 140
+    "y": 540
   },
   "visual": {
     "visualType": "areaChart",
@@ -18,12 +18,12 @@
             {
               "field": {
                 "Column": {
+                  "Property": "timestamp",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "incident_reports"
                     }
-                  },
-                  "Property": "timestamp"
+                  }
                 }
               },
               "queryRef": "incident_reports.timestamp",
@@ -38,12 +38,12 @@
             {
               "field": {
                 "Measure": {
+                  "Property": "Incydenty",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  },
-                  "Property": "Incydenty"
+                  }
                 }
               },
               "queryRef": "kis_country.Incydenty",
@@ -55,28 +55,35 @@
         }
       },
       "sortDefinition": {
+        "isDefaultSort": false,
         "sort": [
           {
+            "direction": "Ascending",
             "field": {
               "Column": {
+                "Property": "timestamp",
                 "Expression": {
                   "SourceRef": {
                     "Entity": "incident_reports"
                   }
-                },
-                "Property": "timestamp"
+                }
               }
-            },
-            "direction": "Ascending"
+            }
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "visualContainerObjects": {
       "background": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
@@ -94,13 +101,6 @@
                   }
                 }
               }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -112,17 +112,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D8DFE8'"
-                    }
-                  }
                 }
               }
             },
@@ -139,6 +128,17 @@
                   "Value": "true"
                 }
               }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -150,6 +150,20 @@
               "expr": {
                 "Literal": {
                   "Value": "88D"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -170,20 +184,6 @@
                   }
                 }
               }
-            },
-            "preset": {
-              "expr": {
-                "Literal": {
-                  "Value": "'BottomRight'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -198,17 +198,17 @@
                 }
               }
             },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "14D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
                 }
               }
             },
@@ -238,10 +238,10 @@
       "title": [
         {
           "properties": {
-            "fontSize": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -249,31 +249,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Tempo narastania zdarzeń'"
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -288,10 +263,35 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
@@ -301,17 +301,10 @@
       "subTitle": [
         {
           "properties": {
-            "italic": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -319,13 +312,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Punkt przegięcia krzywej wyznacza moment, w którym reagowanie lokalne przestaje wystarczać'"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -340,10 +326,24 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

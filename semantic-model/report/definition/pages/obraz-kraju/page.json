@@ -1,41 +1,11 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
   "displayName": "Obraz kraju",
-  "displayOption": "FitToPage",
+  "width": 1280,
   "objects": {
-    "outspace": [
-      {
-        "properties": {
-          "transparency": {
-            "expr": {
-              "Literal": {
-                "Value": "0D"
-              }
-            }
-          },
-          "color": {
-            "solid": {
-              "color": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'#DDE4EC'"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ],
     "background": [
       {
         "properties": {
-          "transparency": {
-            "expr": {
-              "Literal": {
-                "Value": "0D"
-              }
-            }
-          },
           "color": {
             "solid": {
               "color": {
@@ -46,13 +16,43 @@
                 }
               }
             }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#DDE4EC'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
           }
         }
       }
     ]
   },
+  "displayOption": "FitToPage",
   "name": "obraz-kraju",
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
-  "height": 720,
-  "width": 1280
+  "height": 720
 }

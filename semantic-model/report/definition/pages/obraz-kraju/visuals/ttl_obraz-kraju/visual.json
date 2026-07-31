@@ -2,22 +2,20 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "ttl_obraz-kraju",
   "position": {
-    "tabOrder": 10,
     "width": 900,
+    "height": 76,
+    "tabOrder": 10,
     "z": 10,
     "x": 32,
-    "y": 8,
-    "height": 76
+    "y": 8
   },
   "visual": {
-    "visualType": "textbox",
     "objects": {
       "general": [
         {
           "properties": {
             "paragraphs": [
               {
-                "horizontalTextAlignment": "left",
                 "textRuns": [
                   {
                     "value": "KROK 1 z 5  ·  CO SIĘ DZIEJE",
@@ -28,10 +26,10 @@
                       "letterSpacing": "1.6px"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               },
               {
-                "horizontalTextAlignment": "left",
                 "textRuns": [
                   {
                     "value": "Obraz kraju",
@@ -41,10 +39,10 @@
                       "color": "#FFFFFF"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               },
               {
-                "horizontalTextAlignment": "left",
                 "textRuns": [
                   {
                     "value": "Jedno spojrzenie: skala kryzysu, jego koncentracja przestrzenna i tempo narastania.",
@@ -54,15 +52,30 @@
                       "color": "#C4D4EA"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               }
             ]
           }
         }
       ]
     },
+    "visualType": "textbox",
     "visualContainerObjects": {
-      "dropShadow": [
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
         {
           "properties": {
             "show": {
@@ -88,19 +101,6 @@
           }
         }
       ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "padding": [
         {
           "properties": {
@@ -111,14 +111,14 @@
                 }
               }
             },
-            "top": {
+            "right": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
                 }
               }
             },
-            "right": {
+            "top": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -135,7 +135,7 @@
           }
         }
       ],
-      "visualHeader": [
+      "dropShadow": [
         {
           "properties": {
             "show": {

@@ -2,98 +2,33 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "p1_map",
   "position": {
-    "tabOrder": 100,
     "width": 748,
+    "height": 296,
+    "tabOrder": 100,
     "z": 100,
     "x": 32,
-    "y": 220,
-    "height": 296
+    "y": 220
   },
   "visual": {
     "visualType": "azureMap",
     "query": {
       "queryState": {
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "dim_gmina"
-                        }
-                      },
-                      "Property": "lat"
-                    }
-                  },
-                  "Function": 1
-                }
-              },
-              "queryRef": "Average(dim_gmina.lat)",
-              "nativeQueryRef": "Average of lat",
-              "active": true,
-              "displayName": "Szerokość geograficzna"
-            }
-          ]
-        },
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "kis_country"
-                    }
-                  },
-                  "Property": "KIS"
-                }
-              },
-              "queryRef": "kis_country.KIS",
-              "nativeQueryRef": "KIS",
-              "active": true,
-              "displayName": "KIS"
-            }
-          ]
-        },
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_gmina"
-                    }
-                  },
-                  "Property": "gmina_name"
-                }
-              },
-              "queryRef": "dim_gmina.gmina_name",
-              "nativeQueryRef": "gmina_name",
-              "active": true,
-              "displayName": "Gmina"
-            }
-          ]
-        },
         "X": {
           "projections": [
             {
               "field": {
                 "Aggregation": {
+                  "Function": 1,
                   "Expression": {
                     "Column": {
+                      "Property": "lon",
                       "Expression": {
                         "SourceRef": {
                           "Entity": "dim_gmina"
                         }
-                      },
-                      "Property": "lon"
+                      }
                     }
-                  },
-                  "Function": 1
+                  }
                 }
               },
               "queryRef": "Average(dim_gmina.lon)",
@@ -103,23 +38,88 @@
             }
           ]
         },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Property": "KIS",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "kis_country"
+                    }
+                  }
+                }
+              },
+              "queryRef": "kis_country.KIS",
+              "nativeQueryRef": "KIS",
+              "active": true,
+              "displayName": "KIS"
+            }
+          ]
+        },
         "Tooltips": {
           "projections": [
             {
               "field": {
                 "Measure": {
+                  "Property": "KIS Max Lokalny",
                   "Expression": {
                     "SourceRef": {
                       "Entity": "kis_country"
                     }
-                  },
-                  "Property": "KIS Max Lokalny"
+                  }
                 }
               },
               "queryRef": "kis_country.KIS Max Lokalny",
               "nativeQueryRef": "KIS Max Lokalny",
               "active": true,
               "displayName": "KIS max lokalny"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Property": "gmina_name",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_gmina"
+                    }
+                  }
+                }
+              },
+              "queryRef": "dim_gmina.gmina_name",
+              "nativeQueryRef": "gmina_name",
+              "active": true,
+              "displayName": "Gmina"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Function": 1,
+                  "Expression": {
+                    "Column": {
+                      "Property": "lat",
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_gmina"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "queryRef": "Average(dim_gmina.lat)",
+              "nativeQueryRef": "Average of lat",
+              "active": true,
+              "displayName": "Szerokość geograficzna"
             }
           ]
         }
@@ -129,6 +129,13 @@
       "background": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
@@ -146,13 +153,6 @@
                   }
                 }
               }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -164,17 +164,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#D8DFE8'"
-                    }
-                  }
                 }
               }
             },
@@ -191,6 +180,17 @@
                   "Value": "true"
                 }
               }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DFE8'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -202,6 +202,20 @@
               "expr": {
                 "Literal": {
                   "Value": "88D"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomRight'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -222,20 +236,6 @@
                   }
                 }
               }
-            },
-            "preset": {
-              "expr": {
-                "Literal": {
-                  "Value": "'BottomRight'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
             }
           }
         }
@@ -250,17 +250,17 @@
                 }
               }
             },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
             "right": {
               "expr": {
                 "Literal": {
                   "Value": "14D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
                 }
               }
             },
@@ -290,10 +290,10 @@
       "title": [
         {
           "properties": {
-            "fontSize": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -301,31 +301,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Gdzie jest ciężar kryzysu'"
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -340,10 +315,35 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
@@ -353,17 +353,10 @@
       "subTitle": [
         {
           "properties": {
-            "italic": {
+            "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "'left'"
                 }
               }
             },
@@ -371,13 +364,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Wielkość bąbla odpowiada indeksowi KIS gminy — zagrożenie koncentruje się w dorzeczu górnej Odry'"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
                 }
               }
             },
@@ -392,10 +378,24 @@
                 }
               }
             },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

@@ -2,34 +2,22 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "hdr_hydrologia-fala",
   "position": {
-    "tabOrder": 0,
     "width": 1280,
+    "height": 88,
+    "tabOrder": 0,
     "z": 0,
     "x": 0,
-    "y": 0,
-    "height": 88
+    "y": 0
   },
   "visual": {
-    "visualType": "shape",
     "objects": {
-      "fill": [
+      "outline": [
         {
           "properties": {
-            "fillColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#12325B'"
-                    }
-                  }
-                }
-              }
-            },
-            "transparency": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "false"
                 }
               }
             }
@@ -39,13 +27,24 @@
           }
         }
       ],
-      "outline": [
+      "fill": [
         {
           "properties": {
-            "show": {
+            "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "0D"
+                }
+              }
+            },
+            "fillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#12325B'"
+                    }
+                  }
                 }
               }
             }
@@ -69,8 +68,9 @@
         }
       ]
     },
+    "visualType": "shape",
     "visualContainerObjects": {
-      "dropShadow": [
+      "border": [
         {
           "properties": {
             "show": {
@@ -96,30 +96,10 @@
           }
         }
       ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "padding": [
         {
           "properties": {
             "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "top": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
@@ -133,10 +113,30 @@
                 }
               }
             },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
             "bottom": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

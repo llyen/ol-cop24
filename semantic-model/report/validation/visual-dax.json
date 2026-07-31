@@ -227,8 +227,8 @@
     "page": "hydrologia-fala",
     "visual": "p2_wave",
     "type": "lineChart",
-    "purpose": "Propagacja fali w małych multiplikatorach",
-    "dax": "EVALUATE TOPN(1500,SUMMARIZECOLUMNS(hydro_readings[river],hydro_readings[timestamp],\"Poziom\",AVERAGE(hydro_readings[level_cm])),hydro_readings[timestamp],ASC)"
+    "purpose": "Propagacja fali na trasie",
+    "dax": "EVALUATE TOPN(1500,SUMMARIZECOLUMNS(hydro_readings[river],hydro_readings[timestamp],FILTER(ALL(hydro_readings[river]),hydro_readings[river] IN {\"Nysa Kłodzka\",\"Odra\",\"Bystrzyca\"}),\"Poziom\",AVERAGE(hydro_readings[level_cm])),hydro_readings[timestamp],ASC)"
   },
   {
     "page": "hydrologia-fala",
@@ -270,7 +270,7 @@
     "visual": "p3_scatter",
     "type": "scatterChart",
     "purpose": "Korelacja skutków infrastrukturalnych",
-    "dax": "EVALUATE TOPN(2477,SUMMARIZECOLUMNS(escalation_recommendations[gmina_code],\"Hydro\",AVERAGE(escalation_recommendations[hydro_score]),\"Energia\",AVERAGE(escalation_recommendations[power_score]),\"Telco\",AVERAGE(escalation_recommendations[telecom_score]),\"KIS\",AVERAGE(escalation_recommendations[kis])),[KIS],DESC)"
+    "dax": "EVALUATE SUMMARIZECOLUMNS(escalation_recommendations[gmina_code],FILTER(ALL(escalation_recommendations),escalation_recommendations[kis]>=5),\"Hydro\",AVERAGE(escalation_recommendations[hydro_score]),\"Energia\",AVERAGE(escalation_recommendations[power_score]),\"Telco\",AVERAGE(escalation_recommendations[telecom_score]),\"KIS\",AVERAGE(escalation_recommendations[kis]))"
   },
   {
     "page": "infrastruktura-krytyczna",
@@ -382,6 +382,6 @@
     "visual": "p5_matrix",
     "type": "pivotTable",
     "purpose": "Macierz decyzji i uzasadnień",
-    "dax": "EVALUATE TOPN(100,SUMMARIZECOLUMNS(escalation_recommendations[recommended_level],escalation_recommendations[gmina_code],escalation_recommendations[recommended_spo],escalation_recommendations[explanation],\"KIS\",AVERAGE(escalation_recommendations[kis])),[KIS],DESC)"
+    "dax": "EVALUATE SUMMARIZECOLUMNS(escalation_recommendations[recommended_level],escalation_recommendations[gmina_code],escalation_recommendations[recommended_spo],escalation_recommendations[explanation],FILTER(ALL(escalation_recommendations[recommended_level]),escalation_recommendations[recommended_level] IN {\"minister wiodący\",\"wojewoda\",\"RZZK\",\"powiat\"}),\"KIS\",AVERAGE(escalation_recommendations[kis]))"
   }
 ]

@@ -1,17 +1,35 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
   "displayName": "Infrastruktura krytyczna",
-  "displayOption": "FitToPage",
+  "width": 1280,
   "objects": {
-    "outspace": [
+    "background": [
       {
         "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'{\r\n  \"$schema\": \"https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json\",\r\n  \"displayName\": \"Hydrologia i fala\",\r\n  \"width\": 1280,\r\n  \"objects\": {\r\n    \"background\": [\r\n      {\r\n        \"properties\": {\r\n          \"color\": {\r\n            \"solid\": {\r\n              \"color\": {\r\n                \"expr\": {\r\n                  \"Literal\": {\r\n                    \"Value\": \"''{\\r\\n  \\\"$schema\\\": \\\"https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json\\\",\\r\\n  \\\"displayName\\\": \\\"Obraz kraju\\\",\\r\\n  \\\"width\\\": 1280,\\r\\n  \\\"objects\\\": {\\r\\n    \\\"background\\\": [\\r\\n      {\\r\\n        \\\"properties\\\": {\\r\\n          \\\"color\\\": {\\r\\n            \\\"solid\\\": {\\r\\n              \\\"color\\\": {\\r\\n                \\\"expr\\\": {\\r\\n                  \\\"Literal\\\": {\\r\\n                    \\\"Value\\\": \\\"''''#EEF2F7''''\\\"\\r\\n                  }\\r\\n                }\\r\\n              }\\r\\n            }\\r\\n          },\\r\\n          \\\"transparency\\\": {\\r\\n            \\\"expr\\\": {\\r\\n              \\\"Literal\\\": {\\r\\n                \\\"Value\\\": \\\"0D\\\"\\r\\n              }\\r\\n            }\\r\\n          }\\r\\n        }\\r\\n      }\\r\\n    ],\\r\\n    \\\"outspace\\\": [\\r\\n      {\\r\\n        \\\"properties\\\": {\\r\\n          \\\"color\\\": {\\r\\n            \\\"solid\\\": {\\r\\n              \\\"color\\\": {\\r\\n                \\\"expr\\\": {\\r\\n                  \\\"Literal\\\": {\\r\\n                    \\\"Value\\\": \\\"''''#DDE4EC''''\\\"\\r\\n                  }\\r\\n                }\\r\\n              }\\r\\n            }\\r\\n          },\\r\\n          \\\"transparency\\\": {\\r\\n            \\\"expr\\\": {\\r\\n              \\\"Literal\\\": {\\r\\n                \\\"Value\\\": \\\"0D\\\"\\r\\n              }\\r\\n            }\\r\\n          }\\r\\n        }\\r\\n      }\\r\\n    ]\\r\\n  },\\r\\n  \\\"displayOption\\\": \\\"FitToPage\\\",\\r\\n  \\\"name\\\": \\\"obraz-kraju\\\",\\r\\n  \\\"height\\\": 720\\r\\n}''\"\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          },\r\n          \"transparency\": {\r\n            \"expr\": {\r\n              \"Literal\": {\r\n                \"Value\": \"0D\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"outspace\": [\r\n      {\r\n        \"properties\": {\r\n          \"color\": {\r\n            \"solid\": {\r\n              \"color\": {\r\n                \"expr\": {\r\n                  \"Literal\": {\r\n                    \"Value\": \"''#DDE4EC''\"\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          },\r\n          \"transparency\": {\r\n            \"expr\": {\r\n              \"Literal\": {\r\n                \"Value\": \"0D\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"displayOption\": \"FitToPage\",\r\n  \"name\": \"hydrologia-fala\",\r\n  \"height\": 720\r\n}'"
+                  }
+                }
+              }
+            }
+          },
           "transparency": {
             "expr": {
               "Literal": {
                 "Value": "0D"
               }
             }
-          },
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
           "color": {
             "solid": {
               "color": {
@@ -22,28 +40,11 @@
                 }
               }
             }
-          }
-        }
-      }
-    ],
-    "background": [
-      {
-        "properties": {
+          },
           "transparency": {
             "expr": {
               "Literal": {
                 "Value": "0D"
-              }
-            }
-          },
-          "color": {
-            "solid": {
-              "color": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'{\r\n  \"displayName\": \"Hydrologia i fala\",\r\n  \"displayOption\": \"FitToPage\",\r\n  \"objects\": {\r\n    \"outspace\": [\r\n      {\r\n        \"properties\": {\r\n          \"transparency\": {\r\n            \"expr\": {\r\n              \"Literal\": {\r\n                \"Value\": \"0D\"\r\n              }\r\n            }\r\n          },\r\n          \"color\": {\r\n            \"solid\": {\r\n              \"color\": {\r\n                \"expr\": {\r\n                  \"Literal\": {\r\n                    \"Value\": \"''#DDE4EC''\"\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"background\": [\r\n      {\r\n        \"properties\": {\r\n          \"transparency\": {\r\n            \"expr\": {\r\n              \"Literal\": {\r\n                \"Value\": \"0D\"\r\n              }\r\n            }\r\n          },\r\n          \"color\": {\r\n            \"solid\": {\r\n              \"color\": {\r\n                \"expr\": {\r\n                  \"Literal\": {\r\n                    \"Value\": \"''{\\r\\n  \\\"displayName\\\": \\\"Obraz kraju\\\",\\r\\n  \\\"displayOption\\\": \\\"FitToPage\\\",\\r\\n  \\\"objects\\\": {\\r\\n    \\\"outspace\\\": [\\r\\n      {\\r\\n        \\\"properties\\\": {\\r\\n          \\\"transparency\\\": {\\r\\n            \\\"expr\\\": {\\r\\n              \\\"Literal\\\": {\\r\\n                \\\"Value\\\": \\\"0D\\\"\\r\\n              }\\r\\n            }\\r\\n          },\\r\\n          \\\"color\\\": {\\r\\n            \\\"solid\\\": {\\r\\n              \\\"color\\\": {\\r\\n                \\\"expr\\\": {\\r\\n                  \\\"Literal\\\": {\\r\\n                    \\\"Value\\\": \\\"''''#DDE4EC''''\\\"\\r\\n                  }\\r\\n                }\\r\\n              }\\r\\n            }\\r\\n          }\\r\\n        }\\r\\n      }\\r\\n    ],\\r\\n    \\\"background\\\": [\\r\\n      {\\r\\n        \\\"properties\\\": {\\r\\n          \\\"transparency\\\": {\\r\\n            \\\"expr\\\": {\\r\\n              \\\"Literal\\\": {\\r\\n                \\\"Value\\\": \\\"0D\\\"\\r\\n              }\\r\\n            }\\r\\n          },\\r\\n          \\\"color\\\": {\\r\\n            \\\"solid\\\": {\\r\\n              \\\"color\\\": {\\r\\n                \\\"expr\\\": {\\r\\n                  \\\"Literal\\\": {\\r\\n                    \\\"Value\\\": \\\"''''#EEF2F7''''\\\"\\r\\n                  }\\r\\n                }\\r\\n              }\\r\\n            }\\r\\n          }\\r\\n        }\\r\\n      }\\r\\n    ]\\r\\n  },\\r\\n  \\\"name\\\": \\\"obraz-kraju\\\",\\r\\n  \\\"$schema\\\": \\\"https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json\\\",\\r\\n  \\\"height\\\": 720,\\r\\n  \\\"width\\\": 1280\\r\\n}''\"\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"name\": \"hydrologia-fala\",\r\n  \"$schema\": \"https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json\",\r\n  \"height\": 720,\r\n  \"width\": 1280\r\n}'"
-                  }
-                }
               }
             }
           }
@@ -51,8 +52,7 @@
       }
     ]
   },
+  "displayOption": "FitToPage",
   "name": "infrastruktura-krytyczna",
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
-  "height": 720,
-  "width": 1280
+  "height": 720
 }

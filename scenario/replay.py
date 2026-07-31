@@ -80,6 +80,11 @@ class KustoClient:
                     raise SystemExit(f"{url}\n{last}")
             except urllib.error.URLError as exc:
                 last = str(exc)
+            except TimeoutError as exc:
+                # Timeout odczytu nie jest opakowany w URLError, bo polaczenie zostalo
+                # juz nawiazane. Bez tej galezi ciezkie operacje (.clear na kilkuset
+                # tysiacach wierszy) przerywaly caly przebieg zamiast zostac ponowione.
+                last = f"timeout odczytu: {exc}"
             time.sleep(min(2 ** attempt, 15))
         raise SystemExit(f"Nie udalo sie wykonac zadania po 5 probach: {last}")
 
@@ -476,8 +481,10 @@ def run(args):
 
 def main():
     p = argparse.ArgumentParser(description="Odtwarzanie scenariusza COP-24 do Eventhouse")
-    p.add_argument("--speed", type=float, default=300.0,
-                   help="ile sekund scenariusza przypada na sekunde zegara (300 = 5 minut na sekunde)")
+    p.add_argument("--speed", type=float, default=60.0,
+                   help="ile sekund scenariusza przypada na sekunde zegara (60 = minuta na sekunde). "
+                        "Okno dashboardu musi byc krotsze niz czas jednego cyklu, inaczej w kadrze "
+                        "lezy cala scena naraz i przyrost nie jest widoczny")
     p.add_argument("--reset", action="store_true", help="wyczysc tabele przed startem")
     p.add_argument("--reset-only", action="store_true", help="tylko wyczysc i zakoncz")
     p.add_argument("--bulk", action="store_true",

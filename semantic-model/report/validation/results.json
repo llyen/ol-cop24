@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-31T15:11:22.0431617+02:00",
+  "generatedAt": "2026-07-31T16:08:11.6828952+02:00",
   "reportId": "a0449186-59df-49f4-a151-9ceceb06726e",
   "semanticModelId": "669a6a2b-0115-4eeb-8f63-a6e1027133b0",
   "pagesExpected": 5,
@@ -271,9 +271,9 @@
       "page": "hydrologia-fala",
       "visual": "p2_wave",
       "type": "lineChart",
-      "purpose": "Propagacja fali w małych multiplikatorach",
+      "purpose": "Propagacja fali na trasie",
       "status": "OK",
-      "rows": 1500
+      "rows": 1501
     },
     {
       "page": "hydrologia-fala",
@@ -321,7 +321,7 @@
       "type": "scatterChart",
       "purpose": "Korelacja skutków infrastrukturalnych",
       "status": "OK",
-      "rows": 2477
+      "rows": 224
     },
     {
       "page": "infrastruktura-krytyczna",
@@ -329,7 +329,7 @@
       "type": "areaChart",
       "purpose": "Trend awarii energetycznych",
       "status": "OK",
-      "rows": 530
+      "rows": 576
     },
     {
       "page": "infrastruktura-krytyczna",
@@ -337,7 +337,7 @@
       "type": "lineChart",
       "purpose": "Trend pokrycia operatorów",
       "status": "OK",
-      "rows": 350
+      "rows": 341
     },
     {
       "page": "sily-ewakuacja",
@@ -385,7 +385,7 @@
       "type": "stackedAreaChart",
       "purpose": "Narastanie ewakuacji",
       "status": "OK",
-      "rows": 201
+      "rows": 199
     },
     {
       "page": "sily-ewakuacja",
@@ -433,7 +433,7 @@
       "type": "areaChart",
       "purpose": "Trend zasięgu Z20",
       "status": "OK",
-      "rows": 356
+      "rows": 324
     },
     {
       "page": "eskalacja-spo-dezinformacja",
@@ -449,14 +449,14 @@
       "type": "pivotTable",
       "purpose": "Macierz decyzji i uzasadnień",
       "status": "OK",
-      "rows": 100
+      "rows": 55
     }
   ],
   "sanityResults": [
     {
       "measure": "KIS",
-      "expected": 5.27,
-      "actual": 5.265280581348324,
+      "expected": 4.34,
+      "actual": 4.33601130399675,
       "status": "OK"
     },
     {
@@ -467,8 +467,8 @@
     },
     {
       "measure": "Liczba Ewakuowanych",
-      "expected": 160871,
-      "actual": 160871,
+      "expected": 15445,
+      "actual": 15445,
       "status": "OK"
     },
     {
@@ -479,8 +479,8 @@
     },
     {
       "measure": "Odbiorcy Bez Prądu",
-      "expected": 1375406,
-      "actual": 1375406,
+      "expected": 14168,
+      "actual": 14168,
       "status": "OK"
     },
     {
@@ -491,86 +491,86 @@
     },
     {
       "measure": "Gminy Telco Ponizej 50",
-      "expected": 80,
-      "actual": 80,
+      "expected": 74,
+      "actual": 74,
       "status": "OK"
     },
     {
       "measure": "Incydenty",
-      "expected": 4943,
-      "actual": 4943,
+      "expected": 1714,
+      "actual": 1714,
       "status": "OK"
     },
     {
       "measure": "Incydenty Priorytet 4 Plus",
-      "expected": 818,
-      "actual": 818,
+      "expected": 281,
+      "actual": 281,
       "status": "OK"
     },
     {
       "measure": "Osoby Dotkniete",
-      "expected": 263001,
-      "actual": 263001,
+      "expected": 91612,
+      "actual": 91612,
       "status": "OK"
     },
     {
       "measure": "Sygnały Dezinformacji",
-      "expected": 363,
-      "actual": 363,
+      "expected": 335,
+      "actual": 335,
       "status": "OK"
     },
     {
       "measure": "Zasieg Dezinformacji",
-      "expected": 39854793,
-      "actual": 39854793,
+      "expected": 37798399,
+      "actual": 37798399,
       "status": "OK"
     },
     {
       "measure": "PSP Zastepy",
-      "expected": 11366,
-      "actual": 11366,
+      "expected": 651,
+      "actual": 651,
       "status": "OK"
     },
     {
       "measure": "WOT Zolnierze",
-      "expected": 62024,
-      "actual": 62024,
+      "expected": 4013,
+      "actual": 4013,
       "status": "OK"
     },
     {
       "measure": "Pompy",
-      "expected": 7041,
-      "actual": 7041,
+      "expected": 387,
+      "actual": 387,
       "status": "OK"
     },
     {
       "measure": "Agregaty",
-      "expected": 4426,
-      "actual": 4426,
+      "expected": 218,
+      "actual": 218,
       "status": "OK"
     },
     {
       "measure": "Smiglowce",
-      "expected": 103,
-      "actual": 103,
+      "expected": 8,
+      "actual": 8,
       "status": "OK"
     },
     {
       "measure": "Czas Reakcji Min",
-      "expected": 3839,
-      "actual": 3839,
+      "expected": 3818,
+      "actual": 3818,
       "status": "OK"
     },
     {
       "measure": "Rekomendacje RZZK",
-      "expected": 47,
-      "actual": 47,
+      "expected": 21,
+      "actual": 21,
       "status": "OK"
     },
     {
       "measure": "Gminy KIS Powiat Plus",
-      "expected": 54,
-      "actual": 54,
+      "expected": 55,
+      "actual": 55,
       "status": "OK"
     },
     {
@@ -581,8 +581,8 @@
     },
     {
       "measure": "Gminy KIS RZZK",
-      "expected": 47,
-      "actual": 47,
+      "expected": 21,
+      "actual": 21,
       "status": "OK"
     },
     {
@@ -593,8 +593,8 @@
     },
     {
       "measure": "Stan Ostrzegawczy Hydro",
-      "expected": 43,
-      "actual": 43,
+      "expected": 24,
+      "actual": 24,
       "status": "OK"
     }
   ]

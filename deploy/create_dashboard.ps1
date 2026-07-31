@@ -305,12 +305,13 @@ function New-DashboardJson($queries, [string]$schemaVersion, [switch]$Minimal) {
                 kind = 'duration'
                 id = New-StableGuid 'parameter-time-range'
                 displayName = 'Zakres czasu'
-                description = 'Ruchome okno ostatnich 2 godzin. Scenariusz odtwarza sie na skompresowanej osi czasu przypietej do biezacego zegara, wiec dashboard caly czas pokazuje aktualna sytuacje.'
+                description = 'Ruchome okno ostatnich 15 minut zegara. Scenariusz biegnie w tempie 60x, wiec okno obejmuje ok. 15 godzin akcji i przesuwa sie razem z zegarem.'
                 beginVariableName = '_startTime'
                 endVariableName = '_endTime'
-                # Okno dynamiczne, nie sztywne daty: dzieki temu kolejne odswiezenia
-                # przesuwaja sie razem z zegarem i widac naplyw nowych zdarzen.
-                defaultValue = [ordered]@{ kind = 'dynamic'; count = 2; unit = 'hours' }
+                # Okno musi byc wyraznie krotsze niz jeden cykl odtwarzania (24 min przy
+                # tempie 60x). Przy oknie dluzszym od cyklu w kadrze lezy cala scena naraz,
+                # przyrost gina w masie i dashboard wyglada na zamrozony.
+                defaultValue = [ordered]@{ kind = 'dynamic'; count = 15; unit = 'minutes' }
                 showOnPages = [ordered]@{ kind = 'all' }
             }
         )
