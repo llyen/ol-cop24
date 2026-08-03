@@ -104,8 +104,9 @@ class KustoClient:
                     # Token wygasl w trakcie przebiegu. Unieważniamy cache, zeby
                     # kolejna proba poszla z nowym tokenem, zamiast konczyc odtwarzanie.
                     self.tokens.invalidate()
-                # 429 i 5xx sa przejsciowe, pozostalych nie ma sensu ponawiac
-                elif exc.code not in (429, 500, 502, 503, 504):
+                # 429 i wszystkie 5xx sa przejsciowe (Eventhouse potrafi zwrocic 520),
+                # pozostalych nie ma sensu ponawiac
+                elif exc.code != 429 and exc.code < 500:
                     raise SystemExit(f"{url}\n{last}")
             except urllib.error.URLError as exc:
                 last = str(exc)
