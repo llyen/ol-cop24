@@ -1,4 +1,4 @@
-"""Buduje statyczna scene demo (src/data/scene.json) z datasets/ repozytorium ol-cop24.
+"""Buduje statyczna scene demo (public/data/scene.json) z datasets/ repozytorium ol-cop24.
 
 Dlaczego z plikow, a nie z Eventhouse:
 - Eventhouse przechowuje wylacznie okno ostatniego odtwarzania (replay czysci tabele
@@ -28,6 +28,15 @@ OUT = APP / "public" / "data" / "scene.json"
 
 DAYS = [(datetime.date(2026, 9, 12) + datetime.timedelta(days=i)).isoformat() for i in range(14)]
 D0 = "2026-09-15"
+
+# Normalizacja skladowych KIS (kalibracja 2026-08-04, notebooks/_calibrate.py).
+# Wartosc dzielnika = poziom, przy ktorym skladowa osiaga 100 pkt.
+# Dobrane z rozkladu faktycznych danych tak, by kulminacja (2026-09-17) przebijala
+# prog 85 = zwolanie RZZK punktowo, a nie zalewala mapy czerwienia.
+INC_DIV = 5.0     # zgloszen na gmine/dobe (p95 = 4, max = 8)
+PWR_DIV = 1200.0  # odbiorcow bez pradu na gmine/dobe (mediana 1027, max 10 749)
+EV_DIV = 250.0    # ewakuowanych na gmine/dobe (p90 = 414, max 604)
+RES_DIV = 900.0   # punkty obciazenia sil i srodkow na wojewodztwo/dobe (mediana 132, max 2390)
 
 
 def read_csv(name: str) -> list[dict]:
@@ -117,8 +126,17 @@ def main() -> None:
             ev_status[d][g] = e["status"]
 
     res_day: dict = collections.defaultdict(dict)
+    res_load: dict = collections.defaultdict(dict)
     for e in stream("resource_deployment"):
         d, v = e["timestamp"][:10], e["voivodeship_code"]
+        load = (
+            e["psp_units"] * 3
+            + e["wot_soldiers"] * 0.4
+            + e["pumps"] * 5
+            + e["generators"] * 4
+            + e["helicopters"] * 25
+        )
+        res_load[d][v] = max(res_load[d].get(v, 0.0), load)
         prev = res_day[d].get(v)
         if prev is None or e["timestamp"] > prev["ts"]:
             res_day[d][v] = {
@@ -161,13 +179,14 @@ def main() -> None:
         byv: dict[str, list[float]] = collections.defaultdict(list)
         for g in gminas:
             c_hydro = hydro_score.get(day, {}).get(g, 0)
-            c_inc = inc_cnt.get(day, {}).get(g, 0) / 20 * 100
-            c_pwr = pwr_sum.get(day, {}).get(g, 0) / 5000 * 100
+            c_inc = min(100.0, inc_cnt.get(day, {}).get(g, 0) / INC_DIV * 100)
+            c_pwr = min(100.0, pwr_sum.get(day, {}).get(g, 0) / PWR_DIV * 100)
             c_tel = 100 - tel_min.get(day, {}).get(g, 100.0)
-            c_ev = ev_max.get(day, {}).get(g, 0) / 1000 * 100
+            c_ev = min(100.0, ev_max.get(day, {}).get(g, 0) / EV_DIV * 100)
+            c_res = min(100.0, res_load.get(day, {}).get(g2v[g], 0.0) / RES_DIV * 100)
             kis = min(
                 100.0,
-                round(0.30 * c_hydro + 0.25 * c_inc + 0.15 * c_pwr + 0.10 * c_tel + 0.10 * c_ev + 0.10 * 20, 1),
+                round(0.30 * c_hydro + 0.25 * c_inc + 0.15 * c_pwr + 0.10 * c_tel + 0.10 * c_ev + 0.10 * c_res, 1),
             )
             scores.append(kis)
             byv[g2v[g]].append(kis)
@@ -191,7 +210,7 @@ def main() -> None:
                             r1(0.15 * c_pwr),
                             r1(0.10 * c_tel),
                             r1(0.10 * c_ev),
-                            2.0,
+                            r1(0.10 * c_res),
                         ],
                         "lvl": hydro_level.get(day, {}).get(g, 0),
                         "alarm": 1 if g in alarm_flag.get(day, set()) else (2 if g in warn_flag.get(day, set()) else 0),
@@ -341,7 +360,7 @@ def main() -> None:
             "d0": D0,
             "source": "datasets/ (deterministyczna scena powodziowa 2026-09-12..25)",
             "kisFormula": "0,30*hydro + 0,25*incydenty + 0,15*energia + 0,10*telekom + 0,10*ewakuacja + 0,10*zasoby",
-            "kisComponents": ["hydrologia", "incydenty", "energia", "telekom", "ewakuacja", "zasoby"],
+            "kisComponents": ["hydrologia", "incydenty", "energia", "telekom", "ewakuacja", "siły i środki"],
         },
         "voivodeships": [
             {

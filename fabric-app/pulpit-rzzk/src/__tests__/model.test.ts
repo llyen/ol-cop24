@@ -46,10 +46,16 @@ describe('scena', () => {
     expect(alarmed.size).toBe(10);
   });
 
-  it('kulminacja wypada w scenie i przekracza prog wojewodzki', () => {
+  it('kulminacja wypada w scenie i osiaga prog zwolania RZZK', () => {
     expect(scene.meta.days).toContain(peakDay);
     const peak = index.countryByDay.get(peakDay)!;
-    expect(peak.maxKis).toBeGreaterThanOrEqual(45);
+    expect(peak.maxKis).toBeGreaterThanOrEqual(85);
+  });
+
+  it('prog RZZK jest przekraczany punktowo, a nie w polowie sceny', () => {
+    const overRzzk = scene.country.filter((c) => c.maxKis >= 85);
+    expect(overRzzk.length).toBeGreaterThanOrEqual(1);
+    expect(overRzzk.length).toBeLessThanOrEqual(3);
   });
 
   it('KIS krajowy nigdy nie przekracza maksimum lokalnego', () => {

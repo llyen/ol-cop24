@@ -553,7 +553,11 @@ export function rzzkCase(index: SceneIndex, day: string): RzzkCase {
   const cons: string[] = [];
 
   if (c) {
-    if (c.maxKis >= 45) pros.push(`Maks. lokalny KIS ${c.maxKis} przekracza próg wojewódzki (45).`);
+    if (c.maxKis >= 85)
+      pros.push(`Maks. lokalny KIS ${c.maxKis} osiąga próg zwołania RZZK (85).`);
+    else if (c.maxKis >= 65)
+      pros.push(`Maks. lokalny KIS ${c.maxKis} przekracza próg ministra wiodącego (65).`);
+    else if (c.maxKis >= 45) pros.push(`Maks. lokalny KIS ${c.maxKis} przekracza próg wojewódzki (45).`);
     if (hot.length >= 2)
       pros.push(`Zagrożenie obejmuje ${hot.length} województwa: ${hot.map((r) => r.name).join(', ')}.`);
     if (cascade >= 3)
@@ -565,6 +569,8 @@ export function rzzkCase(index: SceneIndex, day: string): RzzkCase {
       pros.push(`Pokrycie telekomunikacyjne spada do ${c.minCov}% — zagrożone alarmowanie ludności.`);
 
     if (c.maxKis < 65) cons.push('Rekomendacja algorytmiczna nie osiąga progu ministra wiodącego (65).');
+    else if (c.maxKis < 85)
+      cons.push('Rekomendacja algorytmiczna nie osiąga progu zwołania RZZK (85) — decyzja wymaga uzasadnienia przesłankami.');
     if (hot.length <= 1)
       cons.push('Zagrożenie skoncentrowane w jednym województwie — możliwe działanie na poziomie wojewody.');
     if (c.p1 === 0) cons.push('Brak zgłoszeń o priorytecie 1 w tym dniu.');

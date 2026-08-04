@@ -15,15 +15,15 @@ Wymiary: `dim_voivodeship`, `dim_powiat`, `dim_gmina`, `dim_hazard`, `dim_spo`, 
 1. Ile gmin było w alarmie? — 10 łącznie.
 2. Kiedy szczyt w Kłodzku? — 2026-09-15T10:05:00+02:00, 493 cm.
 3. Kiedy szczyt we Wrocławiu? — 2026-09-17T12:05:00+02:00, 536 cm.
-4. Jaki peak energii? — 24057 odbiorców w 2026-09-17T08:00.
-5. Ile incydentów? — 4943.
-6. Ile osób objęły zgłoszenia? — 263001.
-7. Ile ewakuowanych/statusów osób? — 56212.
+4. Jaki peak energii? — 14 168 odbiorców w godzinie 2026-09-16T18:00, a w skali doby 139 539.
+5. Ile incydentów? — 1714.
+6. Ile osób objęły zgłoszenia? — 91 612.
+7. Ile ewakuowanych/statusów osób? — 15 445.
 8. Minimalne telco? — 22.6%.
 9. Ile gmin telco poniżej 50%? — 80.
-10. Ile sygnałów Z20? — 363.
-11. Jaki zasięg Z20? — 39854793.
-12. Jaki max KIS? — 100 w 2026-09-16.
+10. Ile sygnałów Z20? — 335.
+11. Jaki zasięg Z20? — 37 798 399.
+12. Jaki max KIS? — 86,3 w 2026-09-17 (województwo dolnośląskie); to jedyna doba, w której indeks osiąga próg zwołania RZZK.
 13. Kiedy RZZK? — w `escalation_events` D0, minister wiodący→RZZK o 18:00.
 14. Jakie SPO? — SPO-1, SPO-2, SPO-3, SPO-10, SPO-12.
 15. Czy zastępujesz decydenta? — Nie; przedstawiam rekomendację i uzasadnienie.
@@ -40,7 +40,7 @@ Odpowiedź zaczynaj od jednego zdania podsumowania. Następnie podaj 3–5 punkt
 ## Dodatkowe pytania demonstracyjne
 
 17. „Jakie województwo pokazać ministrowi jako pierwsze?” — wskaż najwyższy max KIS w `kis_daily_voivodeship`.
-18. „Czy mamy podstawę do SPO-3?” — tak, powódź plus 363 sygnały Z20 i zakłócenia telco.
+18. „Czy mamy podstawę do SPO-3?” — tak, powódź plus 335 sygnałów Z20 i zakłócenia telco.
 19. „Jak udowodnić audyt decyzji?” — pokaż model `decision_log` i wymagane pola.
 20. „Czy dane pogodowe są częścią KIS?” — w tej wersji pogoda jest sygnałem kontekstowym, a KIS liczy hydro, incydenty, energię, telco, ewakuację i zasoby.
 21. „Co powiedzieć, gdy średni KIS krajowy jest niski?” — średnia krajowa rozmywa zdarzenie lokalne; pokazuj `max_local_kis` i liczbę gmin powyżej progów.

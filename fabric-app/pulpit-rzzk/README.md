@@ -57,10 +57,11 @@ python tools/build_scene.py
 ```
 
 Skrypt powtarza formułę KIS z `notebooks/02_situation_index.py` (wagi: hydro 30%,
-incydenty 25%, energia 15%, telekom 10%, ewakuacja 10%, zasoby 10%) i progi eskalacji
-z `notebooks/03_escalation_recommendation.py` (≥85 RZZK, ≥65 minister wiodący,
+incydenty 25%, energia 15%, telekom 10%, ewakuacja 10%, siły i środki 10%) i progi
+eskalacji z `notebooks/03_escalation_recommendation.py` (≥85 RZZK, ≥65 minister wiodący,
 ≥45 wojewoda, ≥25 powiat). Test regresyjny w `src/__tests__/model.test.ts` pilnuje
-zgodności progów w `model.ts` z notatnikiem.
+zgodności progów w `model.ts` z notatnikiem. **Dzielniki normalizacji muszą pozostać
+zgodne w obu miejscach** — patrz sekcja „Kalibracja KIS".
 
 ## Reguły uprawnień
 
@@ -95,23 +96,56 @@ npx rayfin up db apply --force    # migracja schematu
 | Polityka RLS ignorowana | dokumentacja podaje opcję `check` | poprawna nazwa to `policy` |
 | `build_scene.py` wywala się na `wave_delay_h` | puste stringi w JSONL | `float(x) if x else 0.0` |
 
-## Uwaga o danych
+## Kalibracja KIS i liczby scenariusza
 
-`datasets/derived/*` oraz `demo_metrics.json` powstały **przed** ostatnią regeneracją
-`datasets/`. Liczby cytowane w `fabric-app/RAYFIN_PROMPT.md` i `APP_SPEC.md`
-(maks. KIS 100, 363 sygnały dezinformacji) **nie odpowiadają obecnym danym**.
-Wartości faktyczne po przeliczeniu notatnikami 02/03:
+Normalizacja składowych KIS została skalibrowana 2026-08-04 na faktycznym rozkładzie
+danych (`notebooks/_calibrate.py`). Wcześniejsze dzielniki pochodziły z wcześniejszej,
+większej wersji zbioru i po regeneracji danych zaniżały indeks — maksimum zatrzymywało
+się na 65,4, więc algorytm **nigdy** nie rekomendował zwołania RZZK.
+
+Obowiązujące dzielniki (poziom, przy którym składowa osiąga 100 pkt) — zdefiniowane
+raz w `tools/build_scene.py` i powtórzone w `notebooks/02_situation_index.py`:
+
+| Składowa | Dzielnik | Uzasadnienie z danych |
+|---|---|---|
+| incydenty | 5 zgłoszeń / gmina / doba | p95 = 4, max = 8 |
+| energia | 1 200 odbiorców / gmina / doba | mediana 1 027, max 10 749 |
+| ewakuacja | 250 osób / gmina / doba | p90 = 414, max 604 |
+| siły i środki | 900 pkt obciążenia / woj. / doba | mediana 132, max 2 390 |
+
+Składowa „siły i środki" przestała być stałą 20 pkt — liczona jest z faktycznego
+`resource_deployment` (PSP ×3, WOT ×0,4, pompy ×5, agregaty ×4, śmigłowce ×25).
+
+Efekt: **maks. lokalny KIS 86,3 w dobie 2026-09-17** — próg 85 przebity punktowo,
+w jednej gminie i jednej dobie, bez zalewania mapy czerwienią. Rozkład rekomendacji
+wojewódzkich w całej scenie: 26 × powiat, 7 × wojewoda, 5 × minister wiodący, **1 × RZZK**.
+Test `prog RZZK jest przekraczany punktowo` pilnuje, żeby kolejna regeneracja danych
+tego nie zepsuła w żadną stronę.
+
+### Aktualne liczby scenariusza
+
+Źródło prawdy: `datasets/derived/demo_metrics.json`, generowany przez `compute_metrics.py`
+w katalogu głównym repozytorium. Uruchamiać po każdej regeneracji danych.
 
 | Miara | Wartość |
 |---|---|
-| Maks. lokalny KIS | **65,4** (2026-09-16) |
-| Sygnały dezinformacji | **335** |
+| Maks. lokalny KIS | **86,3** (2026-09-17) |
 | Gminy w alarmie | **10** |
-| Szczyt bez prądu (doba) | **139 539** odbiorców |
-| Maks. ewakuowanych (doba) | **8 858** osób |
+| Incydenty łącznie | **1 714** (w tym 495 priorytetu 1) |
+| Szczyt bez prądu | **14 168** odbiorców w godzinie, **139 539** w dobie |
+| Ewakuowani (ostatnie statusy) | **15 445** osób |
+| Sygnały medialne / dezinformacja | **3 044** / **335** |
+| Min. pokrycie telekomunikacyjne | **22,6 %** |
 
-Ponieważ maksymalny KIS nie przekracza 65,4, **algorytm nigdy nie rekomenduje RZZK**.
-Okazało się to korzystne narracyjnie: ekran „Zwołanie RZZK" buduje osobny argument —
-kaskadę wieloresortową (woda + energia + łączność + ewakuacja) obejmującą dwa
-województwa — który uzasadnia decyzję człowieka **wbrew progowi liczbowemu**.
-To najmocniejszy moment demo: pokazuje, że system wspiera decydenta, a nie zastępuje go.
+### Narracja demo
+
+Ekran „Zwołanie RZZK" nie opiera się wyłącznie na progu. Obok wartości KIS buduje
+osobne przesłanki — kaskadę wieloresortową (woda + energia + łączność + ewakuacja)
+i zasięg dwóch województw. Dzięki temu demo działa w obie strony:
+
+- **w dobie kulminacji** próg i przesłanki mówią to samo — decyzja jest oczywista,
+- **w dobach 2026-09-15/16/18** przesłanki są spełnione, ale próg jeszcze nie —
+  decydent może zwołać RZZK **wcześniej niż algorytm**, a aplikacja wymusi
+  uzasadnienie odstępstwa i zapisze je w rejestrze.
+
+To najmocniejszy moment demo: system wspiera decydenta, a nie zastępuje go.

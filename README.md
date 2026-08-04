@@ -56,24 +56,29 @@ Eventstream przyjmuje zdarzenia, Eventhouse analizuje real-time, Lakehouse przec
 | `dim_institution.csv` | 422 |
 | `dim_spo.csv` | 16 |
 | `dim_river_gauge.csv` | 120 |
-| `hydro_readings.jsonl` | 449400 |
-| `weather_observations.jsonl` | 118940 |
-| `incident_reports.jsonl` | 4943 |
-| `power_grid_events.jsonl` | 541 |
-| `telecom_events.jsonl` | 351 |
+| `hydro_readings.jsonl` | 46920 |
+| `weather_observations.jsonl` | 39900 |
+| `incident_reports.jsonl` | 1714 |
+| `power_grid_events.jsonl` | 592 |
+| `telecom_events.jsonl` | 343 |
 | `evacuation_status.jsonl` | 321 |
 | `resource_deployment.jsonl` | 432 |
-| `media_signals.jsonl` | 3028 |
+| `media_signals.jsonl` | 3044 |
 | `escalation_events.jsonl` | 5 |
 
 ## 🔢 Kluczowe liczby demo
 
+Źródło prawdy: `datasets/derived/demo_metrics.json` (generowany przez `compute_metrics.py`).
+Uruchamiaj go po każdej regeneracji danych — inaczej dokumentacja rozjedzie się ze zbiorem.
+
 - Gminy w alarmie hydro łącznie: 10.
-- Peak zasilania: 24057 odbiorców bez prądu w 2026-09-17T08:00.
-- Osoby w najnowszych statusach ewakuacji: 56212.
+- Szczyt zasilania: 14 168 odbiorców bez prądu w godzinie 2026-09-16T18:00, 139 539 w skali doby.
+- Osoby w najnowszych statusach ewakuacji: 15 445.
+- Incydenty łącznie: 1 714, w tym 495 priorytetu 1; objętych zgłoszeniami 91 612 osób.
 - Minimalne pokrycie telco: 22.6%.
-- Sygnały dezinformacji: 363 z zasięgiem 39854793.
-- Maksymalny lokalny KIS: 100 w 2026-09-16.
+- Sygnały medialne: 3 044, w tym 335 dezinformacji o zasięgu 37 798 399.
+- Maksymalny lokalny KIS: 86,3 w 2026-09-17 (dolnośląskie) — jedyna doba osiągająca próg zwołania RZZK.
+- Rekomendacje eskalacji w całej scenie: 26 × powiat, 7 × wojewoda, 5 × minister wiodący, 1 × RZZK.
 
 ## 🚀 Uruchomienie lokalne (Windows / PowerShell)
 

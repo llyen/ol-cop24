@@ -25,7 +25,7 @@ flowchart LR
 
 ## Warstwa 1 — źródła
 
-Źródła reprezentują PSP/112, IMGW-PIB, PGW Wody Polskie, PSE/OSD, operatorów telco, WCZK/PCZK, WOT i media. W danych demo jest 449400 odczytów hydro, 118940 obserwacji pogody, 4943 incydentów, 541 zdarzeń energetycznych i 351 zdarzeń telekomunikacyjnych. Każdy rekord ma `timestamp`, `stream` i klucz obszaru lub obiektu.
+Źródła reprezentują PSP/112, IMGW-PIB, PGW Wody Polskie, PSE/OSD, operatorów telco, WCZK/PCZK, WOT i media. W danych demo jest 449400 odczytów hydro, 118940 obserwacji pogody, 1714 incydentów, 541 zdarzeń energetycznych i 351 zdarzeń telekomunikacyjnych. Każdy rekord ma `timestamp`, `stream` i klucz obszaru lub obiektu.
 
 ## Warstwa 2 — Eventstream
 
@@ -41,7 +41,9 @@ Lakehouse utrzymuje wymiary: 16 województw, 380 powiatów, 2477 gmin, 20 zagro�
 
 ## Warstwa 5 — analityka
 
-Notebooki liczą KIS 0–100 z komponentów hydro, incydenty, energia, telekom, ewakuacja i zasoby. Wyniki dzienne zapisano w `datasets/derived`: KIS krajowy rośnie od 2.3 do 3.3 w szczycie, a maksymalny lokalny KIS osiąga 100.
+Notebooki liczą KIS 0–100 z komponentów hydro, incydenty, energia, telekom, ewakuacja i siły/środki. Normalizacja składowych jest skalibrowana na faktycznym rozkładzie danych scenariusza (`notebooks/_calibrate.py`) tak, aby kulminacja punktowo przebijała próg 85 = zwołanie RZZK. Wyniki dzienne zapisano w `datasets/derived`: KIS krajowy rośnie od 2.0 do 3.4 w szczycie, a maksymalny lokalny KIS osiąga 86,3 w dobie kulminacji 2026-09-17.
+
+KIS krajowy jest średnią z 2477 gmin, więc pozostaje niski nawet w kulminacji — to celowe. Zdarzenie jest lokalne, dlatego w narracji używa się `max_local_kis` i liczby gmin powyżej progów, a nie średniej krajowej.
 
 ## Warstwa 6 — semantyka i prezentacja
 

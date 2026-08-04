@@ -1,248 +1,114 @@
 {
-  "counts": {
-    "dim_gmina.csv": 2477,
-    "dim_hazard.csv": 20,
-    "dim_institution.csv": 422,
-    "dim_powiat.csv": 380,
-    "dim_river_gauge.csv": 120,
-    "dim_spo.csv": 16,
-    "dim_voivodeship.csv": 16,
-    "escalation_events.jsonl": 5,
-    "evacuation_status.jsonl": 321,
-    "hydro_readings.jsonl": 449400,
-    "incident_reports.jsonl": 4943,
-    "media_signals.jsonl": 3028,
-    "power_grid_events.jsonl": 541,
-    "resource_deployment.jsonl": 432,
-    "telecom_events.jsonl": 351,
-    "weather_observations.jsonl": 118940
-  },
-  "alarm_gminas_total": 10,
-  "alarm_gminas_by_day": {
-    "2026-09-14": 2,
-    "2026-09-15": 4,
-    "2026-09-16": 7,
-    "2026-09-17": 6,
-    "2026-09-18": 4,
-    "2026-09-19": 2
-  },
-  "route_peaks": {
-    "WG-001": {
-      "timestamp": "2026-09-15T10:05:00+02:00",
-      "stream": "hydro_readings",
-      "gauge_id": "WG-001",
-      "gmina_code": "0201001",
-      "river": "Nysa Kłodzka",
-      "level_cm": 493,
-      "flow_m3s": 1003.4,
-      "trend": "rising",
-      "warning_level_cm": 268,
-      "alarm_level_cm": 340
-    },
-    "WG-003": {
-      "timestamp": "2026-09-16T00:10:00+02:00",
-      "stream": "hydro_readings",
-      "gauge_id": "WG-003",
-      "gmina_code": "1601001",
-      "river": "Nysa Kłodzka",
-      "level_cm": 512,
-      "flow_m3s": 1378.5,
-      "trend": "rising",
-      "warning_level_cm": 284,
-      "alarm_level_cm": 360
-    },
-    "WG-004": {
-      "timestamp": "2026-09-16T14:15:00+02:00",
-      "stream": "hydro_readings",
-      "gauge_id": "WG-004",
-      "gmina_code": "1603001",
-      "river": "Odra",
-      "level_cm": 520,
-      "flow_m3s": 898.8,
-      "trend": "rising",
-      "warning_level_cm": 292,
-      "alarm_level_cm": 370
-    },
-    "WG-007": {
-      "timestamp": "2026-09-17T12:05:00+02:00",
-      "stream": "hydro_readings",
-      "gauge_id": "WG-007",
-      "gmina_code": "0203001",
-      "river": "Odra",
-      "level_cm": 536,
-      "flow_m3s": 1018.7,
-      "trend": "rising",
-      "warning_level_cm": 316,
-      "alarm_level_cm": 400
-    },
-    "WG-010": {
-      "timestamp": "2026-09-19T02:25:00+02:00",
-      "stream": "hydro_readings",
-      "gauge_id": "WG-010",
-      "gmina_code": "0801001",
-      "river": "Odra",
-      "level_cm": 564,
-      "flow_m3s": 1628.4,
-      "trend": "rising",
-      "warning_level_cm": 340,
-      "alarm_level_cm": 430
-    }
-  },
-  "peak_power_hour": "2026-09-17T08:00",
-  "peak_power_customers": 24057,
-  "power_total_customers_event_sum": 1375406,
-  "evac_latest_people_sum": 56212,
-  "evac_latest_completed_people": 56212,
-  "incident_total": 4943,
-  "incident_affected_sum": 263001,
-  "peak_incident_15m_time": "2026-09-14T22:30:00+02:00",
-  "peak_incident_15m_count": 12,
-  "incidents_by_day": {
-    "2026-09-12": 110,
-    "2026-09-13": 203,
-    "2026-09-14": 284,
-    "2026-09-15": 571,
-    "2026-09-16": 559,
-    "2026-09-17": 599,
-    "2026-09-18": 589,
-    "2026-09-19": 414,
-    "2026-09-20": 273,
-    "2026-09-21": 315,
-    "2026-09-22": 285,
-    "2026-09-23": 274,
-    "2026-09-24": 301,
-    "2026-09-25": 166
-  },
-  "telco_min_coverage_pct": 22.6,
-  "telco_gminas_below_50": 80,
-  "media_total": 3028,
-  "disinfo_count": 363,
-  "disinfo_reach": 39854793,
-  "resource_peak_event": {
-    "timestamp": "2026-09-17T12:00:00+02:00",
-    "stream": "resource_deployment",
-    "event_id": "RES-00161",
-    "voivodeship_code": "02",
-    "psp_units": 177,
-    "wot_soldiers": 1914,
-    "pumps": 30,
-    "generators": 69,
-    "helicopters": 3
-  },
-  "resource_peak_total": 2193,
-  "kis_country": [
-    {
-      "date": "2026-09-12",
-      "kis_country": 2.3,
-      "max_local_kis": 21.4,
-      "gminas_over_25": 0,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-13",
-      "kis_country": 2.4,
-      "max_local_kis": 42.8,
-      "gminas_over_25": 4,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-14",
-      "kis_country": 2.5,
-      "max_local_kis": 43.1,
-      "gminas_over_25": 7,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-15",
-      "kis_country": 2.9,
-      "max_local_kis": 78.6,
-      "gminas_over_25": 29,
-      "gminas_over_45": 11,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-16",
-      "kis_country": 3.2,
-      "max_local_kis": 100,
-      "gminas_over_25": 40,
-      "gminas_over_45": 13,
-      "gminas_over_85": 1
-    },
-    {
-      "date": "2026-09-17",
-      "kis_country": 3.3,
-      "max_local_kis": 89.4,
-      "gminas_over_25": 39,
-      "gminas_over_45": 17,
-      "gminas_over_85": 2
-    },
-    {
-      "date": "2026-09-18",
-      "kis_country": 3.1,
-      "max_local_kis": 68.6,
-      "gminas_over_25": 35,
-      "gminas_over_45": 8,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-19",
-      "kis_country": 2.7,
-      "max_local_kis": 47.1,
-      "gminas_over_25": 19,
-      "gminas_over_45": 1,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-20",
-      "kis_country": 2.5,
-      "max_local_kis": 41.5,
-      "gminas_over_25": 5,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-21",
-      "kis_country": 2.5,
-      "max_local_kis": 41.0,
-      "gminas_over_25": 6,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-22",
-      "kis_country": 2.5,
-      "max_local_kis": 42.9,
-      "gminas_over_25": 3,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-23",
-      "kis_country": 2.4,
-      "max_local_kis": 38.1,
-      "gminas_over_25": 1,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-24",
-      "kis_country": 2.5,
-      "max_local_kis": 45.2,
-      "gminas_over_25": 5,
-      "gminas_over_45": 1,
-      "gminas_over_85": 0
-    },
-    {
-      "date": "2026-09-25",
-      "kis_country": 2.3,
-      "max_local_kis": 30.2,
-      "gminas_over_25": 1,
-      "gminas_over_45": 0,
-      "gminas_over_85": 0
-    }
+  "alarm_gminas": 10,
+  "incidents_total": 1714,
+  "affected_people_total": 91612,
+  "incidents_priority1": 495,
+  "incident_types_top": [
+    [
+      "podtopienie posesji",
+      427
+    ],
+    [
+      "zalanie budynku",
+      314
+    ],
+    [
+      "pompowanie wody",
+      288
+    ],
+    [
+      "podtopienie drogi",
+      215
+    ],
+    [
+      "ewakuacja osób",
+      142
+    ]
   ],
-  "top_rec_count": 194
+  "power_peak_hour": {
+    "hour": "2026-09-16T18",
+    "customers_offline": 14168
+  },
+  "power_peak_day": {
+    "day": "2026-09-16",
+    "customers_offline": 139539
+  },
+  "telecom_events": 343,
+  "telecom_min_coverage_pct": 22.6,
+  "evacuated_latest_total": 15445,
+  "evacuated_peak_gmina_day": {
+    "day": "2026-09-17",
+    "people": 604
+  },
+  "media_signals_total": 3044,
+  "media_reach_total": 338638714,
+  "disinfo_signals": 335,
+  "disinfo_reach": 37798399,
+  "kis_peak": {
+    "day": "2026-09-17",
+    "max_local_kis": 86.3,
+    "kis_country": 3.4,
+    "gminas_over_45": 26,
+    "gminas_over_85": 1
+  },
+  "kis_country_range": [
+    2.0,
+    3.4
+  ],
+  "recommendations_by_level": {
+    "powiat": 26,
+    "wojewoda": 7,
+    "minister wiodący": 5,
+    "RZZK": 1
+  },
+  "gauge_peaks": [
+    {
+      "gauge_id": "WG-095",
+      "level_cm": 309,
+      "at": "2026-09-12T15:00:00+02:00",
+      "gmina": "1015003"
+    },
+    {
+      "gauge_id": "WG-100",
+      "level_cm": 292,
+      "at": "2026-09-12T17:00:00+02:00",
+      "gmina": "2605006"
+    },
+    {
+      "gauge_id": "WG-012",
+      "level_cm": 305,
+      "at": "2026-09-13T04:00:00+02:00",
+      "gmina": "0611007"
+    },
+    {
+      "gauge_id": "WG-117",
+      "level_cm": 161,
+      "at": "2026-09-13T04:00:00+02:00",
+      "gmina": "0218002"
+    },
+    {
+      "gauge_id": "WG-015",
+      "level_cm": 309,
+      "at": "2026-09-13T05:00:00+02:00",
+      "gmina": "2412003"
+    },
+    {
+      "gauge_id": "WG-038",
+      "level_cm": 253,
+      "at": "2026-09-13T05:00:00+02:00",
+      "gmina": "2219002"
+    },
+    {
+      "gauge_id": "WG-107",
+      "level_cm": 159,
+      "at": "2026-09-13T05:00:00+02:00",
+      "gmina": "1016005"
+    },
+    {
+      "gauge_id": "WG-084",
+      "level_cm": 237,
+      "at": "2026-09-14T09:00:00+02:00",
+      "gmina": "0814005"
+    }
+  ]
 }

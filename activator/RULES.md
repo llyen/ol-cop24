@@ -12,13 +12,13 @@ Cel: wykryć dynamikę zanim pojawi się szczyt. KQL: `hydro_readings | order by
 Cel: powiązać zjawisko z wpływem na ludność. KQL: `incident_reports | summarize c=count() by bin(timestamp,15m), gmina_code | where c > 25`. Próg 25 oznacza przeciążenie lokalne. W danych peak 15-min wynosi 12, więc w demo można obniżyć próg testowy. Akcja: SPO-3, SPO-12.
 
 ## 4. Odbiorcy bez prądu
-Cel: aktywować Z07 i IK. KQL: `power_grid_events | summarize customers=sum(customers_offline) by bin(timestamp,1h), gmina_code | where customers > 5000`. Próg: 5000 odbiorców to skala istotna społecznie. W danych szczyt godzinowy wynosi 24057. Odbiorca: PSE/OSD, wojewoda, RCB. Akcja: SPO-10.
+Cel: aktywować Z07 i IK. KQL: `power_grid_events | summarize customers=sum(customers_offline) by bin(timestamp,1h), gmina_code | where customers > 5000`. Próg: 5000 odbiorców to skala istotna społecznie. W danych szczyt godzinowy wynosi 14 168 odbiorców, a dobowy 139 539. Odbiorca: PSE/OSD, wojewoda, RCB. Akcja: SPO-10.
 
 ## 5. Brak łączności
 Cel: wykryć utratę kanałów alarmowania. KQL: `telecom_events | where coverage_pct < 40 or base_stations_down >= 5`. Próg: poniżej 40% oznacza problem z dotarciem do ludności. Minimalne pokrycie w danych: 22.6%. Akcja: SPO-10 i SPO-3.
 
 ## 6. Dezinformacja Z20
-Cel: uruchomić komunikację społeczną. KQL: `media_signals | where disinformation_flag == true and reach > 50000`. W danych jest 363 sygnałów i zasięg 39854793. Odbiorca: CIR, NASK, RCB. Akcja: sprostowanie i SPO-3.
+Cel: uruchomić komunikację społeczną. KQL: `media_signals | where disinformation_flag == true and reach > 50000`. W danych jest 335 sygnałów o łącznym zasięgu 37 798 399. Odbiorca: CIR, NASK, RCB. Akcja: sprostowanie i SPO-3.
 
 ## 7. Rekomendacja RZZK
 Cel: formalnie podnieść temat na poziom krajowy. KQL: `escalation_recommendations | where recommended_level == 'RZZK'`. Próg: KIS ≥85 albo zaangażowanie kilku ministrów. Akcja: SPO-1, SPO-2, SPO-3, SPO-10.

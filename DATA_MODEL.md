@@ -180,7 +180,7 @@ WG-001,Kłodzko,Nysa Kłodzka,0201001,268,340,50.43,16.65,0
 
 **Opis:** Odczyty wodowskazów co 5 minut; największy strumień telemetrii.
 
-**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 449400. **Zakres czasu:** 2026-09-12T12:00:00+02:00 — 2026-09-25T12:00:00+02:00.
+**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 46920. **Zakres czasu:** 2026-09-12T12:00:00+02:00 — 2026-09-25T12:00:00+02:00.
 
 | Kolumna | Typ | Opis | Przykład | Wartości dopuszczalne |
 |---|---|---|---|---|
@@ -216,7 +216,7 @@ WG-001,Kłodzko,Nysa Kłodzka,0201001,268,340,50.43,16.65,0
 
 **Opis:** Obserwacje pogody per powiat co godzinę.
 
-**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 118940. **Zakres czasu:** 2026-09-12T12:00:00+02:00 — 2026-09-25T12:00:00+02:00.
+**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 39900. **Zakres czasu:** 2026-09-12T12:00:00+02:00 — 2026-09-25T12:00:00+02:00.
 
 | Kolumna | Typ | Opis | Przykład | Wartości dopuszczalne |
 |---|---|---|---|---|
@@ -246,7 +246,7 @@ WG-001,Kłodzko,Nysa Kłodzka,0201001,268,340,50.43,16.65,0
 
 **Opis:** Zgłoszenia 112/PSP z typem, priorytetem i liczbą osób objętych.
 
-**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 4943. **Zakres czasu:** 2026-09-12T12:01:00+02:00 — 2026-09-25T12:11:00+02:00.
+**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 1714. **Zakres czasu:** 2026-09-12T12:01:00+02:00 — 2026-09-25T12:11:00+02:00.
 
 | Kolumna | Typ | Opis | Przykład | Wartości dopuszczalne |
 |---|---|---|---|---|
@@ -284,7 +284,7 @@ WG-001,Kłodzko,Nysa Kłodzka,0201001,268,340,50.43,16.65,0
 
 **Opis:** Zdarzenia energetyczne, stacje i odbiorcy bez prądu.
 
-**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 541. **Zakres czasu:** 2026-09-12T18:34:00+02:00 — 2026-09-25T12:47:00+02:00.
+**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 592. **Zakres czasu:** 2026-09-12T18:34:00+02:00 — 2026-09-25T12:47:00+02:00.
 
 | Kolumna | Typ | Opis | Przykład | Wartości dopuszczalne |
 |---|---|---|---|---|
@@ -316,7 +316,7 @@ WG-001,Kłodzko,Nysa Kłodzka,0201001,268,340,50.43,16.65,0
 
 **Opis:** Zdarzenia telekomunikacyjne, operator, pokrycie i stacje bazowe.
 
-**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 351. **Zakres czasu:** 2026-09-12T18:35:00+02:00 — 2026-09-25T12:42:00+02:00.
+**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 343. **Zakres czasu:** 2026-09-12T18:35:00+02:00 — 2026-09-25T12:42:00+02:00.
 
 | Kolumna | Typ | Opis | Przykład | Wartości dopuszczalne |
 |---|---|---|---|---|
@@ -414,7 +414,7 @@ WG-001,Kłodzko,Nysa Kłodzka,0201001,268,340,50.43,16.65,0
 
 **Opis:** Sygnały medialne i społecznościowe, w tym Z20 Dezinformacja.
 
-**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 3028. **Zakres czasu:** 2026-09-12T12:13:00+02:00 — 2026-09-25T12:21:00+02:00.
+**Ziarno:** pojedynczy rekord zdarzenia/odczytu. **Liczba rekordów:** 3044. **Zakres czasu:** 2026-09-12T12:13:00+02:00 — 2026-09-25T12:21:00+02:00.
 
 | Kolumna | Typ | Opis | Przykład | Wartości dopuszczalne |
 |---|---|---|---|---|
@@ -486,7 +486,7 @@ Fala powodziowa jest modelowana jako funkcja gaussowska na wybranych wodowskazac
 
 ### Incydenty po przekroczeniach
 
-`incident_reports.jsonl` ma większą intensywność w oknie D0…D+4 i preferuje gminy z obszarów dotkniętych. W pełnym zbiorze jest 4943 incydentów. Priorytet i liczba osób objętych zgłoszeniem rosną losowo, ale z większym prawdopodobieństwem w obszarze powodziowym. To pozwala pokazać, że sama hydrologia nie wystarcza — decydent widzi wpływ na ludność i służby.
+`incident_reports.jsonl` ma większą intensywność w oknie D0…D+4 i preferuje gminy z obszarów dotkniętych. W pełnym zbiorze jest 1714 incydentów. Priorytet i liczba osób objętych zgłoszeniem rosną losowo, ale z większym prawdopodobieństwem w obszarze powodziowym. To pozwala pokazać, że sama hydrologia nie wystarcza — decydent widzi wpływ na ludność i służby.
 
 ### Kaskada energetyka → telekomunikacja
 

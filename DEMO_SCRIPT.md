@@ -30,7 +30,7 @@
 
 **Co widz zobaczy:** KIS krajowy 2.3, brak gmin powyżej KIS 25, ale w strumieniu pogody widać narastające opady. Na osi hydrologicznej piki przechodzą kolejno: Kłodzko 2026-09-15T10:05:00+02:00 poziom 493 cm, Nysa 2026-09-16T00:10:00+02:00 poziom 512 cm, Opole 2026-09-16T14:15:00+02:00 poziom 520 cm, Wrocław 2026-09-17T12:05:00+02:00 poziom 536 cm.
 
-**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 4943, poszkodowani/objęci zgłoszeniami 263001, zdarzenia telco 351 oraz sygnały medialne 3028 w tym 363 z flagą dezinformacji.
+**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 1714, poszkodowani/objęci zgłoszeniami 91 612, zdarzenia telco 343 oraz sygnały medialne 3044 w tym 335 z flagą dezinformacji.
 
 ### II. D-1 — ostrzegawcze i pierwsze incydenty
 
@@ -40,7 +40,7 @@
 
 **Co widz zobaczy:** 2 gminy osiągają alarm w danych hydro; liczba incydentów dziennych: 284. Na osi hydrologicznej piki przechodzą kolejno: Kłodzko 2026-09-15T10:05:00+02:00 poziom 493 cm, Nysa 2026-09-16T00:10:00+02:00 poziom 512 cm, Opole 2026-09-16T14:15:00+02:00 poziom 520 cm, Wrocław 2026-09-17T12:05:00+02:00 poziom 536 cm.
 
-**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 4943, poszkodowani/objęci zgłoszeniami 263001, zdarzenia telco 351 oraz sygnały medialne 3028 w tym 363 z flagą dezinformacji.
+**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 1714, poszkodowani/objęci zgłoszeniami 91 612, zdarzenia telco 343 oraz sygnały medialne 3044 w tym 335 z flagą dezinformacji.
 
 ### III. D0 — alarmy, kaskada IK i rekomendacja RZZK
 
@@ -50,7 +50,7 @@
 
 **Co widz zobaczy:** D0: 4 gminy w alarmie, 571 incydentów, max lokalny KIS 78.6. Eskalacja minister→RZZK jest o 18:00. Na osi hydrologicznej piki przechodzą kolejno: Kłodzko 2026-09-15T10:05:00+02:00 poziom 493 cm, Nysa 2026-09-16T00:10:00+02:00 poziom 512 cm, Opole 2026-09-16T14:15:00+02:00 poziom 520 cm, Wrocław 2026-09-17T12:05:00+02:00 poziom 536 cm.
 
-**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 4943, poszkodowani/objęci zgłoszeniami 263001, zdarzenia telco 351 oraz sygnały medialne 3028 w tym 363 z flagą dezinformacji.
+**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 1714, poszkodowani/objęci zgłoszeniami 91 612, zdarzenia telco 343 oraz sygnały medialne 3044 w tym 335 z flagą dezinformacji.
 
 ### IV. D+1…D+3 — ewakuacje, siły i Z20
 
@@ -58,9 +58,9 @@
 
 **Co kliknąć:** Strony `Obraz kraju`, `Infrastruktura krytyczna`, `Z20 Dezinformacja`; filtr D+1…D+3. Ustaw filtr czasu zgodnie z nazwą aktu, pozostaw `hazard_code=Z02`, a dla drill-down użyj województw `02` i `16`.
 
-**Co widz zobaczy:** Peak: 24057 odbiorców bez prądu w godzinie 2026-09-17T08:00; 56212 osób w statusach ewakuacji; minimalne pokrycie telco 22.6%. Na osi hydrologicznej piki przechodzą kolejno: Kłodzko 2026-09-15T10:05:00+02:00 poziom 493 cm, Nysa 2026-09-16T00:10:00+02:00 poziom 512 cm, Opole 2026-09-16T14:15:00+02:00 poziom 520 cm, Wrocław 2026-09-17T12:05:00+02:00 poziom 536 cm.
+**Co widz zobaczy:** Peak: 14 168 odbiorców bez prądu w godzinie 2026-09-16T18:00 (szczyt dobowy 139 539); 15 445 osób w statusach ewakuacji; minimalne pokrycie telco 22.6%. Na osi hydrologicznej piki przechodzą kolejno: Kłodzko 2026-09-15T10:05:00+02:00 poziom 493 cm, Nysa 2026-09-16T00:10:00+02:00 poziom 512 cm, Opole 2026-09-16T14:15:00+02:00 poziom 520 cm, Wrocław 2026-09-17T12:05:00+02:00 poziom 536 cm.
 
-**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 4943, poszkodowani/objęci zgłoszeniami 263001, zdarzenia telco 351 oraz sygnały medialne 3028 w tym 363 z flagą dezinformacji.
+**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 1714, poszkodowani/objęci zgłoszeniami 91 612, zdarzenia telco 343 oraz sygnały medialne 3044 w tym 335 z flagą dezinformacji.
 
 ### V. D+4…D+10 — stabilizacja i odbudowa
 
@@ -70,7 +70,7 @@
 
 **Co widz zobaczy:** KIS krajowy schodzi z 3.3 do 2.3; liczba gmin powyżej KIS 45 spada z 17 do 0. Na osi hydrologicznej piki przechodzą kolejno: Kłodzko 2026-09-15T10:05:00+02:00 poziom 493 cm, Nysa 2026-09-16T00:10:00+02:00 poziom 512 cm, Opole 2026-09-16T14:15:00+02:00 poziom 520 cm, Wrocław 2026-09-17T12:05:00+02:00 poziom 536 cm.
 
-**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 4943, poszkodowani/objęci zgłoszeniami 263001, zdarzenia telco 351 oraz sygnały medialne 3028 w tym 363 z flagą dezinformacji.
+**Jakie liczby powiedzieć:** wykorzystaj realne wartości z danych: liczba gmin w alarmie łącznie 10, incydenty łącznie 1714, poszkodowani/objęci zgłoszeniami 91 612, zdarzenia telco 343 oraz sygnały medialne 3044 w tym 335 z flagą dezinformacji.
 
 ## 🤖 Pytania do Data Agenta — do zadania na żywo
 
@@ -78,21 +78,21 @@
 |---:|---|---|
 | 1 | „Które gminy weszły w stan alarmowy i kiedy?” | Agent powinien wskazać 10 gmin oraz pierwsze piki na osi Kłodzko→Nysa→Opole→Wrocław. |
 | 2 | „Dlaczego rekomendujesz eskalację do RZZK?” | Bo w D0/D+1 występuje współwystępowanie Z02, Z07, Z12 i Z20, a eskalacja minister→RZZK jest zapisana w `escalation_events`. |
-| 3 | „Jaki był szczyt awarii zasilania?” | 24057 odbiorców bez prądu w godzinie 2026-09-17T08:00. |
-| 4 | „Ile osób objęto ewakuacją?” | 56212 osób w najnowszych statusach ewakuacji. |
-| 5 | „Gdzie KIS był najwyższy?” | Maksymalny lokalny KIS osiągnął 100 w dniu 2026-09-16; województwo opolskie miało wtedy wysoki pik lokalny. |
+| 3 | „Jaki był szczyt awarii zasilania?” | 14 168 odbiorców bez prądu w godzinie 2026-09-16T18:00 (szczyt dobowy 139 539). |
+| 4 | „Ile osób objęto ewakuacją?” | 15 445 osób w najnowszych statusach ewakuacji. |
+| 5 | „Gdzie KIS był najwyższy?” | Maksymalny lokalny KIS osiągnął 86,3 w dniu 2026-09-17 w województwie dolnośląskim — to jedyna doba przekraczająca próg 85, czyli zwołanie RZZK. Dobę wcześniej pik trzymało opolskie (81,1 w 2026-09-15). |
 | 6 | „Czy telekomunikacja jest problemem operacyjnym?” | Tak, minimalne pokrycie spadło do 22.6%, a 80 gmin miało zdarzenia z pokryciem poniżej 50%. |
-| 7 | „Ile było sygnałów dezinformacyjnych?” | 363 sygnałów z flagą Z20 i łączny zasięg 39854793. |
+| 7 | „Ile było sygnałów dezinformacyjnych?” | 335 sygnałów z flagą Z20 i łączny zasięg 37 798 399. |
 | 8 | „Czy liczba incydentów rośnie po przekroczeniach hydro?” | Tak, D0 ma 571 incydentów, D+1 559, D+2 599. |
 | 9 | „Jakie SPO powinny być na stole RZZK?” | SPO-1, SPO-2, SPO-3, SPO-10, SPO-12 oraz monitorowanie SPO-5. |
 | 10 | „Czy algorytm zastępuje wojewodę albo ministra?” | Nie. Agent generuje rekomendację i uzasadnienie; decyzję podejmuje człowiek i zapisuje ją w rejestrze decyzji. |
 | 11 | „Jakie dane są syntetyczne?” | Wszystkie: 581412 rekordów w CSV/JSONL, zero danych osobowych i zero danych operacyjnych. |
-| 12 | „Co zmieniło się między D0 i D+3?” | KIS lokalny osiąga maksimum 100, potem spada; jednocześnie utrzymują się ewakuacje i skutki infrastrukturalne. |
+| 12 | „Co zmieniło się między D0 i D+3?” | KIS lokalny rośnie z 81,1 (opolskie, D0) do maksimum 86,3 (dolnośląskie, D+2), potem spada; jednocześnie utrzymują się ewakuacje i skutki infrastrukturalne. Przesuwa się też ciężar geograficzny — zagrożenie wędruje z góry rzeki w dół. |
 
 ## ✨ Wow moments
 
 1. **Fala z opóźnieniem czasowym.** Decydent widzi nie statyczną mapę, lecz propagację z Kłodzka przez Nysę i Opole do Wrocławia. To natychmiast buduje zaufanie, bo obraz jest zgodny z intuicją hydrologiczną.
-2. **Kaskada infrastruktury krytycznej.** Peak 24057 odbiorców bez prądu i minimalne pokrycie telco 22.6% pokazują, że powódź nie jest tylko problemem wody. To uzasadnia udział wielu ministrów.
+2. **Kaskada infrastruktury krytycznej.** Szczyt 14 168 odbiorców bez prądu w godzinie kulminacji (139 539 w skali doby) i minimalne pokrycie telco 22.6% pokazują, że powódź nie jest tylko problemem wody. To uzasadnia udział wielu ministrów.
 3. **Automatyczne SPO.** Alert nie kończy się czerwonym kafelkiem; wskazuje SPO i odbiorców powiadomień. Dla decydenta oznacza to przejście od „wiem” do „działam”.
 4. **Data Agent tłumaczy „dlaczego”.** Zamiast szukać raportów, dyrektor pyta językiem naturalnym i dostaje liczby oraz podstawę rekomendacji.
 5. **Dziennik audytowy decyzji.** Pulpit RZZK pokazuje kto, kiedy, na jakiej podstawie i co zdecydował. To jest ważne przy rozliczalności działań administracji.

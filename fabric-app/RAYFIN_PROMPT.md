@@ -12,7 +12,7 @@ Role: Dyrektor RCB zatwierdza i zwołuje RZZK; oficer dyżurny triage i przygoto
 
 Akcje write-back: `create_decision_log`, `assign_spo_owner`, `request_resources`, `notify_teams`, `generate_prime_minister_brief`. Model decyzji: `decision_id`, `version`, `timestamp`, `decision_maker`, `role`, `decision_text`, `scope`, `related_spo`, `source_alert`, `evidence_query`, `audit_hash`.
 
-W danych demo realne wartości do pokazania: 10 gmin w alarmie łącznie, szczyt energii 24057 odbiorców bez prądu, 56212 osób w ewakuacjach, 363 sygnałów dezinformacji, max lokalny KIS 100. Nie wymyślaj innych liczb: jeśli aplikacja nie ma danych, pokaż „brak danych” i link do źródła.
+W danych demo realne wartości do pokazania: 10 gmin w alarmie łącznie, szczyt energii 139 539 odbiorców bez prądu w dobie kulminacji, 15 445 osób w ewakuacjach, 335 sygnałów dezinformacji, maksymalny lokalny KIS 86,3 (2026-09-17). Nie wymyślaj innych liczb: jeśli aplikacja nie ma danych, pokaż „brak danych” i link do źródła.
 
 UX: język prosty, decyzyjny; pierwszy ekran ma odpowiadać w 30 sekund, czy potrzebne jest RZZK. Dodaj tryb offline: tylko odczyt ostatnich danych i kolejka decyzji. Dodaj obsługę błędów: brak danych, brak uprawnień, konflikt wersji, nieudane powiadomienie.
 
@@ -24,7 +24,7 @@ Wygeneruj komponent `DecisionEvidencePanel`, który pokazuje: źródłowe zapyta
 
 Zastosuj walidacje: pola wymagane nie mogą być puste; `decision_text` minimum 20 znaków; decyzja zatwierdzona wymaga roli Dyrektor RCB albo Minister; wojewoda nie może zmienić danych poza swoim województwem; każda korekta decyzji tworzy nową wersję.
 
-Dodaj dane przykładowe do makiety: stan alarmowy w 10 gminach, peak energii 24057 odbiorców, 56212 osób w ewakuacjach, 363 sygnały dezinformacji, maksymalny lokalny KIS 100. Jeśli połączenie danych zwróci null, pokaż pusty stan z instrukcją „sprawdź ingest lub zakres czasu”.
+Dodaj dane przykładowe do makiety: stan alarmowy w 10 gminach, szczyt energii 139 539 odbiorców w dobie kulminacji, 15 445 osób w ewakuacjach, 335 sygnałów dezinformacji, maksymalny lokalny KIS 86,3 (2026-09-17). Jeśli połączenie danych zwróci null, pokaż pusty stan z instrukcją „sprawdź ingest lub zakres czasu”.
 
 Interfejs ma być gotowy do prezentacji przed decydentem: mało tekstu na ekranie głównym, dużo uzasadnienia po kliknięciu. Użyj emoji w nagłówkach, ale zachowaj powagę administracyjną. Nie używaj angielskich etykiet dla użytkownika końcowego poza nazwami technicznymi tabel i kolumn.
 
