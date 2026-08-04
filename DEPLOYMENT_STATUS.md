@@ -119,4 +119,19 @@ Test kontrolny wdrożenia: 3 000 zdarzeń pojawiło się w tabeli w ok. 60 sekun
 2. **Activator** — reguły z `activator\RULES.md` (progi alarmowe, eskalacja, dezinformacja).
 3. **Model semantyczny i raport** — `semantic-model\MODEL.md`, `semantic-model\MEASURES.md`.
 4. **Data Agent** — instrukcje i przykładowe pytania w `ai\DATA_AGENT.md`.
-5. **Fabric App / Rayfin** — specyfikacja `fabric-app\APP_SPEC.md`, prompt `fabric-app\RAYFIN_PROMPT.md`.
+5. ~~**Fabric App / Rayfin**~~ — **wdrożone 2026-08-04**, patrz sekcja 9.
+
+## 9. Fabric App — „Pulpit RZZK" (wdrożone)
+
+| Element | Wartość |
+|---|---|
+| Katalog | `fabric-app\pulpit-rzzk` |
+| URL aplikacji | https://key-horn-c1ee0f1637-westeurope.webapp.fabricapps.net |
+| Rayfin Item ID | `8dd3360a-512e-46a8-8bd3-8eab3be64d73` |
+| Ekrany | Obraz sytuacji, Województwo, Rekomendacje, Rejestr decyzji, Zwołanie RZZK |
+| Zapis (SQL) | `DecisionLog`, `SpoActionLog`, `BriefRequest`, `NotificationLog` |
+| Odczyt | statyczna scena `public/data/scene.json` (810 KB, 14 dób) z `tools/build_scene.py` |
+| Testy | 31 (vitest), lint bez błędów, build OK |
+
+Dokumentacja aplikacji, reguły uprawnień, tabela napotkanych problemów oraz uwaga
+o rozbieżności liczb w `RAYFIN_PROMPT.md`/`APP_SPEC.md`: `fabric-app\pulpit-rzzk\README.md`.

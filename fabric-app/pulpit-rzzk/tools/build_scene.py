@@ -1,0 +1,423 @@
+"""Buduje statyczna scene demo (src/data/scene.json) z datasets/ repozytorium ol-cop24.
+
+Dlaczego z plikow, a nie z Eventhouse:
+- Eventhouse przechowuje wylacznie okno ostatniego odtwarzania (replay czysci tabele
+  i pisze biezacym czasem), wiec nie zawiera pelnej sceny D-3..D+10.
+- datasets/ to deterministyczne zrodlo, z ktorego zasilany jest Lakehouse i Eventstream,
+  wiec liczby w aplikacji zgadzaja sie z dashboardem i notatnikami.
+
+Formula KIS jest skopiowana z notebooks/02_situation_index.py (te same wagi i normalizacja),
+zeby aplikacja nie pokazywala innych wartosci niz Lakehouse.
+
+Uruchomienie:  python tools/build_scene.py
+"""
+
+from __future__ import annotations
+
+import collections
+import csv
+import datetime
+import json
+from pathlib import Path
+
+APP = Path(__file__).resolve().parents[1]
+ROOT = APP.parents[1]
+DATA = ROOT / "datasets"
+DERIVED = DATA / "derived"
+OUT = APP / "public" / "data" / "scene.json"
+
+DAYS = [(datetime.date(2026, 9, 12) + datetime.timedelta(days=i)).isoformat() for i in range(14)]
+D0 = "2026-09-15"
+
+
+def read_csv(name: str) -> list[dict]:
+    with open(DATA / name, encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def read_derived(name: str) -> list[dict]:  # zachowane dla ewentualnych porownan
+    with open(DERIVED / name, encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def stream(name: str):
+    with open(DATA / f"{name}.jsonl", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                yield json.loads(line)
+
+
+def r1(x: float) -> float:
+    return round(x + 0.0, 1)
+
+
+def main() -> None:
+    gminas = {r["gmina_code"]: r for r in read_csv("dim_gmina.csv")}
+    powiats = {r["powiat_code"]: r for r in read_csv("dim_powiat.csv")}
+    voivs = {r["voivodeship_code"]: r for r in read_csv("dim_voivodeship.csv")}
+    gauges = {r["gauge_id"]: r for r in read_csv("dim_river_gauge.csv")}
+    hazards = read_csv("dim_hazard.csv")
+    spo = read_csv("dim_spo.csv")
+    g2v = {g: powiats[r["powiat_code"]]["voivodeship_code"] for g, r in gminas.items()}
+
+    hydro_score: dict = collections.defaultdict(dict)
+    hydro_level: dict = collections.defaultdict(dict)
+    alarm_flag: dict = collections.defaultdict(set)
+    warn_flag: dict = collections.defaultdict(set)
+    gauge_daily: dict = collections.defaultdict(dict)
+    for e in stream("hydro_readings"):
+        day = e["timestamp"][:10]
+        g = e["gmina_code"]
+        s = 100 if e["level_cm"] >= e["alarm_level_cm"] else 60 if e["level_cm"] >= e["warning_level_cm"] else 15
+        hydro_score[day][g] = max(hydro_score[day].get(g, 0), s)
+        hydro_level[day][g] = max(hydro_level[day].get(g, 0), e["level_cm"])
+        if e["level_cm"] >= e["alarm_level_cm"]:
+            alarm_flag[day].add(g)
+        elif e["level_cm"] >= e["warning_level_cm"]:
+            warn_flag[day].add(g)
+        cur = gauge_daily[day].get(e["gauge_id"])
+        if cur is None or e["level_cm"] > cur["level_cm"]:
+            gauge_daily[day][e["gauge_id"]] = {
+                "level_cm": e["level_cm"],
+                "flow_m3s": e["flow_m3s"],
+                "trend": e["trend"],
+                "at": e["timestamp"][11:16],
+            }
+
+    inc_cnt: dict = collections.defaultdict(collections.Counter)
+    inc_aff: dict = collections.defaultdict(collections.Counter)
+    inc_p1: dict = collections.defaultdict(collections.Counter)
+    inc_type_day: dict = collections.defaultdict(collections.Counter)
+    inc_type_voiv: dict = collections.defaultdict(collections.Counter)
+    for e in stream("incident_reports"):
+        d, g = e["timestamp"][:10], e["gmina_code"]
+        inc_cnt[d][g] += 1
+        inc_aff[d][g] += e.get("affected_people", 0)
+        if e.get("priority") == 1:
+            inc_p1[d][g] += 1
+        inc_type_day[d][e["event_type"]] += 1
+        inc_type_voiv[(d, g2v.get(g, "--"))][e["event_type"]] += 1
+
+    pwr_sum: dict = collections.defaultdict(collections.Counter)
+    for e in stream("power_grid_events"):
+        pwr_sum[e["timestamp"][:10]][e["gmina_code"]] += e["customers_offline"]
+
+    tel_min: dict = collections.defaultdict(dict)
+    for e in stream("telecom_events"):
+        d, g = e["timestamp"][:10], e["gmina_code"]
+        tel_min[d][g] = min(tel_min[d].get(g, 100.0), e["coverage_pct"])
+
+    ev_max: dict = collections.defaultdict(dict)
+    ev_status: dict = collections.defaultdict(dict)
+    for e in stream("evacuation_status"):
+        d, g = e["timestamp"][:10], e["gmina_code"]
+        if e["people_count"] >= ev_max[d].get(g, 0):
+            ev_max[d][g] = e["people_count"]
+            ev_status[d][g] = e["status"]
+
+    res_day: dict = collections.defaultdict(dict)
+    for e in stream("resource_deployment"):
+        d, v = e["timestamp"][:10], e["voivodeship_code"]
+        prev = res_day[d].get(v)
+        if prev is None or e["timestamp"] > prev["ts"]:
+            res_day[d][v] = {
+                "ts": e["timestamp"],
+                "psp_units": e["psp_units"],
+                "wot_soldiers": e["wot_soldiers"],
+                "pumps": e["pumps"],
+                "generators": e["generators"],
+                "helicopters": e["helicopters"],
+            }
+
+    media_day: dict = collections.defaultdict(
+        lambda: {"total": 0, "disinfo": 0, "reach": 0, "disinfo_reach": 0, "negative": 0}
+    )
+    media_topic: dict = collections.defaultdict(
+        lambda: collections.defaultdict(lambda: {"count": 0, "reach": 0, "disinfo": 0})
+    )
+    for e in stream("media_signals"):
+        d = e["timestamp"][:10]
+        m = media_day[d]
+        m["total"] += 1
+        m["reach"] += e["reach"]
+        if e["sentiment"] == "negative":
+            m["negative"] += 1
+        if e["disinformation_flag"]:
+            m["disinfo"] += 1
+            m["disinfo_reach"] += e["reach"]
+        t = media_topic[d][e["topic"]]
+        t["count"] += 1
+        t["reach"] += e["reach"]
+        t["disinfo"] += 1 if e["disinformation_flag"] else 0
+
+    gmina_daily: list[dict] = []
+    country: list[dict] = []
+    voiv_daily: list[dict] = []
+    active_gminas: set[str] = set()
+
+    for day in DAYS:
+        scores: list[float] = []
+        byv: dict[str, list[float]] = collections.defaultdict(list)
+        for g in gminas:
+            c_hydro = hydro_score.get(day, {}).get(g, 0)
+            c_inc = inc_cnt.get(day, {}).get(g, 0) / 20 * 100
+            c_pwr = pwr_sum.get(day, {}).get(g, 0) / 5000 * 100
+            c_tel = 100 - tel_min.get(day, {}).get(g, 100.0)
+            c_ev = ev_max.get(day, {}).get(g, 0) / 1000 * 100
+            kis = min(
+                100.0,
+                round(0.30 * c_hydro + 0.25 * c_inc + 0.15 * c_pwr + 0.10 * c_tel + 0.10 * c_ev + 0.10 * 20, 1),
+            )
+            scores.append(kis)
+            byv[g2v[g]].append(kis)
+            has_data = (
+                g in hydro_score.get(day, {})
+                or g in inc_cnt.get(day, {})
+                or g in pwr_sum.get(day, {})
+                or g in tel_min.get(day, {})
+                or g in ev_max.get(day, {})
+            )
+            if has_data:
+                active_gminas.add(g)
+                gmina_daily.append(
+                    {
+                        "d": day,
+                        "g": g,
+                        "kis": kis,
+                        "c": [
+                            r1(0.30 * c_hydro),
+                            r1(0.25 * c_inc),
+                            r1(0.15 * c_pwr),
+                            r1(0.10 * c_tel),
+                            r1(0.10 * c_ev),
+                            2.0,
+                        ],
+                        "lvl": hydro_level.get(day, {}).get(g, 0),
+                        "alarm": 1 if g in alarm_flag.get(day, set()) else (2 if g in warn_flag.get(day, set()) else 0),
+                        "inc": inc_cnt.get(day, {}).get(g, 0),
+                        "p1": inc_p1.get(day, {}).get(g, 0),
+                        "aff": inc_aff.get(day, {}).get(g, 0),
+                        "off": pwr_sum.get(day, {}).get(g, 0),
+                        "cov": r1(tel_min[day][g]) if g in tel_min.get(day, {}) else None,
+                        "evac": ev_max.get(day, {}).get(g, 0),
+                        "evs": ev_status.get(day, {}).get(g),
+                    }
+                )
+
+        res_tot: collections.Counter = collections.Counter()
+        for v, r in res_day.get(day, {}).items():
+            for k in ("psp_units", "wot_soldiers", "pumps", "generators", "helicopters"):
+                res_tot[k] += r[k]
+
+        md = media_day.get(day, {"total": 0, "disinfo": 0, "reach": 0, "disinfo_reach": 0, "negative": 0})
+        country.append(
+            {
+                "d": day,
+                "kis": r1(sum(scores) / len(scores)),
+                "maxKis": max(scores),
+                "over25": sum(s >= 25 for s in scores),
+                "over45": sum(s >= 45 for s in scores),
+                "over85": sum(s >= 85 for s in scores),
+                "alarmGminas": len(alarm_flag.get(day, set())),
+                "warnGminas": len(warn_flag.get(day, set())),
+                "inc": sum(inc_cnt.get(day, {}).values()),
+                "p1": sum(inc_p1.get(day, {}).values()),
+                "aff": sum(inc_aff.get(day, {}).values()),
+                "off": sum(pwr_sum.get(day, {}).values()),
+                "evac": sum(ev_max.get(day, {}).values()),
+                "minCov": r1(min(tel_min[day].values())) if tel_min.get(day) else None,
+                "covBelow50": sum(1 for v in tel_min.get(day, {}).values() if v < 50),
+                "media": md["total"],
+                "disinfo": md["disinfo"],
+                "disinfoReach": md["disinfo_reach"],
+                "negative": md["negative"],
+                "res": dict(res_tot),
+                "topTypes": inc_type_day.get(day, collections.Counter()).most_common(6),
+            }
+        )
+
+        for v in voivs:
+            arr = byv.get(v, [0.0])
+            vg = [g for g in gminas if g2v[g] == v]
+            cov = [tel_min[day][g] for g in vg if g in tel_min.get(day, {})]
+            voiv_daily.append(
+                {
+                    "d": day,
+                    "v": v,
+                    "kis": r1(sum(arr) / len(arr)),
+                    "maxKis": max(arr),
+                    "alarmGminas": sum(1 for g in vg if g in alarm_flag.get(day, set())),
+                    "warnGminas": sum(1 for g in vg if g in warn_flag.get(day, set())),
+                    "inc": sum(inc_cnt.get(day, {}).get(g, 0) for g in vg),
+                    "p1": sum(inc_p1.get(day, {}).get(g, 0) for g in vg),
+                    "aff": sum(inc_aff.get(day, {}).get(g, 0) for g in vg),
+                    "off": sum(pwr_sum.get(day, {}).get(g, 0) for g in vg),
+                    "evac": sum(ev_max.get(day, {}).get(g, 0) for g in vg),
+                    "minCov": r1(min(cov)) if cov else None,
+                    "res": {k: v2 for k, v2 in res_day.get(day, {}).get(v, {}).items() if k != "ts"},
+                    "topTypes": inc_type_voiv.get((day, v), collections.Counter()).most_common(5),
+                }
+            )
+
+    escalations = [
+        {
+            "ts": e["timestamp"],
+            "id": e["event_id"],
+            "from": e["from_level"],
+            "to": e["to_level"],
+            "area": e["area"],
+            "hazard": e["hazard_code"],
+            "spo": e["recommended_spo"],
+            "reason": e["reason"],
+        }
+        for e in stream("escalation_events")
+    ]
+
+    # Rekomendacje eskalacji liczone tu, wg progow z notebooks/03_escalation_recommendation.py.
+    # Nie czytamy datasets/derived/*.csv, bo te pliki bywaja starsze niz datasets/.
+    def rec_level(kis: float) -> tuple[str, list[str]]:
+        if kis >= 85:
+            return "RZZK", ["SPO-1", "SPO-2", "SPO-3", "SPO-10"]
+        if kis >= 65:
+            return "minister wiodący", ["SPO-12", "SPO-3"]
+        if kis >= 45:
+            return "wojewoda", ["SPO-3", "SPO-12"]
+        if kis >= 25:
+            return "powiat", ["SPO-3", "SPO-12"]
+        return "gmina", ["SPO-3"]
+
+    rec_voiv = []
+    for row in voiv_daily:
+        if row["maxKis"] < 25:
+            continue
+        level, spo_codes = rec_level(row["maxKis"])
+        rec_voiv.append(
+            {
+                "d": row["d"],
+                "v": row["v"],
+                "maxKis": row["maxKis"],
+                "level": level,
+                "spo": spo_codes,
+                "why": f"Max lokalny KIS={row['maxKis']}; gminy w alarmie: {row['alarmGminas']}; "
+                f"incydenty: {row['inc']}; bez zasilania: {row['off']}",
+            }
+        )
+
+    rec_gmina = []
+    for row in gmina_daily:
+        if row["kis"] < 25:
+            continue
+        level, spo_codes = rec_level(row["kis"])
+        rec_gmina.append(
+            {
+                "d": row["d"],
+                "g": row["g"],
+                "v": g2v[row["g"]],
+                "kis": row["kis"],
+                "level": level,
+                "spo": spo_codes,
+            }
+        )
+
+    gauge_rows = []
+    for day in DAYS:
+        for gid, val in gauge_daily.get(day, {}).items():
+            gauge_rows.append(
+                {
+                    "d": day,
+                    "id": gid,
+                    "lvl": val["level_cm"],
+                    "flow": val["flow_m3s"],
+                    "trend": val["trend"],
+                    "at": val["at"],
+                }
+            )
+
+    scene = {
+        "meta": {
+            "generatedAt": datetime.datetime.now().isoformat(timespec="seconds"),
+            "days": DAYS,
+            "d0": D0,
+            "source": "datasets/ (deterministyczna scena powodziowa 2026-09-12..25)",
+            "kisFormula": "0,30*hydro + 0,25*incydenty + 0,15*energia + 0,10*telekom + 0,10*ewakuacja + 0,10*zasoby",
+            "kisComponents": ["hydrologia", "incydenty", "energia", "telekom", "ewakuacja", "zasoby"],
+        },
+        "voivodeships": [
+            {
+                "code": r["voivodeship_code"],
+                "name": r["voivodeship_name"],
+                "pop": int(r["population"]),
+                "seat": r["wczk_seat"],
+                "lat": float(r["lat"]),
+                "lon": float(r["lon"]),
+            }
+            for r in voivs.values()
+        ],
+        "gminas": [
+            {
+                "code": g,
+                "name": gminas[g]["gmina_name"],
+                "v": g2v[g],
+                "powiat": powiats[gminas[g]["powiat_code"]]["powiat_name"],
+                "pop": int(gminas[g]["population"]),
+                "lat": float(gminas[g]["lat"]),
+                "lon": float(gminas[g]["lon"]),
+            }
+            for g in sorted(active_gminas)
+        ],
+        "gauges": [
+            {
+                "id": r["gauge_id"],
+                "name": r["gauge_name"],
+                "river": r["river"],
+                "g": r["gmina_code"],
+                "warn": int(r["warning_level_cm"]),
+                "alarm": int(r["alarm_level_cm"]),
+                "lat": float(r["lat"]),
+                "lon": float(r["lon"]),
+                "delayH": float(r["wave_delay_h"]) if r["wave_delay_h"] else 0.0,
+            }
+            for r in gauges.values()
+            if r["gmina_code"] in active_gminas
+        ],
+        "hazards": [
+            {
+                "code": r["hazard_code"],
+                "name": r["hazard_name"],
+                "lead": r["lead_minister"],
+                "coop": r["cooperating_ministers"],
+            }
+            for r in hazards
+        ],
+        "spo": [{"code": r["spo_code"], "name": r["spo_name"]} for r in spo],
+        "country": country,
+        "voivDaily": voiv_daily,
+        "gminaDaily": gmina_daily,
+        "gaugeDaily": gauge_rows,
+        "escalations": escalations,
+        "recVoiv": rec_voiv,
+        "recGmina": rec_gmina,
+        "mediaTopics": [
+            {"d": d, "topic": t, "count": v["count"], "reach": v["reach"], "disinfo": v["disinfo"]}
+            for d, topics in media_topic.items()
+            for t, v in topics.items()
+        ],
+    }
+
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    with open(OUT, "w", encoding="utf-8") as f:
+        json.dump(scene, f, ensure_ascii=False, separators=(",", ":"))
+    print(f"scene.json: {OUT.stat().st_size / 1024:.1f} KB")
+    print(f"gminy aktywne: {len(scene['gminas'])}, gminaDaily: {len(gmina_daily)}, voivDaily: {len(voiv_daily)}")
+    peak = max(country, key=lambda c: c["off"])
+    print(f"szczyt energii: {peak['d']} = {peak['off']} odbiorcow")
+    print(f"gminy alarmowe (unikalne): {len(set().union(*alarm_flag.values()))}")
+    print(f"dezinformacja lacznie: {sum(c['disinfo'] for c in country)}")
+    print(f"max ewakuowanych w dniu: {max(c['evac'] for c in country)}")
+    print(f"max lokalny KIS: {max(c['maxKis'] for c in country)}")
+
+
+if __name__ == "__main__":
+    main()
+
