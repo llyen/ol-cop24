@@ -609,6 +609,15 @@ export function kisColor(kis: number): string {
   return '#22d3ee';
 }
 
+/** Progi skali KIS w postaci gotowej dla legendy mapy. */
+export const KIS_LEGEND = [
+  { label: '<10', value: 5 },
+  { label: '10+', value: 10 },
+  { label: '25+', value: 25 },
+  { label: '45+', value: 45 },
+  { label: '65+', value: 65 },
+];
+
 export function levelBadgeClass(level: string): string {
   switch (level) {
     case 'RZZK':

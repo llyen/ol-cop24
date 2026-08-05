@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, type ReactNode } from 'react';
 
-import { formatNumber, kisColor, project } from '@/data/model';
+import { formatNumber } from '@/data/model';
 
 /* ------------------------------------------------------------------ */
 /* Podstawowe elementy                                                 */
@@ -333,132 +333,11 @@ export function TimelineBars({
 /* Mapa                                                                */
 /* ------------------------------------------------------------------ */
 
-export interface MapPoint {
-  id: string;
-  lat: number;
-  lon: number;
-  value: number;
-  label: string;
-  detail?: string;
-  alarm?: boolean;
-}
+// Mapa mieszka w osobnym pliku - ma wlasny stan widoku i obsluge zdarzen
+// wskaznika, wiec nie pasuje do zbioru bezstanowych elementow tego modulu.
+export { CountryMap } from './CountryMap';
+export type { MapPoint, MapPath, CountryMapProps } from './CountryMap';
 
-/**
- * Mapa kraju bez zewnetrznej biblioteki: rzut rownoprostokatny na wspolrzedne
- * z wymiarow. Zamiast granic administracyjnych rysujemy siedziby WCZK
- * i punkty gmin - dla poziomu decyzyjnego liczy sie rozklad i natezenie.
- */
-export function CountryMap({
-  points,
-  anchors,
-  onSelect,
-  selectedId,
-  height = 420,
-}: {
-  points: MapPoint[];
-  anchors: MapPoint[];
-  onSelect?: (id: string) => void;
-  selectedId?: string | null;
-  height?: number;
-}) {
-  const [hover, setHover] = useState<MapPoint | null>(null);
-  const size = { w: 100, h: 100 };
-  return (
-    <div className="relative" style={{ height }}>
-      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" className="h-full w-full">
-        <defs>
-          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.30" />
-            <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
-          </radialGradient>
-          <pattern id="grid" width="5" height="5" patternUnits="userSpaceOnUse">
-            <path d="M5 0 L0 0 0 5" fill="none" stroke="#1e293b" strokeWidth="0.2" />
-          </pattern>
-        </defs>
-        <rect width="100" height="100" fill="url(#grid)" />
-        <rect width="100" height="100" fill="url(#glow)" />
-
-        {anchors.map((a) => {
-          const p = project(a.lat, a.lon, undefined, size);
-          return (
-            <g key={`a-${a.id}`}>
-              <circle
-                cx={p.x}
-                cy={p.y}
-                r={2.2}
-                fill="none"
-                stroke={kisColor(a.value)}
-                strokeWidth={0.4}
-                opacity={0.9}
-              />
-              <text
-                x={p.x}
-                y={p.y - 3}
-                textAnchor="middle"
-                fontSize="1.9"
-                fill="#94a3b8"
-                className="select-none"
-              >
-                {a.label}
-              </text>
-            </g>
-          );
-        })}
-
-        {points.map((pt) => {
-          const p = project(pt.lat, pt.lon, undefined, size);
-          const r = 0.5 + Math.min(pt.value, 100) / 28;
-          const selected = selectedId === pt.id;
-          return (
-            <g key={pt.id}>
-              {pt.alarm && (
-                <circle cx={p.x} cy={p.y} r={r * 2.4} fill={kisColor(pt.value)} opacity={0.16}>
-                  <animate
-                    attributeName="opacity"
-                    values="0.05;0.28;0.05"
-                    dur="2.4s"
-                    repeatCount="indefinite"
-                  />
-                </circle>
-              )}
-              <circle
-                cx={p.x}
-                cy={p.y}
-                r={r}
-                fill={kisColor(pt.value)}
-                stroke={selected ? '#f8fafc' : 'rgba(15,23,42,0.6)'}
-                strokeWidth={selected ? 0.6 : 0.2}
-                opacity={0.92}
-                onMouseEnter={() => setHover(pt)}
-                onMouseLeave={() => setHover(null)}
-                onClick={() => onSelect?.(pt.id)}
-                className="cursor-pointer"
-              />
-            </g>
-          );
-        })}
-      </svg>
-      {hover && (
-        <div className="pointer-events-none absolute left-3 top-3 rounded-lg bg-slate-950/90 px-3 py-2 text-xs ring-1 ring-slate-700">
-          <div className="font-semibold text-slate-100">{hover.label}</div>
-          {hover.detail && <div className="mt-0.5 text-slate-400">{hover.detail}</div>}
-        </div>
-      )}
-      <div className="absolute bottom-2 right-2 flex items-center gap-2 rounded-lg bg-slate-950/80 px-3 py-1.5 text-[10px] text-slate-400 ring-1 ring-slate-700">
-        <span>KIS</span>
-        {[5, 15, 30, 50, 70].map((v) => (
-          <span key={v} className="flex items-center gap-1">
-            <span
-              className="inline-block h-2 w-2 rounded-full"
-              style={{ background: kisColor(v) }}
-            />
-            {v >= 65 ? '65+' : v >= 45 ? '45+' : v >= 25 ? '25+' : v >= 10 ? '10+' : '<10'}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export function EmptyState({ text }: { text: string }) {
   return (

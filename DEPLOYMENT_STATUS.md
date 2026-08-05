@@ -130,8 +130,34 @@ Test kontrolny wdrożenia: 3 000 zdarzeń pojawiło się w tabeli w ok. 60 sekun
 | Rayfin Item ID | `8dd3360a-512e-46a8-8bd3-8eab3be64d73` |
 | Ekrany | Obraz sytuacji, Województwo, Rekomendacje, Rejestr decyzji, Zwołanie RZZK |
 | Zapis (SQL) | `DecisionLog`, `SpoActionLog`, `BriefRequest`, `NotificationLog` |
-| Odczyt | statyczna scena `public/data/scene.json` (810 KB, 14 dób) z `tools/build_scene.py` |
-| Testy | 31 (vitest), lint bez błędów, build OK |
+| Odczyt | statyczna scena `public/data/scene.json` (839 KB, 14 dób) z `tools/build_scene.py` |
+| Mapa | granice 16 województw, przybliżanie i przesuwanie (kółko, szczypanie, przeciągnięcie, dwuklik, przyciski, klawiatura) |
+| Testy | 37 (vitest), lint bez błędów, build OK |
+
+### Mapa i korekta współrzędnych
+
+Mapa rysuje kontury województw z `src/data/poland.ts` — plik powstaje z granic GUS
+(`ppatrzyk/polska-geojson`, licencja MIT) przez `tools/build_poland_geo.py`, który
+upraszcza geometrię z 77 tys. do 7 tys. wierzchołków i rzutuje ją na tę samą siatkę,
+na którą trafiają punkty. Dzięki temu obie warstwy zawsze się pokrywają. Znaczniki
+są dzielone przez współczynnik przybliżenia, więc na ekranie zachowują stałą wielkość.
+
+Naniesienie prawdziwych granic ujawniło defekt danych: `generate_datasets.py`
+rozrzuca punkty losowym odchyleniem wokół środka województwa, bez sprawdzania
+granic — 69 gmin i 13 wodowskazów leżało poza Polską. `tools/build_scene.py`
+przyciąga takie punkty do własnego województwa **wyłącznie w warstwie prezentacji**.
+Zbiory źródłowe, `derived/`, notatniki, Eventhouse i model semantyczny zostają
+nietknięte, więc żaden wskaźnik się nie zmienia. Wodowskaz dziedziczy województwo
+po swojej gminie. Pięć testów w `src/__tests__/geography.test.ts` pilnuje, że
+każdy punkt leży we właściwym województwie — czytają kontur z `poland.ts`, czyli
+dokładnie z tego, co rysuje aplikacja.
+
+**Dlaczego nie Azure Maps.** Rozważone i odrzucone. Aplikacje Fabric App nie mają
+nagłówka CSP, więc samo SDK by się załadowało, ale Rayfin to wyłącznie warstwa
+Data API Builder — nie ma funkcji serwerowej, w której można by brokerować token.
+Zostawałby klucz subskrypcji w paczce przeglądarki, a kluczy Azure Maps nie da się
+ograniczyć do domeny. Wrócić do tematu tylko jeśli pojawi się miejsce na kod
+serwerowy.
 
 Dokumentacja aplikacji, reguły uprawnień, tabela napotkanych problemów oraz uwaga
 o rozbieżności liczb w `RAYFIN_PROMPT.md`/`APP_SPEC.md`: `fabric-app\pulpit-rzzk\README.md`.

@@ -8,6 +8,7 @@ import {
   formatNumber,
   gminaRows,
   kisColor,
+  KIS_LEGEND,
   levelBadgeClass,
   toCsv,
   voivodeshipRows,
@@ -111,6 +112,8 @@ export function SituationPage() {
           <CountryMap
             points={points}
             anchors={anchors}
+            colorFor={kisColor}
+            legend={KIS_LEGEND}
             selectedId={selected}
             onSelect={(id) => setSelected(id === selected ? null : id)}
           />

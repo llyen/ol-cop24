@@ -18,6 +18,7 @@ import collections
 import csv
 import datetime
 import json
+import math
 from pathlib import Path
 
 APP = Path(__file__).resolve().parents[1]
@@ -61,6 +62,132 @@ def r1(x: float) -> float:
     return round(x + 0.0, 1)
 
 
+# ---------------------------------------------------------------------------
+# Korekta wspolrzednych
+# ---------------------------------------------------------------------------
+#
+# `generate_datasets.py` rozrzuca gminy i wodowskazy losowym odchyleniem wokol
+# srodka wojewodztwa, bez sprawdzania granic. Dopoki mapa rysowala sama siatke,
+# nie bylo tego widac; po naniesieniu prawdziwych granic czesc punktow ladowala
+# poza krajem. Poprawiamy to wylacznie przy budowie sceny - zbiory zrodlowe,
+# notatniki, Eventhouse i model semantyczny zostaja nietkniete.
+
+RINGS_FILE = Path(__file__).resolve().parent / "poland_rings.json"
+
+# Ile drogi w strone srodka wielokata pokonuje punkt po przyciagnieciu na
+# granice - bez tego siadalby dokladnie na kresce.
+INWARD = 0.06
+
+
+def _fold(text: str) -> str:
+    """Nazwy wojewodztw w zbiorach sa bez znakow diakrytycznych, w granicach - z."""
+    import unicodedata
+
+    text = text.replace("\u0142", "l").replace("\u0141", "L")
+    stripped = unicodedata.normalize("NFD", text)
+    return "".join(c for c in stripped if unicodedata.category(c) != "Mn").lower()
+
+
+def load_regions() -> dict[str, list[list[list[float]]]]:
+    if not RINGS_FILE.exists():
+        raise SystemExit(
+            f"brak {RINGS_FILE.name} - uruchom najpierw: python tools/build_poland_geo.py"
+        )
+    with open(RINGS_FILE, encoding="utf-8") as f:
+        return {_fold(k): v for k, v in json.load(f).items()}
+
+
+def in_region(lon: float, lat: float, rings: list[list[list[float]]]) -> bool:
+    """Test parzystosci przeciec promienia poziomego."""
+    inside = False
+    for ring in rings:
+        n = len(ring)
+        for i in range(n):
+            x1, y1 = ring[i]
+            x2, y2 = ring[(i + 1) % n]
+            if (y1 > lat) != (y2 > lat):
+                if lon < x1 + (lat - y1) * (x2 - x1) / (y2 - y1):
+                    inside = not inside
+    return inside
+
+
+def _km(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
+    """Przyblizenie plaskie - dla odleglosci w skali wojewodztwa wystarcza."""
+    return math.hypot((lon2 - lon1) * 68.5, (lat2 - lat1) * 111.2)
+
+
+def snap_into(lon: float, lat: float, rings: list[list[list[float]]]) -> tuple[float, float]:
+    """Najblizszy wierzcholek granicy, przesuniety w strone srodka wielokata.
+
+    Przy ksztaltach wkleslych pojedyncze zanurzenie potrafi nie wystarczyc,
+    wiec zwiekszamy je, az punkt faktycznie znajdzie sie w srodku. Wynik jest
+    od razu zaokraglany do trzech miejsc, bo dokladnie taka wartosc trafi do
+    sceny - sprawdzanie na pelnej precyzji przepuszczaloby punkty, ktore po
+    zaokragleniu ladowaly tuz za granica.
+    """
+    best_vertex = None
+    best_centroid = (lon, lat)
+    best_d = float("inf")
+    for ring in rings:
+        cx = sum(p[0] for p in ring) / len(ring)
+        cy = sum(p[1] for p in ring) / len(ring)
+        for x, y in ring:
+            d = _km(lon, lat, x, y)
+            if d < best_d:
+                best_d = d
+                best_vertex = (x, y)
+                best_centroid = (cx, cy)
+    if best_vertex is None:
+        return lon, lat
+
+    vx, vy = best_vertex
+    cx, cy = best_centroid
+    for inward in (INWARD, 0.12, 0.25, 0.5):
+        nx = round(vx + (cx - vx) * inward, 3)
+        ny = round(vy + (cy - vy) * inward, 3)
+        if in_region(nx, ny, rings):
+            return nx, ny
+    return round(cx, 3), round(cy, 3)
+
+
+def correct_coordinates(
+    gminas: dict[str, dict],
+    gauges: dict[str, dict],
+    voivs: dict[str, dict],
+    g2v: dict[str, str],
+) -> None:
+    """Przesuwa gminy i wodowskazy do wlasnych wojewodztw."""
+    regions = load_regions()
+    voiv_name = {code: _fold(row["voivodeship_name"]) for code, row in voivs.items()}
+    moved = {"gminy": 0, "wodowskazy": 0}
+
+    def fix(row: dict, voiv_code: str | None) -> bool:
+        rings = regions.get(voiv_name.get(voiv_code or "", ""))
+        if not rings:
+            return False
+        # Sprawdzamy wartosc juz zaokraglona, bo taka trafi na mape. Roznica
+        # miedzy pelna precyzja a trzema miejscami to ok. 100 m - przy punkcie
+        # na samej granicy to decyduje, po ktorej stronie wypadnie.
+        lon, lat = round(float(row["lon"]), 3), round(float(row["lat"]), 3)
+        if in_region(lon, lat, rings):
+            row["lon"], row["lat"] = f"{lon:.3f}", f"{lat:.3f}"
+            return False
+        new_lon, new_lat = snap_into(lon, lat, rings)
+        row["lon"], row["lat"] = f"{new_lon:.3f}", f"{new_lat:.3f}"
+        return True
+
+    for code, row in gminas.items():
+        if fix(row, g2v.get(code)):
+            moved["gminy"] += 1
+
+    # Wodowskaz jest opisany gmina, wiec bierze jej wojewodztwo.
+    for row in gauges.values():
+        if fix(row, g2v.get(row.get("gmina_code", ""))):
+            moved["wodowskazy"] += 1
+
+    print("korekta wspolrzednych: " + ", ".join(f"{k} {v}" for k, v in moved.items()))
+
+
 def main() -> None:
     gminas = {r["gmina_code"]: r for r in read_csv("dim_gmina.csv")}
     powiats = {r["powiat_code"]: r for r in read_csv("dim_powiat.csv")}
@@ -69,6 +196,8 @@ def main() -> None:
     hazards = read_csv("dim_hazard.csv")
     spo = read_csv("dim_spo.csv")
     g2v = {g: powiats[r["powiat_code"]]["voivodeship_code"] for g, r in gminas.items()}
+
+    correct_coordinates(gminas, gauges, voivs, g2v)
 
     hydro_score: dict = collections.defaultdict(dict)
     hydro_level: dict = collections.defaultdict(dict)

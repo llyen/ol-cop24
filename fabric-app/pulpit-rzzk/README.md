@@ -53,6 +53,7 @@ datasets/*.jsonl  ──►  tools/build_scene.py  ──►  public/data/scene.
 Po każdej zmianie `datasets/` uruchom:
 
 ```bash
+python tools/build_poland_geo.py   # tylko raz - granice wojewodztw
 python tools/build_scene.py
 ```
 
@@ -62,6 +63,51 @@ eskalacji z `notebooks/03_escalation_recommendation.py` (≥85 RZZK, ≥65 minis
 ≥45 wojewoda, ≥25 powiat). Test regresyjny w `src/__tests__/model.test.ts` pilnuje
 zgodności progów w `model.ts` z notatnikiem. **Dzielniki normalizacji muszą pozostać
 zgodne w obu miejscach** — patrz sekcja „Kalibracja KIS".
+
+## Mapa
+
+Mapa (`src/components/CountryMap.tsx`) rysuje granice 16 województw i pozwala ją
+przeglądać: kółko myszy lub gest szczypania przybliża w miejscu kursora, przeciągnięcie
+przesuwa, dwuklik przybliża dwukrotnie, przyciski w rogu i klawisze `+`, `−`, `0` oraz
+strzałki robią to samo z klawiatury. Maksymalne przybliżenie to 14×. Znaczniki, linie
+i napisy są dzielone przez współczynnik przybliżenia, więc na ekranie zachowują stałą
+wielkość — przybliża się mapa, a nie symbole.
+
+Granice pochodzą z [polska-geojson](https://github.com/ppatrzyk/polska-geojson) (dane GUS,
+licencja MIT). `tools/build_poland_geo.py` upraszcza je z 76 881 do 6 960 wierzchołków
+i **wstępnie rzutuje** na tę samą siatkę 0..100, której używa `project` w `model.ts`,
+zapisując wynik do `src/data/poland.ts` (83 kB). Dzięki temu warstwa granic i warstwa
+punktów zawsze się pokrywają, a przeglądarka nie liczy rzutu przy każdej klatce
+przesuwania.
+
+**Trzy miejsca muszą mieć identyczne `BOUNDS`**: `model.ts`, `CountryMap.tsx` i
+`build_poland_geo.py`. Rozjazd przesunie punkty względem granic — to jedyny sposób,
+w jaki ta mapa może zepsuć się po cichu.
+
+### Korekta współrzędnych
+
+`generate_datasets.py` rozrzuca gminy i wodowskazy losowym odchyleniem wokół środka
+województwa, bez sprawdzania granic. Dopóki mapa rysowała samą siatkę, nie było tego
+widać. Po naniesieniu prawdziwych granic **69 gmin i 13 wodowskazów lądowało poza
+krajem**, a znacznie więcej w sąsiednim województwie.
+
+`build_scene.py` przyciąga takie punkty do własnego województwa — do najbliższego
+wierzchołka granicy, przesuniętego w stronę środka wielokąta. Dzieje się to **wyłącznie
+przy budowie sceny**: zbiory źródłowe, pliki `derived/`, notatniki, Eventhouse i model
+semantyczny zostają nietknięte, więc żaden wskaźnik się nie zmienia.
+
+Dwie pułapki, na które natrafiliśmy:
+
+- **Zaokrąglanie do dwóch miejsc (~1 km) przenosiło punkt przygraniczny na drugą stronę
+  granicy.** Współrzędne mają teraz trzy miejsca (~100 m), a poprawność sprawdzana jest
+  na wartości już zaokrąglonej — tej, która faktycznie trafia na mapę.
+- **Pojedyncze zanurzenie w głąb wielokąta nie wystarcza przy kształtach wklęsłych.**
+  Przyciąganie zwiększa zanurzenie (6% → 12% → 25% → 50%), aż punkt naprawdę znajdzie
+  się w środku.
+
+`src/__tests__/geography.test.ts` sprawdza to na stałe: każda gmina w swoim województwie,
+każdy wodowskaz w województwie swojej gminy, żadna siedziba WCZK poza krajem. Test czyta
+kontury z `poland.ts`, czyli dokładnie z tego, co rysuje aplikacja.
 
 ## Reguły uprawnień
 

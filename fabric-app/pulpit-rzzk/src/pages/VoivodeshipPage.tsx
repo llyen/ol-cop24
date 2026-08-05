@@ -7,6 +7,7 @@ import {
   gminaRows,
   kisBreakdown,
   kisColor,
+  KIS_LEGEND,
   levelBadgeClass,
   toCsv,
   voivSeries,
@@ -258,6 +259,9 @@ export function VoivodeshipPage() {
       <Panel title="Rozkład w województwie">
         <CountryMap
           points={points}
+          colorFor={kisColor}
+          legend={KIS_LEGEND}
+          highlightRegions={[row.name]}
           anchors={[
             {
               id: row.v,
