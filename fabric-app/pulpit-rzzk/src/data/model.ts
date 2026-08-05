@@ -602,11 +602,11 @@ export function project(
 }
 
 export function kisColor(kis: number): string {
-  if (kis >= 65) return '#dc2626';
-  if (kis >= 45) return '#f97316';
-  if (kis >= 25) return '#facc15';
-  if (kis >= 10) return '#38bdf8';
-  return '#22d3ee';
+  if (kis >= 65) return '#d5233f';
+  if (kis >= 45) return '#c2410c';
+  if (kis >= 25) return '#a16207';
+  if (kis >= 10) return '#0052a5';
+  return '#15803d';
 }
 
 /** Progi skali KIS w postaci gotowej dla legendy mapy. */
@@ -621,15 +621,15 @@ export const KIS_LEGEND = [
 export function levelBadgeClass(level: string): string {
   switch (level) {
     case 'RZZK':
-      return 'bg-red-500/15 text-red-300 ring-red-500/40';
+      return 'bg-red-50 text-red-700 ring-red-600/40';
     case 'minister wiodący':
-      return 'bg-orange-500/15 text-orange-300 ring-orange-500/40';
+      return 'bg-orange-50 text-orange-700 ring-orange-600/40';
     case 'wojewoda':
-      return 'bg-amber-500/15 text-amber-300 ring-amber-500/40';
+      return 'bg-amber-50 text-amber-700 ring-amber-600/40';
     case 'powiat':
-      return 'bg-sky-500/15 text-sky-300 ring-sky-500/40';
+      return 'bg-gov/15 text-gov ring-gov/40';
     default:
-      return 'bg-slate-500/15 text-slate-300 ring-slate-500/40';
+      return 'bg-slate-100 text-slate-700 ring-slate-300';
   }
 }
 

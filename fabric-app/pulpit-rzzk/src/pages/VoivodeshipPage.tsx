@@ -72,7 +72,7 @@ export function VoivodeshipPage() {
             setParams({ v: e.target.value });
             setSelectedGmina(null);
           }}
-          className="rounded-lg bg-slate-800 px-3 py-2 text-sm text-slate-100 ring-1 ring-slate-600"
+          className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-900 ring-1 ring-slate-300"
         >
           {rows.map((r) => (
             <option key={r.v} value={r.v}>
@@ -114,8 +114,8 @@ export function VoivodeshipPage() {
         <Panel title="Gminy" subtitle={`${gminas.length} gmin z sygnałem`} className="xl:col-span-2">
           <div className="max-h-[420px] overflow-y-auto">
             <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-slate-900">
-                <tr className="border-b border-slate-700 text-left text-[11px] uppercase tracking-wider text-slate-500">
+              <thead className="sticky top-0 bg-white">
+                <tr className="border-b border-slate-200 text-left text-[11px] uppercase tracking-wider text-slate-500">
                   <th className="py-2 pr-2">Gmina</th>
                   <th className="px-2">Powiat</th>
                   <th className="px-2 text-right">KIS</th>
@@ -131,8 +131,8 @@ export function VoivodeshipPage() {
                   <tr
                     key={g.g}
                     onClick={() => setSelectedGmina(g.g)}
-                    className={`cursor-pointer border-b border-slate-800/70 transition-colors hover:bg-slate-800/60 ${
-                      gmina?.g === g.g ? 'bg-slate-800/80' : ''
+                    className={`cursor-pointer border-b border-slate-200 transition-colors hover:bg-slate-50 ${
+                      gmina?.g === g.g ? 'bg-slate-50' : ''
                     }`}
                   >
                     <td className="py-1.5 pr-2">
@@ -141,27 +141,27 @@ export function VoivodeshipPage() {
                           className="inline-block h-2 w-2 rounded-full"
                           style={{ background: kisColor(g.kis) }}
                         />
-                        <span className="text-slate-200">{g.name}</span>
+                        <span className="text-slate-900">{g.name}</span>
                         {g.alarm === 1 && (
-                          <Badge className="bg-red-500/15 text-red-300 ring-red-500/40">alarm</Badge>
+                          <Badge className="bg-red-50 text-red-700 ring-red-600/40">alarm</Badge>
                         )}
                       </span>
                     </td>
-                    <td className="px-2 text-slate-400">{g.powiat}</td>
-                    <td className="px-2 text-right font-medium tabular-nums text-slate-100">
+                    <td className="px-2 text-slate-500">{g.powiat}</td>
+                    <td className="px-2 text-right font-medium tabular-nums text-slate-900">
                       {g.kis}
                     </td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">
+                    <td className="px-2 text-right tabular-nums text-slate-700">
                       {g.lvl ? `${g.lvl} cm` : '—'}
                     </td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">{g.inc}</td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">
+                    <td className="px-2 text-right tabular-nums text-slate-700">{g.inc}</td>
+                    <td className="px-2 text-right tabular-nums text-slate-700">
                       {formatNumber(g.off)}
                     </td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">
+                    <td className="px-2 text-right tabular-nums text-slate-700">
                       {formatNumber(g.evac)}
                     </td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">
+                    <td className="px-2 text-right tabular-nums text-slate-700">
                       {g.cov === null ? '—' : `${g.cov}%`}
                     </td>
                   </tr>
@@ -208,7 +208,7 @@ export function VoivodeshipPage() {
                   label: b.label,
                   value: b.value,
                 }))}
-                color="#22d3ee"
+                color="#0052a5"
               />
               <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
                 {index.scene.meta.kisFormula}. Suma składowych daje wartość indeksu, obciętą do 100.
@@ -223,8 +223,8 @@ export function VoivodeshipPage() {
                   key={c.key}
                   className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm ring-1 ${
                     c.active
-                      ? 'bg-orange-500/10 text-orange-200 ring-orange-500/30'
-                      : 'bg-slate-800/50 text-slate-400 ring-slate-700'
+                      ? 'bg-orange-50 text-orange-800 ring-orange-600/30'
+                      : 'bg-slate-50 text-slate-500 ring-slate-200'
                   }`}
                 >
                   <span>{c.label}</span>
@@ -243,7 +243,7 @@ export function VoivodeshipPage() {
                 { label: 'Agregaty', value: row.res.generators ?? 0 },
                 { label: 'Śmigłowce', value: row.res.helicopters ?? 0 },
               ]}
-              color="#34d399"
+              color="#15803d"
             />
           </Panel>
 
@@ -377,7 +377,7 @@ function BriefModal({
         <p className="text-xs text-slate-500">
           Zamawiający: {actorName} · doba {day}
         </p>
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && <p className="text-sm text-red-700">{error}</p>}
         <div className="flex justify-end gap-2">
           <Button onClick={onClose}>Anuluj</Button>
           <Button variant="primary" onClick={() => void submit()} disabled={busy}>

@@ -27,7 +27,7 @@ function TimeScrubber() {
   const day = index.days[dayIndex];
   const country = index.countryByDay.get(day);
   return (
-    <div className="flex flex-wrap items-center gap-3 border-b border-slate-800 bg-slate-950/80 px-5 py-2.5">
+    <div className="flex flex-wrap items-center gap-3 border-b border-slate-200 bg-slate-100 px-5 py-2.5">
       <Button variant={playing ? 'danger' : 'primary'} onClick={togglePlay} className="w-24">
         {playing ? '❚❚ Pauza' : '▶ Odtwórz'}
       </Button>
@@ -38,7 +38,7 @@ function TimeScrubber() {
           max={index.days.length - 1}
           value={dayIndex}
           onChange={(e) => setDayIndex(Number(e.target.value))}
-          className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-slate-700 accent-cyan-400"
+          className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-gov"
           aria-label="Dzień sceny"
         />
         <span
@@ -54,7 +54,7 @@ function TimeScrubber() {
       <select
         value={speed}
         onChange={(e) => setSpeed(Number(e.target.value))}
-        className="rounded-lg bg-slate-800 px-2 py-1 text-xs text-slate-200 ring-1 ring-slate-600"
+        className="rounded-lg bg-slate-50 px-2 py-1 text-xs text-slate-900 ring-1 ring-slate-300"
         aria-label="Tempo odtwarzania"
       >
         <option value={3000}>0,3× (3 s/dobę)</option>
@@ -76,7 +76,7 @@ function RolePicker() {
       <select
         value={actor.role}
         onChange={(e) => setRole(e.target.value as UserRole)}
-        className="rounded-lg bg-slate-800 px-2 py-1 text-xs text-slate-200 ring-1 ring-slate-600"
+        className="rounded-lg bg-slate-50 px-2 py-1 text-xs text-slate-900 ring-1 ring-slate-300"
         aria-label="Rola użytkownika"
       >
         {USER_ROLES.map((r) => (
@@ -89,7 +89,7 @@ function RolePicker() {
         <select
           value={actor.voivodeshipCode}
           onChange={(e) => setVoivodeship(e.target.value)}
-          className="rounded-lg bg-slate-800 px-2 py-1 text-xs text-slate-200 ring-1 ring-slate-600"
+          className="rounded-lg bg-slate-50 px-2 py-1 text-xs text-slate-900 ring-1 ring-slate-300"
           aria-label="Województwo"
         >
           <option value="">— wybierz —</option>
@@ -111,15 +111,16 @@ export function Layout({ children }: { children: ReactNode }) {
   const active = NAV.find((n) => n.to === location.pathname)?.label ?? '';
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200">
-      <header className="border-b border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-slate-100 text-slate-900">
+      <div className="h-1 w-full bg-gov" />
+      <header className="border-b border-slate-200 bg-gradient-to-r from-white via-white to-slate-100">
         <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-500/40">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gov/15 text-gov ring-1 ring-gov/40">
               <span className="text-sm font-bold">24</span>
             </div>
             <div>
-              <h1 className="text-sm font-semibold tracking-wide text-slate-100">
+              <h1 className="text-sm font-semibold tracking-wide text-slate-900">
                 COP-24 · Pulpit RZZK
               </h1>
               <p className="text-[11px] text-slate-500">
@@ -145,8 +146,8 @@ export function Layout({ children }: { children: ReactNode }) {
               className={({ isActive }) =>
                 `whitespace-nowrap border-b-2 px-3 py-2 text-sm transition-colors ${
                   isActive
-                    ? 'border-cyan-400 text-cyan-300'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                    ? 'border-gov text-gov'
+                    : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`
               }
             >
@@ -159,18 +160,18 @@ export function Layout({ children }: { children: ReactNode }) {
       <TimeScrubber />
 
       {writebackError && (
-        <div className="border-b border-amber-500/40 bg-amber-500/10 px-5 py-2 text-xs text-amber-300">
+        <div className="border-b border-amber-300 bg-amber-50 px-5 py-2 text-xs text-amber-700">
           Zapis do bazy aplikacji jest niedostępny ({writebackError}). Decyzje zapisują się lokalnie
           w sesji przeglądarki.
         </div>
       )}
 
       <main className="mx-auto max-w-[1500px] px-5 py-5">
-        <p className="mb-3 text-[11px] uppercase tracking-widest text-slate-600">{active}</p>
+        <p className="mb-3 text-[11px] uppercase tracking-widest text-slate-400">{active}</p>
         {children}
       </main>
 
-      <footer className="border-t border-slate-800 px-5 py-3 text-[11px] text-slate-600">
+      <footer className="border-t border-slate-200 px-5 py-3 text-[11px] text-slate-400">
         Dane są w całości syntetyczne. Indeks KIS i progi eskalacji są konstrukcją demonstracyjną,
         nie odwzorowują obowiązujących procedur.
       </footer>

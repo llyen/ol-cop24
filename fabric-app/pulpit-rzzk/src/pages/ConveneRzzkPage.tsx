@@ -104,7 +104,7 @@ export function ConveneRzzkPage() {
       >
         <div className="grid gap-4 lg:grid-cols-2">
           <div>
-            <p className="mb-2 text-xs font-medium uppercase tracking-wide text-emerald-400">
+            <p className="mb-2 text-xs font-medium uppercase tracking-wide text-emerald-700">
               Argumenty za zwołaniem
             </p>
             {kase.pros.length === 0 ? (
@@ -114,7 +114,7 @@ export function ConveneRzzkPage() {
                 {kase.pros.map((a) => (
                   <li
                     key={a}
-                    className="rounded-lg bg-emerald-500/10 px-3 py-2 text-sm text-emerald-100 ring-1 ring-emerald-500/25"
+                    className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800 ring-1 ring-emerald-600/25"
                   >
                     {a}
                   </li>
@@ -123,7 +123,7 @@ export function ConveneRzzkPage() {
             )}
           </div>
           <div>
-            <p className="mb-2 text-xs font-medium uppercase tracking-wide text-amber-400">
+            <p className="mb-2 text-xs font-medium uppercase tracking-wide text-amber-700">
               Argumenty przeciw / zastrzeżenia
             </p>
             {kase.cons.length === 0 ? (
@@ -133,7 +133,7 @@ export function ConveneRzzkPage() {
                 {kase.cons.map((a) => (
                   <li
                     key={a}
-                    className="rounded-lg bg-amber-500/10 px-3 py-2 text-sm text-amber-100 ring-1 ring-amber-500/25"
+                    className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800 ring-1 ring-amber-600/25"
                   >
                     {a}
                   </li>
@@ -143,13 +143,13 @@ export function ConveneRzzkPage() {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-3 rounded-lg bg-slate-800/60 px-4 py-3">
+        <div className="mt-4 flex flex-wrap items-center gap-3 rounded-lg bg-slate-50 px-4 py-3">
           <Badge className={levelBadgeClass(kase.suggestSummon ? 'RZZK' : kase.recommendedLevel)}>
             {kase.suggestSummon
               ? 'przesłanki uzasadniają zwołanie'
               : 'przesłanki nie są rozstrzygające'}
           </Badge>
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-slate-500">
             maks. lokalny KIS {kase.maxKis} · kaskada {kase.cascade}/4 · województwa powyżej progu:{' '}
             {kase.affectedVoivodeships.length || '—'}
           </span>
@@ -167,19 +167,19 @@ export function ConveneRzzkPage() {
         <Panel title="Proponowany skład" subtitle={`${participants.length} adresatów`}>
           <ul className="space-y-1.5">
             {participants.map((p) => (
-              <li key={p.name} className="rounded-lg bg-slate-800/50 px-3 py-2 text-sm">
+              <li key={p.name} className="rounded-lg bg-slate-50 px-3 py-2 text-sm">
                 <div className="flex items-baseline justify-between gap-2">
-                  <span className="font-medium text-slate-100">{p.name}</span>
+                  <span className="font-medium text-slate-900">{p.name}</span>
                   <span className="text-[11px] uppercase tracking-wide text-slate-500">
                     {p.role}
                   </span>
                 </div>
-                <div className="text-xs text-slate-400">{p.why}</div>
+                <div className="text-xs text-slate-500">{p.why}</div>
               </li>
             ))}
           </ul>
           {hazard && (
-            <p className="mt-3 rounded-lg bg-slate-800/60 px-3 py-2 text-xs text-slate-400">
+            <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500">
               Współdziałający wg siatki bezpieczeństwa dla {hazard.code}: {hazard.coop}
             </p>
           )}
@@ -236,9 +236,9 @@ export function ConveneRzzkPage() {
               ['Zgłoszenia', country.inc],
               ['Dezinformacja', country.disinfo],
             ].map(([label, value]) => (
-              <div key={String(label)} className="rounded-lg bg-slate-800/50 px-3 py-2">
+              <div key={String(label)} className="rounded-lg bg-slate-50 px-3 py-2">
                 <div className="text-[11px] uppercase tracking-wide text-slate-500">{label}</div>
-                <div className="text-lg font-semibold tabular-nums text-slate-100">
+                <div className="text-lg font-semibold tabular-nums text-slate-900">
                   {formatNumber(Number(value))}
                 </div>
               </div>
@@ -251,11 +251,11 @@ export function ConveneRzzkPage() {
         <Panel title="Zapisane decyzje o poziomie RZZK">
           <ul className="space-y-1.5 text-sm">
             {rzzkDecisions.map((d) => (
-              <li key={d.id} className="rounded-lg bg-slate-800/50 px-3 py-2">
-                <span className="font-mono text-xs text-slate-400">
+              <li key={d.id} className="rounded-lg bg-slate-50 px-3 py-2">
+                <span className="font-mono text-xs text-slate-500">
                   {d.decision_id} v{d.version}
                 </span>{' '}
-                <span className="text-slate-200">{d.title}</span>
+                <span className="text-slate-900">{d.title}</span>
                 <span className="block text-[11px] text-slate-500">
                   {d.author_name} · {d.author_role} · {d.status}
                 </span>

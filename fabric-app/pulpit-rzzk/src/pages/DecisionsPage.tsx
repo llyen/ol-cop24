@@ -24,10 +24,10 @@ import {
 } from '@/components/ui';
 
 const STATUS_CLASS: Record<string, string> = {
-  projekt: 'bg-slate-500/15 text-slate-300 ring-slate-500/40',
-  zatwierdzona: 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/40',
-  odrzucona: 'bg-red-500/15 text-red-300 ring-red-500/40',
-  wycofana: 'bg-amber-500/15 text-amber-300 ring-amber-500/40',
+  projekt: 'bg-slate-100 text-slate-700 ring-slate-300',
+  zatwierdzona: 'bg-emerald-50 text-emerald-700 ring-emerald-600/40',
+  odrzucona: 'bg-red-50 text-red-700 ring-red-600/40',
+  wycofana: 'bg-amber-50 text-amber-700 ring-amber-600/40',
 };
 
 const ACTION_STATUSES = ['nie rozpoczęto', 'w toku', 'gotowe', 'zablokowane'];
@@ -105,7 +105,7 @@ export function DecisionsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-slate-700 text-left text-[11px] uppercase tracking-wider text-slate-500">
+                  <tr className="border-b border-slate-200 text-left text-[11px] uppercase tracking-wider text-slate-500">
                     <th className="py-2 pr-2">Decyzja</th>
                     <th className="px-2">Tytuł</th>
                     <th className="px-2">Doba</th>
@@ -119,21 +119,21 @@ export function DecisionsPage() {
                     <tr
                       key={d.id}
                       onClick={() => setSelectedId(d.decision_id)}
-                      className={`cursor-pointer border-b border-slate-800/70 hover:bg-slate-800/60 ${
-                        selectedId === d.decision_id ? 'bg-slate-800/80' : ''
+                      className={`cursor-pointer border-b border-slate-200 hover:bg-slate-50 ${
+                        selectedId === d.decision_id ? 'bg-slate-50' : ''
                       }`}
                     >
-                      <td className="py-1.5 pr-2 font-mono text-xs text-slate-300">
+                      <td className="py-1.5 pr-2 font-mono text-xs text-slate-700">
                         {d.decision_id}
                         <span className="ml-1 text-slate-500">v{d.version}</span>
                       </td>
-                      <td className="px-2 text-slate-200">{d.title}</td>
-                      <td className="px-2 tabular-nums text-slate-400">{d.scene_day}</td>
+                      <td className="px-2 text-slate-900">{d.title}</td>
+                      <td className="px-2 tabular-nums text-slate-500">{d.scene_day}</td>
                       <td className="px-2">
                         <Badge className={levelBadgeClass(d.chosen_level)}>{d.chosen_level}</Badge>
                         {d.chosen_level !== d.recommended_level && (
                           <span
-                            className="ml-1 text-[10px] text-amber-400"
+                            className="ml-1 text-[10px] text-amber-700"
                             title={`Rekomendacja systemu: ${d.recommended_level}`}
                           >
                             ≠
@@ -145,9 +145,9 @@ export function DecisionsPage() {
                           {d.status}
                         </Badge>
                       </td>
-                      <td className="px-2 text-xs text-slate-400">
+                      <td className="px-2 text-xs text-slate-500">
                         {d.author_name}
-                        <span className="block text-slate-600">{d.author_role}</span>
+                        <span className="block text-slate-400">{d.author_role}</span>
                       </td>
                     </tr>
                   ))}
@@ -164,15 +164,15 @@ export function DecisionsPage() {
             ) : (
               <ul className="space-y-1.5 text-sm">
                 {briefs.slice(0, 8).map((b) => (
-                  <li key={b.id} className="rounded-lg bg-slate-800/50 px-3 py-2">
-                    <div className="text-slate-200">
+                  <li key={b.id} className="rounded-lg bg-slate-50 px-3 py-2">
+                    <div className="text-slate-900">
                       {b.format} → {b.audience}
                     </div>
                     <div className="text-[11px] text-slate-500">
                       doba {b.scene_day} ·{' '}
                       {index.voivByCode.get(b.voivodeship_code)?.name ?? 'kraj'} · {b.author_name}
                     </div>
-                    {b.note && <div className="mt-1 text-xs text-slate-400">{b.note}</div>}
+                    {b.note && <div className="mt-1 text-xs text-slate-500">{b.note}</div>}
                   </li>
                 ))}
               </ul>
@@ -185,8 +185,8 @@ export function DecisionsPage() {
             ) : (
               <ul className="space-y-1.5 text-sm">
                 {notifications.slice(0, 8).map((n) => (
-                  <li key={n.id} className="rounded-lg bg-slate-800/50 px-3 py-2">
-                    <div className="text-slate-200">{n.subject}</div>
+                  <li key={n.id} className="rounded-lg bg-slate-50 px-3 py-2">
+                    <div className="text-slate-900">{n.subject}</div>
                     <div className="text-[11px] text-slate-500">
                       kanał {n.channel} · adresatów {formatNumber(n.recipient_count)} · doba{' '}
                       {n.scene_day}
@@ -220,7 +220,7 @@ export function DecisionsPage() {
         >
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="space-y-3">
-              <p className="whitespace-pre-wrap rounded-lg bg-slate-800/50 px-4 py-3 text-sm text-slate-200">
+              <p className="whitespace-pre-wrap rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-900">
                 {history[history.length - 1]?.decision_text ?? selected.decision_text}
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -228,7 +228,7 @@ export function DecisionsPage() {
                   .split(',')
                   .filter(Boolean)
                   .map((code) => (
-                    <Badge key={code} className="bg-cyan-500/15 text-cyan-300 ring-cyan-500/40">
+                    <Badge key={code} className="bg-gov/15 text-gov ring-gov/40">
                       {code} · {index.spoByCode.get(code)?.name?.slice(0, 40) ?? ''}
                     </Badge>
                   ))}
@@ -242,9 +242,9 @@ export function DecisionsPage() {
                   {history.map((h) => (
                     <li
                       key={h.id}
-                      className="flex items-center justify-between rounded-lg bg-slate-800/50 px-3 py-2 text-xs"
+                      className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-xs"
                     >
-                      <span className="text-slate-300">
+                      <span className="text-slate-700">
                         v{h.version}
                         {h.supersedes_version > 0 && (
                           <span className="text-slate-500"> (zastępuje v{h.supersedes_version})</span>
@@ -272,10 +272,10 @@ export function DecisionsPage() {
                       .map((a) => (
                         <li
                           key={a.id}
-                          className="flex items-center justify-between gap-2 rounded-lg bg-slate-800/50 px-3 py-2 text-xs"
+                          className="flex items-center justify-between gap-2 rounded-lg bg-slate-50 px-3 py-2 text-xs"
                         >
-                          <span className="text-slate-200">
-                            <span className="font-medium text-cyan-300">{a.spo_code}</span>{' '}
+                          <span className="text-slate-900">
+                            <span className="font-medium text-gov">{a.spo_code}</span>{' '}
                             {a.action_text}
                             <span className="block text-slate-500">
                               {a.owner || 'bez właściciela'}
@@ -290,7 +290,7 @@ export function DecisionsPage() {
                                 void refresh();
                               });
                             }}
-                            className="rounded bg-slate-900 px-2 py-1 text-[11px] text-slate-200 ring-1 ring-slate-600"
+                            className="rounded bg-white px-2 py-1 text-[11px] text-slate-900 ring-1 ring-slate-300"
                           >
                             {ACTION_STATUSES.map((s) => (
                               <option key={s} value={s}>
@@ -350,7 +350,7 @@ export function DecisionsPage() {
 
       <Toast message={toast} onDone={() => setToast(null)} />
       {actor.role === 'oficer dyżurny' && (
-        <p className="text-xs text-slate-600">
+        <p className="text-xs text-slate-400">
           Rola „oficer dyżurny” może zapisywać projekty decyzji i prowadzić zadania, ale nie nadaje
           statusu „zatwierdzona”.
         </p>
@@ -434,7 +434,7 @@ function ActionModal({
             <input value={due} onChange={(e) => setDue(e.target.value)} className={inputClass} />
           </Field>
         </div>
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && <p className="text-sm text-red-700">{error}</p>}
         <div className="flex justify-end gap-2">
           <Button onClick={onClose}>Anuluj</Button>
           <Button variant="primary" onClick={() => void submit()} disabled={busy}>

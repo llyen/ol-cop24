@@ -54,9 +54,9 @@ export function DecisionEvidencePanel({
     <Panel title="Przesłanki decyzji" subtitle="migawka obrazu sytuacji z chwili zapisu">
       <dl className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm sm:grid-cols-3">
         {Object.entries(evidence).map(([k, v]) => (
-          <div key={k} className="rounded-lg bg-slate-800/50 px-3 py-2">
+          <div key={k} className="rounded-lg bg-slate-50 px-3 py-2">
             <dt className="text-[11px] uppercase tracking-wide text-slate-500">{k}</dt>
-            <dd className="tabular-nums text-slate-200">
+            <dd className="tabular-nums text-slate-900">
               {Array.isArray(v)
                 ? v.length
                   ? v.join(', ')
@@ -70,7 +70,7 @@ export function DecisionEvidencePanel({
       </dl>
       {hash && (
         <p className="mt-3 font-mono text-[11px] text-slate-500">
-          Skrót kontrolny przesłanek: <span className="text-cyan-400">{hash}</span>
+          Skrót kontrolny przesłanek: <span className="text-gov">{hash}</span>
         </p>
       )}
     </Panel>
@@ -100,20 +100,20 @@ export function SpoChecklist({
               onClick={() => onToggle(code)}
               className={`flex w-full items-start gap-3 rounded-lg px-3 py-2 text-left text-sm ring-1 transition-colors ${
                 on
-                  ? 'bg-cyan-500/10 text-cyan-100 ring-cyan-500/40'
-                  : 'bg-slate-800/50 text-slate-300 ring-slate-700 hover:bg-slate-800'
+                  ? 'bg-gov/10 text-gov-dark ring-gov/40'
+                  : 'bg-slate-50 text-slate-700 ring-slate-200 hover:bg-slate-50'
               }`}
             >
               <span
                 className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] ${
-                  on ? 'border-cyan-400 bg-cyan-400 text-slate-950' : 'border-slate-600'
+                  on ? 'border-gov bg-gov text-white' : 'border-slate-300'
                 }`}
               >
                 {on ? '✓' : ''}
               </span>
               <span>
                 <span className="font-medium">{code}</span>
-                <span className="ml-2 text-xs text-slate-400">{spo?.name ?? ''}</span>
+                <span className="ml-2 text-xs text-slate-500">{spo?.name ?? ''}</span>
               </span>
             </button>
           </li>
@@ -272,14 +272,14 @@ export function DecisionForm(props: DecisionFormProps) {
         </div>
 
         {deviation !== 0 && (
-          <p className="rounded-lg bg-amber-500/10 px-3 py-2 text-sm text-amber-200 ring-1 ring-amber-500/30">
+          <p className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800 ring-1 ring-amber-600/30">
             Wybrany poziom jest {deviation > 0 ? 'wyższy' : 'niższy'} niż rekomendacja systemu.
             Odstępstwo zostanie zapisane razem z przesłankami — opisz powód w treści decyzji.
           </p>
         )}
 
         <div>
-          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-400">
+          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
             Uruchamiane procedury SPO
           </p>
           <SpoChecklist
@@ -295,7 +295,7 @@ export function DecisionForm(props: DecisionFormProps) {
         <DecisionEvidencePanel evidence={evidence} hash={buildEvidenceHash(draft)} />
 
         {errors.length > 0 && (
-          <ul className="space-y-1 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300 ring-1 ring-red-500/30">
+          <ul className="space-y-1 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 ring-1 ring-red-600/30">
             {errors.map((e) => (
               <li key={e}>• {e}</li>
             ))}

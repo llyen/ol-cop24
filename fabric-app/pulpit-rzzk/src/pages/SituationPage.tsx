@@ -138,8 +138,8 @@ export function SituationPage() {
                   key={c.key}
                   className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm ring-1 ${
                     c.active
-                      ? 'bg-red-500/10 text-red-200 ring-red-500/30'
-                      : 'bg-slate-800/50 text-slate-400 ring-slate-700'
+                      ? 'bg-red-50 text-red-800 ring-red-600/30'
+                      : 'bg-slate-50 text-slate-500 ring-slate-200'
                   }`}
                 >
                   <span className="font-medium">{c.label}</span>
@@ -148,7 +148,7 @@ export function SituationPage() {
               ))}
             </div>
             {activeCascade >= 3 && (
-              <p className="mt-3 rounded-lg bg-red-500/10 px-3 py-2 text-xs text-red-200 ring-1 ring-red-500/30">
+              <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-800 ring-1 ring-red-600/30">
                 Zagrożenie przestało być jednoresortowe. To przesłanka do rozważenia zwołania RZZK —
                 przejdź do zakładki „Zwołaj RZZK”.
               </p>
@@ -163,21 +163,21 @@ export function SituationPage() {
                 {wave.map((w) => {
                   const pct = Math.min((w.level / w.alarm) * 100, 140);
                   return (
-                    <li key={w.gaugeId} className="rounded-lg bg-slate-800/50 px-3 py-2">
+                    <li key={w.gaugeId} className="rounded-lg bg-slate-50 px-3 py-2">
                       <div className="flex items-baseline justify-between gap-2 text-xs">
-                        <span className="truncate font-medium text-slate-200">
+                        <span className="truncate font-medium text-slate-900">
                           {w.gaugeName} · {w.river}
                         </span>
-                        <span className="tabular-nums text-slate-400">
+                        <span className="tabular-nums text-slate-500">
                           {w.level} cm / alarm {w.alarm}
                         </span>
                       </div>
-                      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-900">
+                      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white">
                         <div
                           className="h-full rounded-full transition-all duration-500"
                           style={{
                             width: `${Math.min(pct, 100)}%`,
-                            background: w.state === 'alarm' ? '#dc2626' : '#f59e0b',
+                            background: w.state === 'alarm' ? '#d5233f' : '#b45309',
                           }}
                         />
                       </div>
@@ -229,7 +229,7 @@ export function SituationPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-slate-700 text-left text-[11px] uppercase tracking-wider text-slate-500">
+                <tr className="border-b border-slate-200 text-left text-[11px] uppercase tracking-wider text-slate-500">
                   <th className="py-2 pr-2">Województwo</th>
                   <th className="px-2 text-right">KIS</th>
                   <th className="px-2 text-right">Maks.</th>
@@ -245,7 +245,7 @@ export function SituationPage() {
                   <tr
                     key={v.v}
                     onClick={() => navigate(`/wojewodztwo?v=${v.v}`)}
-                    className="cursor-pointer border-b border-slate-800/70 transition-colors hover:bg-slate-800/60"
+                    className="cursor-pointer border-b border-slate-200 transition-colors hover:bg-slate-50"
                   >
                     <td className="py-1.5 pr-2">
                       <span className="flex items-center gap-2">
@@ -253,28 +253,28 @@ export function SituationPage() {
                           className="inline-block h-2 w-2 rounded-full"
                           style={{ background: kisColor(v.maxKis) }}
                         />
-                        <span className="text-slate-200">{v.name}</span>
+                        <span className="text-slate-900">{v.name}</span>
                       </span>
                     </td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">
+                    <td className="px-2 text-right tabular-nums text-slate-700">
                       {v.kis}
                       {v.delta !== null && v.delta !== 0 && (
                         <span
-                          className={`ml-1 text-[10px] ${v.delta > 0 ? 'text-red-400' : 'text-emerald-400'}`}
+                          className={`ml-1 text-[10px] ${v.delta > 0 ? 'text-red-700' : 'text-emerald-700'}`}
                         >
                           {v.delta > 0 ? '▲' : '▼'}
                         </span>
                       )}
                     </td>
-                    <td className="px-2 text-right font-medium tabular-nums text-slate-100">
+                    <td className="px-2 text-right font-medium tabular-nums text-slate-900">
                       {v.maxKis}
                     </td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">{v.alarmGminas}</td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">{v.inc}</td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">
+                    <td className="px-2 text-right tabular-nums text-slate-700">{v.alarmGminas}</td>
+                    <td className="px-2 text-right tabular-nums text-slate-700">{v.inc}</td>
+                    <td className="px-2 text-right tabular-nums text-slate-700">
                       {formatNumber(v.off)}
                     </td>
-                    <td className="px-2 text-right tabular-nums text-slate-300">
+                    <td className="px-2 text-right tabular-nums text-slate-700">
                       {formatNumber(v.evac)}
                     </td>
                     <td className="px-2">
@@ -318,7 +318,7 @@ export function SituationPage() {
               activeIndex={dayIndex}
               onSelect={setDayIndex}
               height={44}
-              colorFor={() => '#a855f7'}
+              colorFor={() => '#7e22ce'}
             />
           </Panel>
 
@@ -329,11 +329,11 @@ export function SituationPage() {
                 value: m.count,
                 hint: `zasięg ${formatNumber(m.reach)}`,
               }))}
-              color="#a855f7"
+              color="#7e22ce"
             />
-            <div className="mt-3 rounded-lg bg-slate-800/60 px-3 py-2 text-xs text-slate-400">
+            <div className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500">
               Zasięg treści oznaczonych jako dezinformacja:{' '}
-              <span className="font-semibold text-slate-200">
+              <span className="font-semibold text-slate-900">
                 {formatNumber(country.disinfoReach)}
               </span>
             </div>
@@ -342,7 +342,7 @@ export function SituationPage() {
           <Panel title="Dominujące typy zdarzeń">
             <BarList
               rows={country.topTypes.map(([label, value]) => ({ label, value }))}
-              color="#38bdf8"
+              color="#0052a5"
             />
           </Panel>
         </div>
@@ -363,13 +363,13 @@ function SelectedGmina({
   const row = rows.find((r) => r.g === code);
   if (!row) return null;
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-3 rounded-lg bg-slate-800/70 px-4 py-3 text-sm ring-1 ring-slate-700">
-      <span className="font-semibold text-slate-100">{row.name}</span>
-      <span className="text-slate-400">
+    <div className="mt-3 flex flex-wrap items-center gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm ring-1 ring-slate-200">
+      <span className="font-semibold text-slate-900">{row.name}</span>
+      <span className="text-slate-500">
         {row.powiat} · {row.vName}
       </span>
       <Badge className={levelBadgeClass(row.rec.level)}>KIS {row.kis} → {row.rec.level}</Badge>
-      <span className="text-xs text-slate-400">
+      <span className="text-xs text-slate-500">
         zgłoszenia {row.inc} · bez prądu {formatNumber(row.off)} · ewakuacja{' '}
         {formatNumber(row.evac)}
         {row.cov !== null ? ` · pokrycie ${row.cov}%` : ''}

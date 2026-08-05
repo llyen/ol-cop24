@@ -51,8 +51,8 @@ export function RecommendationsPage() {
             ['≥ 65', 'minister wiodący'],
             ['≥ 85', 'RZZK'],
           ].map(([range, level]) => (
-            <div key={level} className="rounded-lg bg-slate-800/60 px-3 py-2 ring-1 ring-slate-700">
-              <div className="tabular-nums text-slate-400">maks. lokalny KIS {range}</div>
+            <div key={level} className="rounded-lg bg-slate-50 px-3 py-2 ring-1 ring-slate-200">
+              <div className="tabular-nums text-slate-500">maks. lokalny KIS {range}</div>
               <div className="mt-0.5">
                 <Badge className={levelBadgeClass(level)}>{level}</Badge>
               </div>
@@ -79,7 +79,7 @@ export function RecommendationsPage() {
                 right={<Badge className={levelBadgeClass(r.rec.level)}>{r.rec.level}</Badge>}
               >
                 <div className="space-y-3">
-                  <div className="rounded-lg bg-slate-800/60 px-3 py-2 text-xs text-slate-300">
+                  <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-700">
                     Przesłanki: {r.alarmGminas} gmin w stanie alarmowym · {r.inc} zgłoszeń (P1:{' '}
                     {r.p1}) · {formatNumber(r.off)} odbiorców bez zasilania ·{' '}
                     {formatNumber(r.evac)} ewakuowanych
@@ -94,10 +94,10 @@ export function RecommendationsPage() {
                       {r.rec.spo.map((code) => (
                         <li
                           key={code}
-                          className="rounded-lg bg-slate-800/50 px-3 py-1.5 text-sm text-slate-200"
+                          className="rounded-lg bg-slate-50 px-3 py-1.5 text-sm text-slate-900"
                         >
-                          <span className="font-medium text-cyan-300">{code}</span>{' '}
-                          <span className="text-xs text-slate-400">
+                          <span className="font-medium text-gov">{code}</span>{' '}
+                          <span className="text-xs text-slate-500">
                             {index.spoByCode.get(code)?.name ?? ''}
                           </span>
                         </li>
@@ -121,7 +121,7 @@ export function RecommendationsPage() {
                   )}
 
                   {escalated.length > 0 && (
-                    <div className="rounded-lg bg-amber-500/10 px-3 py-2 text-xs text-amber-200 ring-1 ring-amber-500/30">
+                    <div className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800 ring-1 ring-amber-600/30">
                       Zarejestrowana eskalacja: {escalated[0].from} → {escalated[0].to} ({escalated[0].area}).{' '}
                       {escalated[0].reason}
                     </div>
@@ -161,7 +161,7 @@ export function RecommendationsPage() {
         <Panel title="Pozostałe województwa" subtitle="poniżej progu powiatowego">
           <div className="flex flex-wrap gap-1.5">
             {quiet.map((r) => (
-              <Badge key={r.v} className="bg-slate-500/10 text-slate-400 ring-slate-600">
+              <Badge key={r.v} className="bg-slate-100 text-slate-600 ring-slate-300">
                 {r.name} · {r.maxKis}
               </Badge>
             ))}
