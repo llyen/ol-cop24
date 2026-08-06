@@ -25,6 +25,9 @@ kroków, którymi zostało ono zbudowane. Służy do odtworzenia wdrożenia i do
 | `01b_load_streams` | Notebook | — |
 | `02_situation_index` | Notebook | `481a0c32-8684-46b1-96c5-bc694eb8de8a` |
 | `03_escalation_recommendation` | Notebook | `ad666d46-7097-470f-9ed7-0a277b83002a` |
+| `OL_COP24_SemanticModel` | Semantic Model (Direct Lake) | `669a6a2b-0115-4eeb-8f63-a6e1027133b0` |
+| `OL_COP24_Raport` | Raport Power BI | `a0449186-59df-49f4-a151-9ceceb06726e` |
+| `agent_cop24` | Data Agent | `7733697a-5231-4b8c-a9ac-bd5a6ce62adc` |
 
 Cluster URI Eventhouse: `https://trd-tmsdqpz0s6cg6aewj9.z3.kusto.fabric.microsoft.com`
 
@@ -118,7 +121,11 @@ Test kontrolny wdrożenia: 3 000 zdarzeń pojawiło się w tabeli w ok. 60 sekun
 1. **Real-Time Dashboard** — `deploy\create_dashboard.ps1` oraz `dashboard\RTI_DASHBOARD.md`.
 2. **Activator** — reguły z `activator\RULES.md` (progi alarmowe, eskalacja, dezinformacja).
 3. **Model semantyczny i raport** — `semantic-model\MODEL.md`, `semantic-model\MEASURES.md`.
-4. **Data Agent** — instrukcje i przykładowe pytania w `ai\DATA_AGENT.md`.
+4. ~~**Data Agent**~~ — **wdrożony** skryptem `deploy\create_data_agent.py` (element `agent_cop24`).
+   Instrukcja systemowa jest składana z `ai\DATA_AGENT.md`, więc zmiana specyfikacji wymaga
+   ponownego uruchomienia skryptu. Podpięte źródła: Lakehouse (21 tabel), Eventhouse (16 tabel),
+   model semantyczny (20 tabel). W interfejsie pozostaje jedynie **publikacja** agenta —
+   przejście z wersji roboczej do produkcyjnej; API tego nie udostępnia.
 5. ~~**Fabric App / Rayfin**~~ — **wdrożone 2026-08-04**, patrz sekcja 9.
 
 ## 9. Fabric App — „Pulpit RZZK" (wdrożone)

@@ -1,0 +1,19 @@
+{
+  "workspaceName": "OL-ZK-Demo-COP24",
+  "workspaceId": "8ea0556f-7368-4b36-ad84-adf995e19a80",
+  "capacityId": "75d74dac-c3ee-4861-8a22-e7017940afbb",
+  "lakehouseName": "OL_COP24_Lakehouse",
+  "lakehouseId": "2d840a79-be01-4f82-be45-d4d45e0992ea",
+  "sqlEndpointId": "79ffb987-70d3-4b11-8bc0-4c3c776ee686",
+  "eventhouseId": "8be13fdf-ad4c-48d7-805a-c02cf669386b",
+  "kqlDatabaseId": "c3c2fbc2-7fa9-4b70-b82d-c76f79640b37",
+  "kqlDatabaseName": "OL_COP24_Eventhouse",
+  "kustoQueryUri": "https://trd-tmsdqpz0s6cg6aewj9.z3.kusto.fabric.microsoft.com",
+  "eventstreamId": "c964c29e-bdd7-46b6-b59f-89b3a49d3338",
+  "realtimeDashboardId": "97230212-fe0c-42a4-add4-dc947b8fa3f7",
+  "reflexId": "dde1f39b-fe6c-4adb-8efe-db708cdb1bdf",
+  "semanticModelId": "669a6a2b-0115-4eeb-8f63-a6e1027133b0",
+  "reportId": "a0449186-59df-49f4-a151-9ceceb06726e",
+  "appBackendId": "8dd3360a-512e-46a8-8bd3-8eab3be64d73",
+  "dataAgentId": "7733697a-5231-4b8c-a9ac-bd5a6ce62adc"
+}
